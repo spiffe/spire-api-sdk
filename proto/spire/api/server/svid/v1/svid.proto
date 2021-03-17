@@ -1,11 +1,11 @@
 syntax = "proto3";
 package spire.api.server.svid.v1;
-option go_package = "github.com/spiffe/spire/proto/spire/api/server/svid/v1;svid";
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/svid/v1;svidv1";
 
-import "spire/types/jwtsvid.proto";
-import "spire/types/spiffeid.proto";
-import "spire/types/status.proto";
-import "spire/types/x509svid.proto";
+import "spire/api/types/jwtsvid.proto";
+import "spire/api/types/spiffeid.proto";
+import "spire/api/types/status.proto";
+import "spire/api/types/x509svid.proto";
 
 service SVID {
     // Mints a one-off X509-SVID outside of the normal node/workload
@@ -54,12 +54,12 @@ message MintX509SVIDRequest {
 
 message MintX509SVIDResponse {
     // The newly issued X509-SVID.
-    spire.types.X509SVID svid = 1;
+    spire.api.types.X509SVID svid = 1;
 }
 
 message MintJWTSVIDRequest {
     // Required. SPIFFE ID of the JWT-SVID.
-    spire.types.SPIFFEID id = 1;
+    spire.api.types.SPIFFEID id = 1;
 
     // Required. List of audience claims to include in the JWT-SVID. At least one must
     // be set.
@@ -74,7 +74,7 @@ message MintJWTSVIDRequest {
 
 message MintJWTSVIDResponse {
     // The newly issued JWT-SVID.
-    spire.types.JWTSVID svid = 1;
+    spire.api.types.JWTSVID svid = 1;
 }
 
 message BatchNewX509SVIDRequest {
@@ -86,10 +86,10 @@ message BatchNewX509SVIDRequest {
 message BatchNewX509SVIDResponse {
     message Result {
         // The status of creating the X509-SVID.
-        spire.types.Status status = 1;
+        spire.api.types.Status status = 1;
 
         // The newly created X509-SVID. This will be set if the status is OK.
-        spire.types.X509SVID svid = 2;
+        spire.api.types.X509SVID svid = 2;
     }
 
     // Result for each X509-SVID requested (order is maintained).
@@ -107,7 +107,7 @@ message NewJWTSVIDRequest {
 
 message NewJWTSVIDResponse {
     // The newly issued JWT-SVID
-    spire.types.JWTSVID svid = 1;
+    spire.api.types.JWTSVID svid = 1;
 }
 
 message NewDownstreamX509CARequest {

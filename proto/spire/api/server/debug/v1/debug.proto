@@ -1,8 +1,8 @@
 syntax = "proto3";
 package spire.api.server.debug.v1;
-option go_package = "github.com/spiffe/spire/proto/spire/api/server/debug/v1;debug";
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/debug/v1;debugv1";
 
-import "spire/types/spiffeid.proto";
+import "spire/api/types/spiffeid.proto";
 
 service Debug {
     // Get information about SPIRE server
@@ -15,11 +15,11 @@ message GetInfoRequest {
 message GetInfoResponse {
     message Cert {
         // Certificate SPIFFE ID
-    	spire.types.SPIFFEID id = 1;
-	// Expiration time
-	int64 expires_at = 2;
-	// Subject
-	string subject = 3;
+        spire.api.types.SPIFFEID id = 1;
+        // Expiration time
+        int64 expires_at = 2;
+        // Subject
+        string subject = 3;
     }
 
     // Server SVID chain

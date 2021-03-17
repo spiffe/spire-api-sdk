@@ -1,6 +1,6 @@
 syntax = "proto3";
-package spire.types;
-option go_package = "github.com/spiffe/spire/proto/spire/types";
+package spire.api.types;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
 
 message Selector {
     // The type of the selector. This is typically the name of the plugin that
