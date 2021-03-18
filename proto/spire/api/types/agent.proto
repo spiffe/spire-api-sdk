@@ -1,13 +1,13 @@
 syntax = "proto3";
-package spire.types;
-option go_package = "github.com/spiffe/spire/proto/spire/types";
+package spire.api.types;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
 
-import "spire/types/selector.proto";
-import "spire/types/spiffeid.proto";
+import "spire/api/types/selector.proto";
+import "spire/api/types/spiffeid.proto";
 
 message Agent {
     // Output only. SPIFFE ID of the agent.
-    spire.types.SPIFFEID id = 1;
+    spire.api.types.SPIFFEID id = 1;
 
     // Output only. The method by which the agent attested.
     string attestation_type = 2;
@@ -19,7 +19,7 @@ message Agent {
     int64 x509svid_expires_at = 4;
 
     // Output only. The selectors attributed to the agent during attestation.
-    repeated spire.types.Selector selectors = 5;
+    repeated spire.api.types.Selector selectors = 5;
 
     // Output only. Whether or not the agent is banned.
     bool banned = 6;

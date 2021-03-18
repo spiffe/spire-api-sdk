@@ -1,28 +1,28 @@
 syntax = "proto3";
-package spire.types;
-option go_package = "github.com/spiffe/spire/proto/spire/types";
+package spire.api.types;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
 
-import "spire/types/selector.proto";
-import "spire/types/spiffeid.proto";
+import "spire/api/types/selector.proto";
+import "spire/api/types/spiffeid.proto";
 
 message Entry {
     // Globally unique ID for the entry.
     string id = 1;
 
     // The SPIFFE ID of the identity described by this entry.
-    spire.types.SPIFFEID spiffe_id = 2;
+    spire.api.types.SPIFFEID spiffe_id = 2;
 
     // Who the entry is delegated to. If the entry describes a node, this is
     // set to the SPIFFE ID of the SPIRE server of the trust domain (e.g.
     // spiffe://example.org/spire/server). Otherwise, it will be set to a node
     // SPIFFE ID.
-    spire.types.SPIFFEID parent_id = 3;
+    spire.api.types.SPIFFEID parent_id = 3;
 
     // The selectors which identify which entities match this entry. If this is
     // an entry for a node, these selectors represent selectors produced by
     // node attestation. Otherwise, these selectors represent those produced by
     // workload attestation.
-    repeated spire.types.Selector selectors = 4;
+    repeated spire.api.types.Selector selectors = 4;
 
     // The time to live for identities issued for this entry (in seconds).
     int32 ttl = 5;

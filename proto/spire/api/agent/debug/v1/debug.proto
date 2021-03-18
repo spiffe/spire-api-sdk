@@ -1,8 +1,8 @@
 syntax = "proto3";
 package spire.agent.debug.v1;
-option go_package = "github.com/spiffe/spire/proto/spire/api/agent/debug/v1;debug";
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/agent/debug/v1;debugv1";
 
-import "spire/types/spiffeid.proto";
+import "spire/api/types/spiffeid.proto";
 
 service Debug {
     // Get information about SPIRE agent
@@ -15,10 +15,10 @@ message GetInfoRequest {
 message GetInfoResponse {
     message Cert {
         // Cerfificate SPIFFE ID
-        spire.types.SPIFFEID id = 1;
+        spire.api.types.SPIFFEID id = 1;
         // Expiration time
         int64 expires_at = 2;
-        // Subject 
+        // Subject
         string subject = 3;
     }
 

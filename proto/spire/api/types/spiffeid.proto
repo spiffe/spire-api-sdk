@@ -1,6 +1,6 @@
 syntax = "proto3";
-package spire.types;
-option go_package = "github.com/spiffe/spire/proto/spire/types";
+package spire.api.types;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
 
 // A SPIFFE ID, consisting of the trust domain name and a path portions of
 // the SPIFFE ID URI.

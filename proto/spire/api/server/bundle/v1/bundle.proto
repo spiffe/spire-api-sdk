@@ -1,9 +1,9 @@
 syntax = "proto3";
 package spire.api.server.bundle.v1;
-option go_package = "github.com/spiffe/spire/proto/spire/api/server/bundle/v1;bundle";
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/bundle/v1;bundlev1";
 
-import "spire/types/bundle.proto";
-import "spire/types/status.proto";
+import "spire/api/types/bundle.proto";
+import "spire/api/types/status.proto";
 
 service Bundle {
     // Count bundles.
@@ -14,7 +14,7 @@ service Bundle {
     // Gets the bundle for the trust domain of the server.
     //
     // The RPC does not require authentication.
-    rpc GetBundle(GetBundleRequest) returns (spire.types.Bundle);
+    rpc GetBundle(GetBundleRequest) returns (spire.api.types.Bundle);
 
     // Append to the bundle. Items specified in the bundle in the request are
     // appended to the existing bundle. If the bundle does not exist, NOT_FOUND
@@ -22,7 +22,7 @@ service Bundle {
     // bundle for the trust domain of the SPIRE server.
     //
     // The caller must be local or present an admin X509-SVID.
-    rpc AppendBundle(AppendBundleRequest) returns (spire.types.Bundle);
+    rpc AppendBundle(AppendBundleRequest) returns (spire.api.types.Bundle);
 
     // Publishes a downstream JWT authority to the SPIRE server. If the server
     // is itself a downstream server (i.e. configured with an UpstreamAuthority
@@ -42,7 +42,7 @@ service Bundle {
     // Gets a federated bundle. If the bundle does not exist, NOT_FOUND is returned.
     //
     // The caller must be local or present an admin or an active agent X509-SVID.
-    rpc GetFederatedBundle(GetFederatedBundleRequest) returns (spire.types.Bundle);
+    rpc GetFederatedBundle(GetFederatedBundleRequest) returns (spire.api.types.Bundle);
 
     // Batch creates one or more federated bundles.
     //
@@ -75,33 +75,33 @@ message CountBundlesResponse {
 
 message GetBundleRequest {
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 1;
+    spire.api.types.BundleMask output_mask = 1;
 }
 
 message AppendBundleRequest {
     // X.509 authorities to append.
-    repeated spire.types.X509Certificate x509_authorities = 1;
+    repeated spire.api.types.X509Certificate x509_authorities = 1;
 
     // JWT authorities to append.
-    repeated spire.types.JWTKey jwt_authorities = 2;
+    repeated spire.api.types.JWTKey jwt_authorities = 2;
 
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 3;
+    spire.api.types.BundleMask output_mask = 3;
 }
 
 message PublishJWTAuthorityRequest {
     // Required. The JWT authority to publish.
-    spire.types.JWTKey jwt_authority = 1;
+    spire.api.types.JWTKey jwt_authority = 1;
 }
 
 message PublishJWTAuthorityResponse {
     // The JWT authorities for the trust domain.
-    repeated spire.types.JWTKey jwt_authorities = 1;
+    repeated spire.api.types.JWTKey jwt_authorities = 1;
 }
 
 message ListFederatedBundlesRequest {
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 1;
+    spire.api.types.BundleMask output_mask = 1;
 
     // The maximum number of results to return. The server may further
     // constrain this value, or if zero, choose its own.
@@ -113,7 +113,7 @@ message ListFederatedBundlesRequest {
 
 message ListFederatedBundlesResponse {
     // The bundles.
-    repeated spire.types.Bundle bundles = 1;
+    repeated spire.api.types.Bundle bundles = 1;
 
     // The page token for the next request. Empty if there are no more results.
     // This field should be checked by clients even when a page_size was not
@@ -126,24 +126,24 @@ message GetFederatedBundleRequest {
     string trust_domain = 1;
 
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 2;
+    spire.api.types.BundleMask output_mask = 2;
 }
 
 message BatchCreateFederatedBundleRequest {
     // The bundles to be created.
-    repeated spire.types.Bundle bundle = 1;
+    repeated spire.api.types.Bundle bundle = 1;
 
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 2;
+    spire.api.types.BundleMask output_mask = 2;
 }
 
 message BatchCreateFederatedBundleResponse {
     message Result {
         // The status of creating the bundle.
-        spire.types.Status status = 1;
+        spire.api.types.Status status = 1;
 
         // The bundle that was created. This will be set if the status is OK.
-        spire.types.Bundle bundle = 2;
+        spire.api.types.Bundle bundle = 2;
     }
 
     // Result for each bundle in the request (order is maintained).
@@ -152,22 +152,22 @@ message BatchCreateFederatedBundleResponse {
 
 message BatchUpdateFederatedBundleRequest {
     // The bundles to be updated.
-    repeated spire.types.Bundle bundle = 1;
+    repeated spire.api.types.Bundle bundle = 1;
 
     // An input mask indicating which bundle fields should be updated.
-    spire.types.BundleMask input_mask = 2;
+    spire.api.types.BundleMask input_mask = 2;
 
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 3;
+    spire.api.types.BundleMask output_mask = 3;
 }
 
 message BatchUpdateFederatedBundleResponse {
     message Result {
         // The status of updating the bundle.
-        spire.types.Status status = 1;
+        spire.api.types.Status status = 1;
 
         // The bundle that was updated. This will be set if the status is OK.
-        spire.types.Bundle bundle = 2;
+        spire.api.types.Bundle bundle = 2;
     }
 
     // Result for each bundle in the request (order is maintained).
@@ -176,19 +176,19 @@ message BatchUpdateFederatedBundleResponse {
 
 message BatchSetFederatedBundleRequest {
     // The bundles to be upserted.
-    repeated spire.types.Bundle bundle = 1;
+    repeated spire.api.types.Bundle bundle = 1;
 
     // An output mask indicating which bundle fields are set in the response.
-    spire.types.BundleMask output_mask = 2;
+    spire.api.types.BundleMask output_mask = 2;
 }
 
 message BatchSetFederatedBundleResponse {
     message Result {
         // The status of upserting the bundle.
-        spire.types.Status status = 1;
+        spire.api.types.Status status = 1;
 
         // The bundle that was upserted. This will be set if the status is OK.
-        spire.types.Bundle bundle = 2;
+        spire.api.types.Bundle bundle = 2;
     }
 
     // Result for each bundle in the request (order is maintained).
@@ -210,14 +210,14 @@ message BatchDeleteFederatedBundleRequest {
     // The trust domain names (e.g., "example.org") of the bundles to delete.
     repeated string trust_domains = 1;
 
-    // The deletion mode selected  
+    // The deletion mode selected
     Mode mode = 2;
 }
 
 message BatchDeleteFederatedBundleResponse {
     message Result {
         // The status of deleting the bundle.
-        spire.types.Status status = 1;
+        spire.api.types.Status status = 1;
 
         // The trust domain name (e.g., "example.org") of the bundle that was
         // deleted.
