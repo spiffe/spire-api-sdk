@@ -1,8 +1,5 @@
-![SPIRE Logo](/doc/images/spire_logo.png)
-
 This repository contains the service definitions and code generated stubs for
 public [SPIRE](https://github.com/spiffe/spire) APIs.
-
 
 ## Versioning
 

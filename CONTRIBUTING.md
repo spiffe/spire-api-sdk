@@ -5,7 +5,7 @@ This document outlines the contribution guidelines for the SPIRE API SDK.
 This project follows the contribution and governance guidelines from the SPIFFE
 project (see
 [CONTRIBUTING](https://github.com/spiffe/spiffe/blob/master/CONTRIBUTING.md)
-and [GOVERNANCE](https://github.com/spiffe/spiffe/blob/master/GOVERNANCE.md))
+and [GOVERNANCE](https://github.com/spiffe/spiffe/blob/master/GOVERNANCE.md)).
 
 ## Prerequisites
 
@@ -31,14 +31,23 @@ and add the .proto file to the relevant variables.
 
 ## Consuming Changes in SPIRE
 
-SPIRE's main branch will always depend on the `next` tag. When changes from
-this repository need to make their way into SPIRE ahead of a release, the
-`next` tag will be updated.
+SPIRE's main branch depends on a pseudo-version of this repository (see
+https://golang.org/ref/mod#pseudo-versions).
 
-When a SPIRE release is imminent, a tag for that version is first pushed to
-this repository. The `go.mod` file in the SPIRE release branch is then updated
-to consume the specific version tag for the release.
-
-For testing changes locally, you can add a temporary `replace` directive to the
-SPIRE `go.mod` file. However, care must be taken to not push this change up to
+While a new change in this repository is under development, you can add a
+temporary `replace` directive to the SPIRE `go.mod` to allow you to consume the
+changes.  Care must be taken to not push the `replace` directive change up to
 SPIRE.
+
+Once those changes have been merged and you are ready to consume them from
+SPIRE, run `go get github.com/spiffe/spire-api-sdk@<commit hash>` in the SPIRE
+repository. This will update `go.mod` in SPIRE to use the latest pseudo version
+with that commit.
+
+When cutting a SPIRE release, this repository is tagged with the SPIRE
+release version. The release branch in SPIRE is be updated to depend explicitly
+on that version (i.e. `go get github.com/spiffe/spire-api-sdk@<version>`).
+
+Relying on a pseudo versions means that this repository only needs tags
+for the offically released versions, while still allowing SPIRE to work with
+unreleased changes during development.
