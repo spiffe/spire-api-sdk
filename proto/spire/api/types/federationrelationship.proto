@@ -1,0 +1,38 @@
+syntax = "proto3";
+package spire.api.types;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
+
+message FederationRelationship {
+    // The trust domain name (e.g., "example.org") to federate with. 
+    string trust_domain = 1;
+
+    // IP address or DNS name of the SPIFFE bundle endpoint that provides the trust
+    // bundle to federate with.
+    string address = 2;
+
+    // Port number of the SPIFFE bundle endpoint that provides the trust
+    // bundle to federate with.
+    int32 port = 3;
+
+    // Required. Authentication method.
+    oneof authentication {
+        // Use SPIFFE authentication. Specifies the expected SPIFFE ID
+        // of the SPIFFE bundle endpoint server. The SPIRE Server SPIFFE ID
+        // within the trust domain will be used if this is empty.
+        string spiffe_id = 4;
+
+        // Use Web PKI authentication. 
+        bool use_web_pki = 5;
+    }
+}
+
+message FederationRelationshipMask {
+    // Address field mask.
+    bool address = 1;
+
+    // Port field mask.
+    bool port = 2;
+
+    // Authentication field mask.
+    bool authentication = 3;
+}
