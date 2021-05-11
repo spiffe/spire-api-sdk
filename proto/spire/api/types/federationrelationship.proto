@@ -16,14 +16,22 @@ message FederationRelationship {
 
     // Required. Authentication method.
     oneof authentication {
-        // Use SPIFFE authentication. Specifies the expected SPIFFE ID
-        // of the SPIFFE bundle endpoint server. The SPIRE Server SPIFFE ID
-        // within the trust domain will be used if this is empty.
-        string spiffe_id = 4;
+        // Use SPIFFE authentication.
+        SPIFFEAuthentication spiffe = 4;
 
         // Use Web PKI authentication. 
-        bool use_web_pki = 5;
+        WebPKIAuthentication web_pki = 5;
     }
+}
+
+message SPIFFEAuthentication {
+    // Specifies the expected SPIFFE ID of the SPIFFE bundle endpoint server.
+    // The SPIRE Server SPIFFE ID within the trust domain will be
+    // used if this is empty.
+    string spiffe_id = 1;
+}
+
+message WebPKIAuthentication {
 }
 
 message FederationRelationshipMask {
