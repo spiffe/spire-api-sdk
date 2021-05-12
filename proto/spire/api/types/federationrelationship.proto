@@ -6,21 +6,17 @@ message FederationRelationship {
     // The trust domain name (e.g., "example.org") to federate with. 
     string trust_domain = 1;
 
-    // IP address or DNS name of the SPIFFE bundle endpoint that provides the trust
-    // bundle to federate with.
-    string address = 2;
-
-    // Port number of the SPIFFE bundle endpoint that provides the trust
-    // bundle to federate with.
-    int32 port = 3;
+    // URL of the SPIFFE bundle endpoint that provides the trust
+    // bundle to federate with. Must use the HTTPS protocol.
+    string url = 2;
 
     // Required. Authentication method.
     oneof authentication {
         // Use SPIFFE authentication.
-        SPIFFEAuthentication spiffe = 4;
+        SPIFFEAuthentication spiffe = 3;
 
         // Use Web PKI authentication. 
-        WebPKIAuthentication web_pki = 5;
+        WebPKIAuthentication web_pki = 4;
     }
 }
 
@@ -35,12 +31,9 @@ message WebPKIAuthentication {
 }
 
 message FederationRelationshipMask {
-    // Address field mask.
-    bool address = 1;
-
-    // Port field mask.
-    bool port = 2;
+    // URL field mask.
+    bool url = 1;
 
     // Authentication field mask.
-    bool authentication = 3;
+    bool authentication = 2;
 }
