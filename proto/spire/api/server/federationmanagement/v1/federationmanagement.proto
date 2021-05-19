@@ -6,31 +6,33 @@ import "google/protobuf/empty.proto";
 import "spire/api/types/federationrelationship.proto";
 import "spire/api/types/status.proto";
 
-// Manages the federation relationships with other trust domains.
+// Manages the federation relationships with foreign trust domains.
 service FederationManagement {
-    // Lists federation relationships with other trust domains.
+    // Lists federation relationships with foreign trust domains.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc ListFederationRelationships(ListFederationRelationshipsRequest) returns (ListFederationRelationshipsResponse);
 
-    // Gets a federation relationship with other trust domain.
+    // Gets a federation relationship with a foreign trust domain.
     // If there is no federation relationship with the specified
     // trust domain, NOT_FOUND is returned.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc GetFederationRelationship(GetFederationRelationshipRequest) returns (spire.api.types.FederationRelationship);
 
-    // Batch creates one or more federation relationships with other trust domains.
+    // Batch creates one or more federation relationships with
+    // foreign trust domains.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc BatchCreateFederationRelationship(BatchCreateFederationRelationshipRequest) returns (BatchCreateFederationRelationshipResponse);
 
-    // Batch updates one or more federation relationships with other trust domains.
+    // Batch updates one or more federation relationships with
+    // foreign trust domains.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc BatchUpdateFederationRelationship(BatchUpdateFederationRelationshipRequest) returns (BatchUpdateFederationRelationshipResponse);
 
-    // Batch deletes federation relationships with other trust domains.
+    // Batch deletes federation relationships with foreign trust domains.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc BatchDeleteFederationRelationship(BatchDeleteFederationRelationshipRequest) returns (BatchDeleteFederationRelationshipResponse);
@@ -57,7 +59,7 @@ message ListFederationRelationshipsRequest {
 }
 
 message ListFederationRelationshipsResponse {
-    // The federation relationships with other trust domains.
+    // The federation relationships with foreign trust domains.
     repeated spire.api.types.FederationRelationship federation_relationships = 1;
 
     // The page token for the next request. Empty if there are no more results.

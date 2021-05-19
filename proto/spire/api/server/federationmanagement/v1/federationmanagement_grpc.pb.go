@@ -19,25 +19,27 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FederationManagementClient interface {
-	// Lists federation relationships with other trust domains.
+	// Lists federation relationships with foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	ListFederationRelationships(ctx context.Context, in *ListFederationRelationshipsRequest, opts ...grpc.CallOption) (*ListFederationRelationshipsResponse, error)
-	// Gets a federation relationship with other trust domain.
+	// Gets a federation relationship with a foreign trust domain.
 	// If there is no federation relationship with the specified
 	// trust domain, NOT_FOUND is returned.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetFederationRelationship(ctx context.Context, in *GetFederationRelationshipRequest, opts ...grpc.CallOption) (*types.FederationRelationship, error)
-	// Batch creates one or more federation relationships with other trust domains.
+	// Batch creates one or more federation relationships with
+	// foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	BatchCreateFederationRelationship(ctx context.Context, in *BatchCreateFederationRelationshipRequest, opts ...grpc.CallOption) (*BatchCreateFederationRelationshipResponse, error)
-	// Batch updates one or more federation relationships with other trust domains.
+	// Batch updates one or more federation relationships with
+	// foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	BatchUpdateFederationRelationship(ctx context.Context, in *BatchUpdateFederationRelationshipRequest, opts ...grpc.CallOption) (*BatchUpdateFederationRelationshipResponse, error)
-	// Batch deletes federation relationships with other trust domains.
+	// Batch deletes federation relationships with foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	BatchDeleteFederationRelationship(ctx context.Context, in *BatchDeleteFederationRelationshipRequest, opts ...grpc.CallOption) (*BatchDeleteFederationRelationshipResponse, error)
@@ -115,25 +117,27 @@ func (c *federationManagementClient) RefreshBundle(ctx context.Context, in *Refr
 // All implementations must embed UnimplementedFederationManagementServer
 // for forward compatibility
 type FederationManagementServer interface {
-	// Lists federation relationships with other trust domains.
+	// Lists federation relationships with foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	ListFederationRelationships(context.Context, *ListFederationRelationshipsRequest) (*ListFederationRelationshipsResponse, error)
-	// Gets a federation relationship with other trust domain.
+	// Gets a federation relationship with a foreign trust domain.
 	// If there is no federation relationship with the specified
 	// trust domain, NOT_FOUND is returned.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetFederationRelationship(context.Context, *GetFederationRelationshipRequest) (*types.FederationRelationship, error)
-	// Batch creates one or more federation relationships with other trust domains.
+	// Batch creates one or more federation relationships with
+	// foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	BatchCreateFederationRelationship(context.Context, *BatchCreateFederationRelationshipRequest) (*BatchCreateFederationRelationshipResponse, error)
-	// Batch updates one or more federation relationships with other trust domains.
+	// Batch updates one or more federation relationships with
+	// foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	BatchUpdateFederationRelationship(context.Context, *BatchUpdateFederationRelationshipRequest) (*BatchUpdateFederationRelationshipResponse, error)
-	// Batch deletes federation relationships with other trust domains.
+	// Batch deletes federation relationships with foreign trust domains.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	BatchDeleteFederationRelationship(context.Context, *BatchDeleteFederationRelationshipRequest) (*BatchDeleteFederationRelationshipResponse, error)

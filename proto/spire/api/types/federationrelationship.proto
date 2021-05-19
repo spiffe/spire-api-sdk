@@ -8,15 +8,15 @@ message FederationRelationship {
 
     // URL of the SPIFFE bundle endpoint that provides the trust
     // bundle to federate with. Must use the HTTPS protocol.
-    string url = 2;
+    string bundle_endpoint_url = 2;
 
-    // Required. Authentication method.
-    oneof authentication {
-        // Use SPIFFE authentication.
-        SPIFFEAuthentication spiffe = 3;
+    // Required. The endpoint profile type.
+    oneof bundle_endpoint_profile {
+        // Use Web PKI endpoint profile. 
+        WebPKI https_web = 3;
 
-        // Use Web PKI authentication. 
-        WebPKIAuthentication web_pki = 4;
+        // Use SPIFFE Authentication endpoint profile.
+        SPIFFEAuthentication https_spiffe = 4;
     }
 }
 
@@ -24,16 +24,16 @@ message SPIFFEAuthentication {
     // Specifies the expected SPIFFE ID of the SPIFFE bundle endpoint server.
     // The SPIRE Server SPIFFE ID within the trust domain will be
     // used if this is empty.
-    string spiffe_id = 1;
+    string endpoint_spiffe_id = 1;
 }
 
-message WebPKIAuthentication {
+message WebPKI {
 }
 
 message FederationRelationshipMask {
-    // URL field mask.
-    bool url = 1;
+    // bundle_endpoint_url field mask.
+    bool bundle_endpoint_url = 1;
 
-    // Authentication field mask.
-    bool authentication = 2;
+    // bundle_endpoint_profile field mask.
+    bool bundle_endpoint_profile = 2;
 }

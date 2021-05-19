@@ -100,7 +100,7 @@ type ListFederationRelationshipsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The federation relationships with other trust domains.
+	// The federation relationships with foreign trust domains.
 	FederationRelationships []*types.FederationRelationship `protobuf:"bytes,1,rep,name=federation_relationships,json=federationRelationships,proto3" json:"federation_relationships,omitempty"`
 	// The page token for the next request. Empty if there are no more results.
 	// This field should be checked by clients even when a page_size was not
