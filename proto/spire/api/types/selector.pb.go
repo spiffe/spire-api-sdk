@@ -37,7 +37,7 @@ const (
 	// Indicates that the selectors in this match are a superset of the
 	// candidate selectors.
 	SelectorMatch_MATCH_SUPERSET SelectorMatch_MatchBehavior = 2
-	// Indicates that at least one of the selectors in this match are in the
+	// Indicates that at least one of the selectors in this match is in the
 	// candidate selectors.
 	SelectorMatch_MATCH_ANY SelectorMatch_MatchBehavior = 3
 )
