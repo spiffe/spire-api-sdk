@@ -20,6 +20,14 @@ message SelectorMatch {
         // Indicates that the selectors in this match are a subset of the
         // candidate selectors.
         MATCH_SUBSET = 1;
+
+        // Indicates that the selectors in this match are a superset of the
+        // candidate selectors.
+	MATCH_SUPERSET = 2;
+
+        // Indicates that at least one of the selectors in this match are in the 
+        // candidate selectors.
+	MATCH_ANY = 3;
     }
 
     // The set of selectors to match on.

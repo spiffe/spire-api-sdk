@@ -11,6 +11,14 @@ message FederatesWithMatch {
         // Indicates that all candidates which have a non-empty subset
         // of the provided set of trust domains will match.
         MATCH_SUBSET = 1;
+	
+        // Indicate that all candidates which are a superset
+        // of the provided set of trust domains will match.
+        MATCH_SUPERSET = 2;
+
+        // Indicates that all candidates wich have at least one 
+        // of the provided set of trust domains will match.
+        MATCH_ANY = 3;
     }
 
     // The set of trust domain names to match on (e.g., "example.org").
