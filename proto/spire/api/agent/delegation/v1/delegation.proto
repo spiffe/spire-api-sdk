@@ -1,0 +1,75 @@
+syntax = "proto3";
+package spire.api.agent.delegation.v1;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/agent/delegation/v1;delegationv1";
+
+import "spire/api/types/selector.proto";
+import "spire/api/types/x509svid.proto";
+
+// The deletation service provides an interface to get the SVIDs of other
+// workloads on the host. This service is intended for use cases where a process
+// (different than the workload one) should access the workload's SVID to
+// perform actions on behalf of the workload. One example of is using a single
+// node instance of Envoy that upgrades TCP connections for different processes
+// running in such a node.
+//
+// The caller must be local and its identity must be listed in the allowed
+// clients on the spire-agent configuration.
+service Delegation {
+    // Fetch X.509-SVIDs for multiple workloads.
+    rpc FetchX509SVIDs(stream FetchX509SVIDsRequest) returns (stream FetchX509SVIDsResponse);
+
+    // Fetch local and federated bundles.
+    rpc FetchX509Bundles(FetchX509BundlesRequest) returns (stream FetchX509BundlesResponse);
+}
+
+// X.509 SPIFFE Verifiable Identity Document with the private key.
+message X509SVIDWithKey {
+    spire.api.types.X509SVID x509_svid = 1;
+    bytes x509_svid_key = 2;
+
+    repeated string federates_with = 3;
+}
+
+// FetchX509SVIDsRequest is used by clients to modify the set of workloads that
+// it receives SVIDs for.
+message FetchX509SVIDsRequest {
+    enum Operation {
+        UNSPEC = 0;
+        // Add a new workload to the watched set.
+        ADD = 1;
+        // Delete a workload from the watched set.
+        DEL = 2;
+    }
+
+    // Operation to perform. Add/delete a workload to/from the watched set.
+    Operation operation = 1;
+
+    // Workload's identifier. The meaning of this field depends on the
+    // operation:
+    // - ADD: The server will include this id in the messages containing updates
+    // for this workload.
+    // - DEL: The id of the workload to remove from the watched set.
+    uint64 id = 2;
+
+    // Selectors of the workload to add to the watched set. Only used when
+    // operation is ADD.
+    repeated spire.api.types.Selector selectors = 3;
+}
+
+message FetchX509SVIDsResponse {
+    // Id of the workload. This value corresponds to the one used when adding
+    // the workload to the watched set.
+    uint64 id = 1;
+
+    repeated X509SVIDWithKey x509_svids = 2;
+}
+
+
+message FetchX509BundlesRequest {}
+
+// FetchX509BundlesResponse represents the bundle for a given trust domain. An
+// empty bundle indicates that it was removed.
+message FetchX509BundlesResponse {
+    string trust_domain_name = 1;
+    bytes bundle = 2;
+}
