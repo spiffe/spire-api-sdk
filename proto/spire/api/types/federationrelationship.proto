@@ -13,21 +13,21 @@ message FederationRelationship {
     // Required. The endpoint profile type.
     oneof bundle_endpoint_profile {
         // Use Web PKI endpoint profile. 
-        WebPKI https_web = 3;
+        HTTPSWebProfile https_web = 3;
 
         // Use SPIFFE Authentication endpoint profile.
-        SPIFFEAuthentication https_spiffe = 4;
+        HTTPSSPIFFEProfile https_spiffe = 4;
     }
 }
 
-message SPIFFEAuthentication {
+message HTTPSSPIFFEProfile {
     // Specifies the expected SPIFFE ID of the SPIFFE bundle endpoint server.
     // The SPIRE Server SPIFFE ID within the trust domain will be
     // used if this is empty.
     string endpoint_spiffe_id = 1;
 }
 
-message WebPKI {
+message HTTPSWebProfile {
 }
 
 message FederationRelationshipMask {
