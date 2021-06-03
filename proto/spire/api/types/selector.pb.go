@@ -30,15 +30,54 @@ type SelectorMatch_MatchBehavior int32
 const (
 	// Indicates that the selectors in this match are equal to the
 	// candidate selectors, independent of ordering.
+	// Example:
+	//   Given:
+	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
+	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
+	//     - 'e3 { Selectors: ["a:1]"}'
+	//   Operation:
+	//     - MATCH_EXACT ["a:1", "b:2"]
+	//   Entries that match:
+	//     - 'e2'
 	SelectorMatch_MATCH_EXACT SelectorMatch_MatchBehavior = 0
-	// Indicates that the selectors in this match are a subset of the
-	// candidate selectors.
+	// Indicates that all candidates which have a non-empty subset
+	// of the provided set of selectors will match.
+	// Example:
+	//   Given:
+	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
+	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
+	//     - 'e3 { Selectors: ["a:1]"}'
+	//   Operation:
+	//     - MATCH_SUBSET ["a:1"]
+	//   Entries that match:
+	//     - 'e1'
 	SelectorMatch_MATCH_SUBSET SelectorMatch_MatchBehavior = 1
-	// Indicates that the selectors in this match are a superset of the
-	// candidate selectors.
+	// Indicates that all candidates which are a superset
+	// of the provided selectors will match.
+	// Example:
+	//   Given:
+	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
+	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
+	//     - 'e3 { Selectors: ["a:1]"}'
+	//   Operation:
+	//     - MATCH_SUPERSET ["a:1", "b:2"]
+	//   Entries that match:
+	//     - 'e1'
+	//     - 'e2'
 	SelectorMatch_MATCH_SUPERSET SelectorMatch_MatchBehavior = 2
-	// Indicates that at least one of the selectors in this match is in the
-	// candidate selectors.
+	// Indicates that all candidates which have at least one
+	// of the provided set of selectors will match.
+	// Example:
+	//   Given:
+	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
+	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
+	//     - 'e3 { Selectors: ["a:1]"}'
+	//   Operation:
+	//     - MATCH_ANY ["a:1"]
+	//   Entries that match:
+	//     - 'e1'
+	//     - 'e2'
+	//     - 'e3'
 	SelectorMatch_MATCH_ANY SelectorMatch_MatchBehavior = 3
 )
 
