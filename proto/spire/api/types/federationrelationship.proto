@@ -2,6 +2,8 @@ syntax = "proto3";
 package spire.api.types;
 option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
 
+import "spire/api/types/bundle.proto";
+
 message FederationRelationship {
     // The trust domain name (e.g., "example.org") to federate with. 
     string trust_domain = 1;
@@ -25,6 +27,12 @@ message HTTPSSPIFFEProfile {
     // The SPIRE Server SPIFFE ID within the trust domain will be
     // used if this is empty.
     string endpoint_spiffe_id = 1;
+
+    // The bundle of the trust domain that will be used when performing requests
+    // to the SPIFFE bundle endpoint server. If there is an existing stored bundle,
+    // this bundle will be used instead. If not specified, a previously
+    // stored bundle must exist.
+    spire.api.types.Bundle bundle = 2;
 }
 
 message HTTPSWebProfile {

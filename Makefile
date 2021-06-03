@@ -29,7 +29,7 @@ apiprotos := \
 	proto/spire/api/server/bundle/v1/bundle.proto \
 	proto/spire/api/server/debug/v1/debug.proto \
 	proto/spire/api/server/entry/v1/entry.proto \
-	proto/spire/api/server/federationmanagement/v1/federationmanagement.proto \
+	proto/spire/api/server/trustdomain/v1/trustdomain.proto \
 	proto/spire/api/server/svid/v1/svid.proto \
 
 # Used to force some rules to run every time

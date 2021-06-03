@@ -1,13 +1,13 @@
 syntax = "proto3";
-package spire.api.server.federationmanagement.v1;
-option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/federationmanagement/v1;federationmanagementv1";
+package spire.api.server.trustdomain.v1;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/trustdomain/v1;trustdomain";
 
 import "google/protobuf/empty.proto";
 import "spire/api/types/federationrelationship.proto";
 import "spire/api/types/status.proto";
 
 // Manages the federation relationships with foreign trust domains.
-service FederationManagement {
+service TrustDomain {
     // Lists federation relationships with foreign trust domains.
     //
     // The caller must be local or present an admin X509-SVID.
