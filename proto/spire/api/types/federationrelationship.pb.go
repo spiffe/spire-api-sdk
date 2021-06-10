@@ -134,12 +134,11 @@ type HTTPSSPIFFEProfile struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Specifies the expected SPIFFE ID of the SPIFFE bundle endpoint server.
-	// The SPIRE Server SPIFFE ID within the trust domain will be
-	// used if this is empty.
 	EndpointSpiffeId string `protobuf:"bytes,1,opt,name=endpoint_spiffe_id,json=endpointSpiffeId,proto3" json:"endpoint_spiffe_id,omitempty"`
 	// The bundle of the trust domain that will be used when performing requests
-	// to the SPIFFE bundle endpoint server. If there is an existing stored bundle,
-	// this bundle will be used instead. If not specified, a previously
+	// to the SPIFFE bundle endpoint server. It will be persisted for future requests.
+	// If there is an existing stored bundle, this bundle will be used instead and the
+	// existing bundle will be updated. If not specified, a previously
 	// stored bundle must exist.
 	Bundle *Bundle `protobuf:"bytes,2,opt,name=bundle,proto3" json:"bundle,omitempty"`
 }
