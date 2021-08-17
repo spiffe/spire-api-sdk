@@ -24,6 +24,7 @@ protos := \
 
 apiprotos := \
 	proto/spire/api/agent/debug/v1/debug.proto \
+	proto/spire/api/agent/delegatedidentity/v1/delegatedidentity.proto \
 	proto/spire/api/server/agent/v1/agent.proto \
 	proto/spire/api/server/bundle/v1/bundle.proto \
 	proto/spire/api/server/debug/v1/debug.proto \
