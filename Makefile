@@ -13,6 +13,7 @@ protos := \
 	proto/spire/api/types/attestation.proto \
 	proto/spire/api/types/bundle.proto \
 	proto/spire/api/types/entry.proto \
+	proto/spire/api/types/federationrelationship.proto \
 	proto/spire/api/types/federateswith.proto \
 	proto/spire/api/types/jointoken.proto \
 	proto/spire/api/types/jwtsvid.proto \
@@ -29,6 +30,7 @@ apiprotos := \
 	proto/spire/api/server/bundle/v1/bundle.proto \
 	proto/spire/api/server/debug/v1/debug.proto \
 	proto/spire/api/server/entry/v1/entry.proto \
+	proto/spire/api/server/trustdomain/v1/trustdomain.proto \
 	proto/spire/api/server/svid/v1/svid.proto \
 
 # Used to force some rules to run every time
