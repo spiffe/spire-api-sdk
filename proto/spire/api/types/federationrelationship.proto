@@ -12,13 +12,18 @@ message FederationRelationship {
     // bundle to federate with. Must use the HTTPS protocol.
     string bundle_endpoint_url = 2;
 
+    // If true, it indicates that the federation relationship is static. Static
+    // federation relationships are those defined in the SPIRE server
+    // configuration file.
+    bool static = 3;
+
     // Required. The endpoint profile type.
     oneof bundle_endpoint_profile {
         // Use Web PKI endpoint profile. 
-        HTTPSWebProfile https_web = 3;
+        HTTPSWebProfile https_web = 4;
 
         // Use SPIFFE Authentication endpoint profile.
-        HTTPSSPIFFEProfile https_spiffe = 4;
+        HTTPSSPIFFEProfile https_spiffe = 5;
     }
 }
 

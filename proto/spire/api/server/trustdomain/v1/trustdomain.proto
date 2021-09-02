@@ -56,6 +56,10 @@ message ListFederationRelationshipsRequest {
 
     // The next_page_token value returned from a previous request, if any.
     string page_token = 3;
+
+    // If true, static federation relationships defined in the SPIRE server
+    // configuration file are included in the response.
+    bool include_static = 4;
 }
 
 message ListFederationRelationshipsResponse {
@@ -73,9 +77,13 @@ message GetFederationRelationshipRequest {
     // (e.g., "example.org").
     string trust_domain = 1;
 
+    // If true, it returns the static federation relationship defined in the
+    // SPIRE server configuration file.
+    bool include_static = 2;
+
     // An output mask indicating which federation relationship fields
     // are set in the response.
-    spire.api.types.FederationRelationshipMask output_mask = 2;
+    spire.api.types.FederationRelationshipMask output_mask = 3;
 }
 
 message BatchCreateFederationRelationshipRequest {
