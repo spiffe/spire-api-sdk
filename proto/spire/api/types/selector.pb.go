@@ -34,7 +34,7 @@ const (
 	//   Given:
 	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
 	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
-	//     - 'e3 { Selectors: ["a:1]"}'
+	//     - 'e3 { Selectors: ["a:1"]}'
 	//   Operation:
 	//     - MATCH_EXACT ["a:1", "b:2"]
 	//   Entries that match:
@@ -46,7 +46,7 @@ const (
 	//   Given:
 	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
 	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
-	//     - 'e3 { Selectors: ["a:1]"}'
+	//     - 'e3 { Selectors: ["a:1"]}'
 	//   Operation:
 	//     - MATCH_SUBSET ["a:1"]
 	//   Entries that match:
@@ -58,7 +58,7 @@ const (
 	//   Given:
 	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
 	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
-	//     - 'e3 { Selectors: ["a:1]"}'
+	//     - 'e3 { Selectors: ["a:1"]}'
 	//   Operation:
 	//     - MATCH_SUPERSET ["a:1", "b:2"]
 	//   Entries that match:
@@ -71,7 +71,7 @@ const (
 	//   Given:
 	//     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
 	//     - 'e2 { Selectors: ["a:1", "b:2"]}'
-	//     - 'e3 { Selectors: ["a:1]"}'
+	//     - 'e3 { Selectors: ["a:1"]}'
 	//   Operation:
 	//     - MATCH_ANY ["a:1"]
 	//   Entries that match:
