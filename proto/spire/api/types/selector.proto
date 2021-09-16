@@ -16,55 +16,55 @@ message SelectorMatch {
         // Indicates that the selectors in this match are equal to the
         // candidate selectors, independent of ordering.
         // Example:
-        //   Given: 
+        //   Given:
         //     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
         //     - 'e2 { Selectors: ["a:1", "b:2"]}'
         //     - 'e3 { Selectors: ["a:1]"}'
-        //   Operation: 
+        //   Operation:
         //     - MATCH_EXACT ["a:1", "b:2"]
-        //   Entries that match: 
+        //   Entries that match:
         //     - 'e2'
         MATCH_EXACT = 0;
 
         // Indicates that all candidates which have a non-empty subset
         // of the provided set of selectors will match.
         // Example:
-        //   Given: 
+        //   Given:
         //     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
         //     - 'e2 { Selectors: ["a:1", "b:2"]}'
         //     - 'e3 { Selectors: ["a:1]"}'
-        //   Operation: 
+        //   Operation:
         //     - MATCH_SUBSET ["a:1"]
-        //   Entries that match: 
+        //   Entries that match:
         //     - 'e1'
         MATCH_SUBSET = 1;
 
         // Indicates that all candidates which are a superset
         // of the provided selectors will match.
         // Example:
-        //   Given: 
+        //   Given:
         //     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
         //     - 'e2 { Selectors: ["a:1", "b:2"]}'
         //     - 'e3 { Selectors: ["a:1]"}'
-        //   Operation: 
+        //   Operation:
         //     - MATCH_SUPERSET ["a:1", "b:2"]
         //   Entries that match:
         //     - 'e1'
         //     - 'e2'
         MATCH_SUPERSET = 2;
-        
+
         // Indicates that all candidates which have at least one
         // of the provided set of selectors will match.
         // Example:
-        //   Given: 
+        //   Given:
         //     - 'e1 { Selectors: ["a:1", "b:2", "c:3"]}'
         //     - 'e2 { Selectors: ["a:1", "b:2"]}'
         //     - 'e3 { Selectors: ["a:1]"}'
-        //   Operation: 
+        //   Operation:
         //     - MATCH_ANY ["a:1"]
         //   Entries that match:
         //     - 'e1'
-        //     - 'e2' 
+        //     - 'e2'
         //     - 'e3'
         MATCH_ANY = 3;
 
