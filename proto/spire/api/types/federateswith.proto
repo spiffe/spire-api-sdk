@@ -29,7 +29,7 @@ message FederatesWithMatch {
         //   Entries that match:
         //     - 'e1'
         MATCH_SUBSET = 1;
-	
+
         // Indicate that all candidates which are a superset
         // of the provided set of trust domains will match.
         // Example:
@@ -44,7 +44,7 @@ message FederatesWithMatch {
         //     - 'e2'
         MATCH_SUPERSET = 2;
 
-        // Indicates that all candidates which have at least one 
+        // Indicates that all candidates which have at least one
         // of the provided set of trust domains will match.
         // Example:
         //   Given:
