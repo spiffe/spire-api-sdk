@@ -80,7 +80,7 @@ message GetFederationRelationshipRequest {
 
 message BatchCreateFederationRelationshipRequest {
     // The federation relationships to be created.
-    repeated spire.api.types.FederationRelationship federation_relationship = 1;
+    repeated spire.api.types.FederationRelationship federation_relationships = 1;
 
     // An output mask indicating the federation relationship fields set in the response.
     spire.api.types.FederationRelationshipMask output_mask = 2;
