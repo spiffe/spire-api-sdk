@@ -22,16 +22,19 @@ message FederationRelationship {
     }
 
     // Optional. The bundle for the trust domain. This field can be used to
-    // create/replace the bundle when the relationship is created or updated.
-    // When the relationship is retrieved, it will be set to the latest trust
-    // domain bundle (if available). Note, an endpoint with an https_profile
-    // that is self-served (i.e. bundle endpoint server presents an SVID from
-    // the same trust domain as the bundle returned from the endpoint) requires
-    // the bundle from that trust domain to authenticate the connection. This
-    // parameter is a convenient way to provide that bundle instead of making a
-    // seperate call to the Bundle APIs. If the bundle for the endpoint does
-    // not exist, for both self-serving and non self-serving endpoints, the
-    // relationship will still be created.
+    // create or replace the referenced trust domains' bundle when the
+    // relationship is created or updated.  When the relationship is retrieved,
+    // it will be set to the referenced trust domain's latest bundle (if
+    // available). Please note that the `https_spiffe` profile requires an
+    // existing trust domain bundle in order to function correctly. The
+    // required bundle must match the trust domain specified in the bundle
+    // endpoint SPIFFE ID. If the bundle endpoint SPIFFE ID resides in the same
+    // trust domain that you're trying to federate with, you may optionally
+    // specify that trust domain bundle here. If the bundle endpoint SPIFFE ID
+    // _does not_ reside in the same trust domain that you're federating with,
+    // please ensure that the trust domain bundle for that trust domain has
+    // been configured separately (e.g. configured via another federation
+    // relationship or manually set via the Bundle API).
     spire.api.types.Bundle trust_domain_bundle = 5;
 }
 
