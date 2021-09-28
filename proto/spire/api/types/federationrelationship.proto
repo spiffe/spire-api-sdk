@@ -53,4 +53,7 @@ message FederationRelationshipMask {
 
     // bundle_endpoint_profile field mask.
     bool bundle_endpoint_profile = 2;
+
+    // trust_domain_bundle field mask.
+    bool trust_domain_bundle = 3;
 }
