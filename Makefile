@@ -19,6 +19,7 @@ protos := \
 	proto/spire/api/types/attestation.proto \
 	proto/spire/api/types/bundle.proto \
 	proto/spire/api/types/entry.proto \
+	proto/spire/api/types/federationrelationship.proto \
 	proto/spire/api/types/federateswith.proto \
 	proto/spire/api/types/jointoken.proto \
 	proto/spire/api/types/jwtsvid.proto \
@@ -30,10 +31,12 @@ protos := \
 
 apiprotos := \
 	proto/spire/api/agent/debug/v1/debug.proto \
+	proto/spire/api/agent/delegatedidentity/v1/delegatedidentity.proto \
 	proto/spire/api/server/agent/v1/agent.proto \
 	proto/spire/api/server/bundle/v1/bundle.proto \
 	proto/spire/api/server/debug/v1/debug.proto \
 	proto/spire/api/server/entry/v1/entry.proto \
+	proto/spire/api/server/trustdomain/v1/trustdomain.proto \
 	proto/spire/api/server/svid/v1/svid.proto \
 
 # Used to force some rules to run every time
@@ -142,8 +145,7 @@ $(protoc_gen_go_grpc_bin): | go-check
 	@echo "Installing protoc-gen-go-grpc $(protoc_gen_go_grpc_version)..."
 	@rm -rf $(protoc_gen_go_grpc_base_dir)
 	@mkdir -p $(protoc_gen_go_grpc_dir)
-	@echo "module tools" > $(protoc_gen_go_grpc_dir)/go.mod
-	@cd $(protoc_gen_go_grpc_dir) && GOBIN=$(protoc_gen_go_grpc_dir) $(go_path) go get google.golang.org/grpc/cmd/protoc-gen-go-grpc@$(protoc_gen_go_grpc_version)
+	@GOBIN=$(protoc_gen_go_grpc_dir) $(go_path) go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@$(protoc_gen_go_grpc_version)
 
 #############################################################################
 # Code Generation
