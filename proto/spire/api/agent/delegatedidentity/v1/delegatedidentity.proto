@@ -4,6 +4,7 @@ option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/agent/deleg
 
 import "spire/api/types/selector.proto";
 import "spire/api/types/x509svid.proto";
+import "spire/api/types/jwtsvid.proto";
 
 // The delegatedIdentity service provides an interface to get the SVIDs of other
 // workloads on the host. This service is intended for use cases where a process
@@ -22,6 +23,14 @@ service DelegatedIdentity {
     // Subscribe to get local and all federated bundles.
     // The lifetime of the subscription aligns to the lifetime of the stream.
     rpc SubscribeToX509Bundles(SubscribeToX509BundlesRequest) returns (stream SubscribeToX509BundlesResponse);
+
+    // Fetch JWT-SVIDs for workloads that match the given selectors, and
+    // for the requested audience.
+    rpc FetchJWTSVIDs(FetchJWTSVIDsRequest) returns (FetchJWTSVIDsResponse);
+
+    // Subscribe to get local and all federated JWKS bundle.
+    // The lifetime of the subscription aligns to the lifetime of the stream.
+    rpc SubscribeToJWTBundles(SubscribeToJWTBundlesRequest) returns (stream SubscribeToJWTBundlesResponse);
 }
 
 // X.509 SPIFFE Verifiable Identity Document with the private key.
@@ -57,4 +66,30 @@ message SubscribeToX509BundlesResponse {
     // A map keyed by trust domain name, with ASN.1 DER-encoded
     // X.509 CA certificates as the values
     map<string, bytes> ca_certificates = 1;
+}
+
+message FetchJWTSVIDsRequest {
+    // Required. The audience(s) the workload intends to authenticate against.
+    repeated string audience = 1;
+
+    // Required. Selectors describing the workload to fetch.
+    repeated spire.api.types.Selector selectors = 2;
+}
+
+// The FetchJWTSVIDsResponse message conveys JWT-SVIDs.
+message FetchJWTSVIDsResponse {
+    // Required. The list of returned JWT-SVIDs.
+    repeated spire.api.types.JWTSVID svids = 1;
+}
+
+// The SubscribeToJWTBundlesRequest message conveys parameters for requesting JWKS bundles.
+// There are currently no such parameters.
+message SubscribeToJWTBundlesRequest { 
+}
+
+// The SubscribeToJWTBundlesReponse conveys JWKS bundles.
+message SubscribeToJWTBundlesResponse {
+    // Required. JWK encoded JWT bundles, keyed by the SPIFFE ID of the trust
+    // domain.
+    map<string, bytes> bundles = 1;
 }
