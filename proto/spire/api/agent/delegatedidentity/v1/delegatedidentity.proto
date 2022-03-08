@@ -28,7 +28,7 @@ service DelegatedIdentity {
     // for the requested audience.
     rpc FetchJWTSVIDs(FetchJWTSVIDsRequest) returns (FetchJWTSVIDsResponse);
 
-    // Subscribe to get local and all federated JWKS bundle.
+    // Subscribe to get local and all federated JWKS bundles.
     // The lifetime of the subscription aligns to the lifetime of the stream.
     rpc SubscribeToJWTBundles(SubscribeToJWTBundlesRequest) returns (stream SubscribeToJWTBundlesResponse);
 }

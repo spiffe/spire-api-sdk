@@ -26,7 +26,7 @@ type DelegatedIdentityClient interface {
 	// Fetch JWT-SVIDs for workloads that match the given selectors, and
 	// for the requested audience.
 	FetchJWTSVIDs(ctx context.Context, in *FetchJWTSVIDsRequest, opts ...grpc.CallOption) (*FetchJWTSVIDsResponse, error)
-	// Subscribe to get local and all federated JWKS bundle.
+	// Subscribe to get local and all federated JWKS bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	SubscribeToJWTBundles(ctx context.Context, in *SubscribeToJWTBundlesRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToJWTBundlesClient, error)
 }
@@ -157,7 +157,7 @@ type DelegatedIdentityServer interface {
 	// Fetch JWT-SVIDs for workloads that match the given selectors, and
 	// for the requested audience.
 	FetchJWTSVIDs(context.Context, *FetchJWTSVIDsRequest) (*FetchJWTSVIDsResponse, error)
-	// Subscribe to get local and all federated JWKS bundle.
+	// Subscribe to get local and all federated JWKS bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	SubscribeToJWTBundles(*SubscribeToJWTBundlesRequest, DelegatedIdentity_SubscribeToJWTBundlesServer) error
 	mustEmbedUnimplementedDelegatedIdentityServer()
