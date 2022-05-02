@@ -145,6 +145,9 @@ message AttestAgentResponse {
     message Result {
         // The agent X509-SVID.
         spire.api.types.X509SVID svid = 1;
+
+	// Should the attested agent reattest when its certificate expires
+	bool reattest = 2;
     }
 
     oneof step {
