@@ -4,8 +4,8 @@ This document outlines the contribution guidelines for the SPIRE API SDK.
 
 This project follows the contribution and governance guidelines from the SPIFFE
 project (see
-[CONTRIBUTING](https://github.com/spiffe/spiffe/blob/master/CONTRIBUTING.md)
-and [GOVERNANCE](https://github.com/spiffe/spiffe/blob/master/GOVERNANCE.md)).
+[CONTRIBUTING](https://github.com/spiffe/spiffe/blob/main/CONTRIBUTING.md)
+and [GOVERNANCE](https://github.com/spiffe/spiffe/blob/main/GOVERNANCE.md)).
 
 ## Prerequisites
 
