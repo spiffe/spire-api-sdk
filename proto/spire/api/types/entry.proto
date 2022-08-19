@@ -53,6 +53,12 @@ message Entry {
 
     // Determines if the issued identity is exportable to a store
     bool store_svid = 12;
+
+    // The time to live for X509-SVID identities issued for this entry (in seconds), overrides ttl if set.
+    int32 x509_svid_ttl = 13;
+
+    // The time to live for JWT-SVID identities issued for this entry (in seconds), overrides ttl if set.
+    int32 jwt_svid_ttl = 14;
 }
 
 // Field mask for Entry fields
@@ -89,4 +95,10 @@ message EntryMask {
 
     // store_svid field mask
     bool store_svid = 12;
+
+    // x509_svid_ttl field mask
+    bool x509_svid_ttl = 13;
+
+    // jwt_svid_ttl field mask
+    bool jwt_svid_ttl = 14;
 }
