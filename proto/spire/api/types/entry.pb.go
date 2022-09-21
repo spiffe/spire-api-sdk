@@ -40,6 +40,8 @@ type Entry struct {
 	// workload attestation.
 	Selectors []*Selector `protobuf:"bytes,4,rep,name=selectors,proto3" json:"selectors,omitempty"`
 	// The time to live for identities issued for this entry (in seconds).
+	// This field is deprecated in favor of the x509_svid_ttl and jwt_svid_ttl
+	// fields and will be removed in a future release.
 	Ttl int32 `protobuf:"varint,5,opt,name=ttl,proto3" json:"ttl,omitempty"`
 	// The names of trust domains the identity described by this entry
 	// federates with.
