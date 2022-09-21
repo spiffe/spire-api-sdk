@@ -25,6 +25,8 @@ message Entry {
     repeated spire.api.types.Selector selectors = 4;
 
     // The time to live for identities issued for this entry (in seconds).
+    // This field is deprecated in favor of the x509_svid_ttl and jwt_svid_ttl
+    // fields and will be removed in a future release.
     int32 ttl = 5;
 
     // The names of trust domains the identity described by this entry
