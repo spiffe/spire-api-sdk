@@ -57,6 +57,10 @@ message Entry {
 
     // The time to live for JWT-SVID identities issued for this entry (in seconds), overrides ttl if set.
     int32 jwt_svid_ttl = 13;
+
+    // An operator-specified string used to provide guidance on how this
+    // identity should be used by a workload when more than one SVID is returned.
+    string hint = 14;
 }
 
 // Field mask for Entry fields
@@ -96,4 +100,7 @@ message EntryMask {
 
     // jwt_svid_ttl field mask
     bool jwt_svid_ttl = 13;
+
+    // hiny field mask
+    string hint = 14;
 }
