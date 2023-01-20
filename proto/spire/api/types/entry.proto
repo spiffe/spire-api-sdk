@@ -101,6 +101,6 @@ message EntryMask {
     // jwt_svid_ttl field mask
     bool jwt_svid_ttl = 13;
 
-    // hiny field mask
-    string hint = 14;
+    // hint field mask
+    bool hint = 14;
 }
