@@ -60,6 +60,7 @@ message ListEntriesRequest {
         spire.api.types.SPIFFEID by_parent_id = 2;
         spire.api.types.SelectorMatch by_selectors = 3;
         spire.api.types.FederatesWithMatch by_federates_with = 4;
+        string by_hint = 5;
     }
 
     // Filters the entries returned in the response.
