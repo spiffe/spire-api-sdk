@@ -1,6 +1,6 @@
 syntax = "proto3";
-package spire.api.server.local_authority.v1;
-option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/local_authority/v1;local_authorityv1";
+package spire.api.server.localauthority.v1;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/localauthority/v1;localauthorityv1";
 
 // The LocalAuthority service provides a way to manage the signing keys (and
 // related material) of the SPIRE Server exposing it.
@@ -25,6 +25,7 @@ service LocalAuthority {
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
+        // It can receive the KeyID of an old JWT authority.
         //
         // If a previously active JWT authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
@@ -34,6 +35,7 @@ service LocalAuthority {
         // RevokeJWTAuthority revokes the previously active JWT authority by
         // removing it from the bundle and propagating this update throughout
         // the cluster.
+        // It can receive the KeyID of an old JWT authority.
         //
         // If a previously active JWT authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
@@ -49,7 +51,6 @@ service LocalAuthority {
         // the bundle. This action will  propagate the new CA cluster-wide.
         rpc PrepareX509Authority(PrepareX509AuthorityRequest) returns (PrepareX509AuthorityResponse);
 
-        
         // ActivateX509Authority activates a prepared X.509 authority for use,
         // which will cause it to be used for all X.509 signing operations
         // serviced by this server going forward. If a new X.509 authority has
@@ -61,6 +62,7 @@ service LocalAuthority {
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
+        // It can receive the public key of an old X.509 authority.
         //
         // If a previously active X.509 authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
@@ -70,6 +72,7 @@ service LocalAuthority {
         // RevokeX509Authority revokes the previously active X.509 authority by
         // removing it from the bundle and propagating this update throughout
         // the cluster.
+        // It can receive the public key of an old X.509 authority.
         //
         // If a previously active X.509 authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
@@ -95,13 +98,19 @@ message ActivateJWTAuthorityResponse {
         AuthorityState activated_authority = 1;
 }
 
-message TaintJWTAuthorityRequest {}
+message TaintJWTAuthorityRequest {
+        // The key ID of the local authority to taint
+        string key_id = 1;
+}
 
 message TaintJWTAuthorityResponse {
         AuthorityState tainted_authority = 1;
 }
 
-message RevokeJWTAuthorityRequest {}
+message RevokeJWTAuthorityRequest {
+        // The key ID of the local authority to revoke
+        string key_id = 1;
+}
 
 message RevokeJWTAuthorityResponse {
         AuthorityState revoked_authority = 1;
@@ -125,13 +134,19 @@ message ActivateX509AuthorityResponse {
         AuthorityState activated_authority = 1;
 }
 
-message TaintX509AuthorityRequest {}
+message TaintX509AuthorityRequest {
+        // The public key of the local authority to taint
+        bytes public_key  = 1;
+}
 
 message TaintX509AuthorityResponse {
         AuthorityState tainted_authority = 1;
 }
 
-message RevokeX509AuthorityRequest {}
+message RevokeX509AuthorityRequest {
+        // The public key of the local authority to revoke
+        bytes public_key  = 1;
+}
 
 message RevokeX509AuthorityResponse {
         AuthorityState revoked_authority = 1;

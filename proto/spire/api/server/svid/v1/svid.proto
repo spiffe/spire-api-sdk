@@ -2,6 +2,7 @@ syntax = "proto3";
 package spire.api.server.svid.v1;
 option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/svid/v1;svidv1";
 
+import "spire/api/types/bundle.proto";
 import "spire/api/types/jwtsvid.proto";
 import "spire/api/types/spiffeid.proto";
 import "spire/api/types/status.proto";
@@ -125,6 +126,9 @@ message NewDownstreamX509CAResponse {
 
     // X.509 authorities (DER encoded).
     repeated bytes x509_authorities = 2;
+
+    // X.509 authorities with metadata
+    repeated spire.api.types.X509Certificate x509_authorities_with_metadata = 3;
 }
 
 message NewX509SVIDParams {

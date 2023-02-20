@@ -58,6 +58,13 @@ service Agent {
     //
     // The caller must be local or present an admin X509-SVID.
     rpc CreateJoinToken(CreateJoinTokenRequest) returns (spire.api.types.JoinToken);
+
+    // Pushes Agent status, relevant information is returned to agent to keep it 
+    // updated on server changes.
+    //
+    // The caller must present an active agent X509-SVID, i.e. the X509-SVID
+    // returned by the AttestAgent or the most recent RenewAgent call.
+    rpc PushStatus(PushStatusRequest) returns (PushStatusResponse);
 }
 
 message CountAgentsRequest {
@@ -192,4 +199,14 @@ message AgentX509SVIDParams {
     // CSR is only used to convey the public key; other fields in the CSR are
     // ignored. The agent X509-SVID attributes are determined by the server.
     bytes csr = 1;
+}
+
+message PushStatusRequest {
+    // Required. Serial number of the bundle used to sign Agent identity.
+    string authority_serial = 1;
+}
+
+message PushStatusResponse {
+    // Keys that are no longer secure and must be rotated.
+    repeated bytes taintedKeys = 1;
 }
