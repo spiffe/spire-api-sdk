@@ -79,7 +79,7 @@ message ListAgentsRequest {
         google.protobuf.BoolValue by_banned = 3;
 
         // Filters agents that can re-attest.
-        google.protobuf.BoolValue by_can_re_attest = 4;
+        google.protobuf.BoolValue by_can_reattest = 4;
     }
 
     // Filters the agents returned by the list operation.
