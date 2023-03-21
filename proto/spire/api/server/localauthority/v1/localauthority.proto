@@ -153,19 +153,13 @@ message RevokeX509AuthorityResponse {
 }
 
 message AuthorityState {
-        // An opaque name for the "slot" that this authority is housed in
-        string slot = 1;
-
         // The authority's public key, PKIX encoded
-        bytes public_key = 2;
+        bytes public_key = 1;
 
         enum Status {
                 // Key status is unknown. This is an error condition and should
                 // never really be encountered.
                 UNKNOWN = 0;
-
-                // This slot is empty. To fill it, prepare a new authority.
-                EMPTY = 1;
 
                 // This is a new authority that has been added to the bundle
                 // but is not yet in use.
@@ -178,12 +172,8 @@ message AuthorityState {
                 // This is an old authority that was previously in use but is
                 // no longer.
                 OLD = 4;
-
-                // This is an old authority that was previously in use but is
-                // now expired.
-                EXPIRED = 5;
         }
 
         // The status of this authority
-        Status status = 3;
+        Status status = 2;
 }
