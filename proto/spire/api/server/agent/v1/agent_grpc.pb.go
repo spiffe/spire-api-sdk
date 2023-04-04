@@ -58,7 +58,7 @@ type AgentClient interface {
 	//
 	// The caller must be local or present an admin X509-SVID.
 	CreateJoinToken(ctx context.Context, in *CreateJoinTokenRequest, opts ...grpc.CallOption) (*types.JoinToken, error)
-	// Pushes Agent status, relevant information is returned to agent to keep it
+	// Publishes Agent status, relevant information is returned to the agent to keep it
 	// updated on server changes.
 	//
 	// The caller must present an active agent X509-SVID, i.e. the X509-SVID
@@ -220,7 +220,7 @@ type AgentServer interface {
 	//
 	// The caller must be local or present an admin X509-SVID.
 	CreateJoinToken(context.Context, *CreateJoinTokenRequest) (*types.JoinToken, error)
-	// Pushes Agent status, relevant information is returned to agent to keep it
+	// Publishes Agent status, relevant information is returned to the agent to keep it
 	// updated on server changes.
 	//
 	// The caller must present an active agent X509-SVID, i.e. the X509-SVID
