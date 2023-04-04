@@ -64,7 +64,7 @@ service Agent {
     //
     // The caller must present an active agent X509-SVID, i.e. the X509-SVID
     // returned by the AttestAgent or the most recent RenewAgent call.
-    rpc PushStatus(PushStatusRequest) returns (PushStatusResponse);
+    rpc PostStatus(PostStatusRequest) returns (PostStatusResponse);
 }
 
 message CountAgentsRequest {
@@ -201,12 +201,12 @@ message AgentX509SVIDParams {
     bytes csr = 1;
 }
 
-message PushStatusRequest {
-    // Required. Serial number of the bundle used to sign Agent identity.
-    string authority_serial = 1;
+message PostStatusRequest {
+    // Required. Serial number of the bundle currently being served by the agent
+    string current_bundle_serial = 1;
 }
 
-message PushStatusResponse {
+message PostStatusResponse {
     // Keys that are no longer secure and must be rotated.
-    repeated bytes taintedKeys = 1;
+    repeated bytes tainted_keys = 1;
 }
