@@ -35,7 +35,7 @@ type JWTSVID struct {
 	ExpiresAt int64 `protobuf:"varint,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	// Issuance timestamp (seconds since Unix epoch).
 	IssuedAt int64 `protobuf:"varint,4,opt,name=issued_at,json=issuedAt,proto3" json:"issued_at,omitempty"`
-	// An operator-specified string used to provide guidance on how this
+	// Optional. An operator-specified string used to provide guidance on how this
 	// identity should be used by a workload when more than one SVID is returned.
 	// For example, `internal` and `external` to indicate an SVID for internal or
 	// external use, respectively.
