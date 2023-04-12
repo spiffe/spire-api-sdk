@@ -99,8 +99,9 @@ message ActivateJWTAuthorityResponse {
 }
 
 message TaintJWTAuthorityRequest {
-        // The key ID of the local authority to taint
-        string key_id = 1;
+        // The authority ID of the local authority JWT authority to taint.
+        // This is the JWT Key ID.
+        string authority_id = 1;
 }
 
 message TaintJWTAuthorityResponse {
@@ -108,8 +109,9 @@ message TaintJWTAuthorityResponse {
 }
 
 message RevokeJWTAuthorityRequest {
-        // The key ID of the local authority to revoke
-        string key_id = 1;
+        // The authority ID of the local authority JWT authority to revoke.
+        // This is the JWT Key ID.
+        string authority_id = 1;
 }
 
 message RevokeJWTAuthorityResponse {
@@ -135,8 +137,10 @@ message ActivateX509AuthorityResponse {
 }
 
 message TaintX509AuthorityRequest {
-        // The public key of the local authority to taint
-        bytes public_key  = 1;
+        // The authority ID of the local X.509 authority to taint.
+        // This is the subject key identifier, that's calculated by
+        // doing a SHA-1 hash over the ASN.1 encoding of the public key.
+        string authority_id = 1;
 }
 
 message TaintX509AuthorityResponse {
@@ -144,8 +148,10 @@ message TaintX509AuthorityResponse {
 }
 
 message RevokeX509AuthorityRequest {
-        // The public key of the local authority to revoke
-        bytes public_key  = 1;
+        // The authority ID of the local X.509 authority to revoke.
+        // This is the subject key identifier, that's calculated by
+        // doing a SHA-1 hash over the ASN.1 encoding of the public key.
+        string authority_id  = 1;
 }
 
 message RevokeX509AuthorityResponse {
@@ -153,8 +159,8 @@ message RevokeX509AuthorityResponse {
 }
 
 message AuthorityState {
-        // The authority's public key, PKIX encoded
-        bytes public_key = 1;
+        // The authority ID.
+        string authority_id = 1;
 
         enum Status {
                 // Key status is unknown. This is an error condition and should

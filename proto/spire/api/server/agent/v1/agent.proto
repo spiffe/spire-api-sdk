@@ -203,10 +203,8 @@ message AgentX509SVIDParams {
 
 message PostStatusRequest {
     // Required. Serial number of the bundle currently being served by the agent
-    string current_bundle_serial = 1;
+    int64 current_bundle_serial = 1;
 }
 
 message PostStatusResponse {
-    // Keys that are no longer secure and must be rotated.
-    repeated bytes tainted_keys = 1;
 }
