@@ -203,7 +203,7 @@ message AgentX509SVIDParams {
 
 message PostStatusRequest {
     // Required. Serial number of the bundle currently being served by the agent
-    int64 current_bundle_serial = 1;
+    uint64 current_bundle_serial = 1;
 }
 
 message PostStatusResponse {
