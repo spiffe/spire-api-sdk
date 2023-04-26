@@ -34,7 +34,7 @@ type LocalAuthorityClient interface {
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
-	// It can receive the KeyID of an old JWT authority.
+	// It can receive the Authority ID of an old JWT authority.
 	//
 	// If a previously active JWT authority does not exist (e.g. if one
 	// has been prepared but not activated yet), a FailedPrecondition
@@ -43,7 +43,7 @@ type LocalAuthorityClient interface {
 	// RevokeJWTAuthority revokes the previously active JWT authority by
 	// removing it from the bundle and propagating this update throughout
 	// the cluster.
-	// It can receive the KeyID of an old JWT authority.
+	// It can receive the Authority ID of an old JWT authority.
 	//
 	// If a previously active JWT authority does not exist (e.g. if one
 	// has been prepared but not activated yet), a FailedPrecondition
@@ -202,7 +202,7 @@ type LocalAuthorityServer interface {
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
-	// It can receive the KeyID of an old JWT authority.
+	// It can receive the Authority ID of an old JWT authority.
 	//
 	// If a previously active JWT authority does not exist (e.g. if one
 	// has been prepared but not activated yet), a FailedPrecondition
@@ -211,7 +211,7 @@ type LocalAuthorityServer interface {
 	// RevokeJWTAuthority revokes the previously active JWT authority by
 	// removing it from the bundle and propagating this update throughout
 	// the cluster.
-	// It can receive the KeyID of an old JWT authority.
+	// It can receive the Authority ID of an old JWT authority.
 	//
 	// If a previously active JWT authority does not exist (e.g. if one
 	// has been prepared but not activated yet), a FailedPrecondition
