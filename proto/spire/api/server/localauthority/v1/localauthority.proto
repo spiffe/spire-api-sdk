@@ -1,0 +1,203 @@
+syntax = "proto3";
+package spire.api.server.localauthority.v1;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/localauthority/v1;localauthorityv1";
+
+// The LocalAuthority service provides a way to manage the signing keys (and
+// related material) of the SPIRE Server exposing it.
+service LocalAuthority {
+        // GetJWTAuthorityState returns the state of all locally configured
+        // JWT authorities.
+        rpc GetJWTAuthorityState(GetJWTAuthorityStateRequest) returns (GetJWTAuthorityStateResponse);
+
+        // PrepareJWTAuthority prepares a new JWT authority for use by
+        // generating a new key and injecting it into the bundle. This action
+        // will propagate the new public key cluster-wide.
+        rpc PrepareJWTAuthority(PrepareJWTAuthorityRequest) returns (PrepareJWTAuthorityResponse);
+
+        // ActivateJWTAuthority activates a prepared JWT authority for use,
+        // which will cause it to be used for all JWT signing operations
+        // serviced by this server going forward. If a new JWT authority has
+        // not already been prepared, a FailedPrecondition error will be returned.
+        rpc ActivateJWTAuthority(ActivateJWTAuthorityRequest) returns (ActivateJWTAuthorityResponse);
+
+        // TaintJWTAuthority marks the previously active JWT authority as
+        // being tainted. SPIRE Agents observing an authority to be tainted
+        // will perform proactive rotations of any key material related to
+        // the tainted authority. The result of this action will be observed
+        // cluster-wide.
+        // It can receive the Authority ID of an old JWT authority.
+        //
+        // If a previously active JWT authority does not exist (e.g. if one
+        // has been prepared but not activated yet), a FailedPrecondition
+        // error will be returned.
+        rpc TaintJWTAuthority(TaintJWTAuthorityRequest) returns (TaintJWTAuthorityResponse);
+
+        // RevokeJWTAuthority revokes the previously active JWT authority by
+        // removing it from the bundle and propagating this update throughout
+        // the cluster.
+        // It can receive the Authority ID of an old JWT authority.
+        //
+        // If a previously active JWT authority does not exist (e.g. if one
+        // has been prepared but not activated yet), a FailedPrecondition
+        // error will be returned.
+        rpc RevokeJWTAuthority(RevokeJWTAuthorityRequest) returns (RevokeJWTAuthorityResponse);
+
+        // GetX509AuthorityState returns the state of all locally configured
+        // X.509 authorities.
+        rpc GetX509AuthorityState(GetX509AuthorityStateRequest) returns (GetX509AuthorityStateResponse);
+
+        // PrepareX509Authority prepares a new X.509 authority for use by
+        // generating a new key and injecting the resulting CA certificate into
+        // the bundle. This action will  propagate the new CA cluster-wide.
+        rpc PrepareX509Authority(PrepareX509AuthorityRequest) returns (PrepareX509AuthorityResponse);
+
+        // ActivateX509Authority activates a prepared X.509 authority for use,
+        // which will cause it to be used for all X.509 signing operations
+        // serviced by this server going forward. If a new X.509 authority has
+        // not already been prepared, a FailedPrecondition error will be returned.
+        rpc ActivateX509Authority(ActivateX509AuthorityRequest) returns (ActivateX509AuthorityResponse);
+
+        // TaintX509Authority marks the previously active X.509 authority as
+        // being tainted. SPIRE Agents observing an authority to be tainted
+        // will perform proactive rotations of any key material related to
+        // the tainted authority. The result of this action will be observed
+        // cluster-wide.
+        // It can receive the public key of an old X.509 authority.
+        //
+        // If a previously active X.509 authority does not exist (e.g. if one
+        // has been prepared but not activated yet), a FailedPrecondition
+        // error will be returned.
+        rpc TaintX509Authority(TaintX509AuthorityRequest) returns (TaintX509AuthorityResponse);
+
+        // RevokeX509Authority revokes the previously active X.509 authority by
+        // removing it from the bundle and propagating this update throughout
+        // the cluster.
+        // It can receive the public key of an old X.509 authority.
+        //
+        // If a previously active X.509 authority does not exist (e.g. if one
+        // has been prepared but not activated yet), a FailedPrecondition
+        // error will be returned.
+        rpc RevokeX509Authority(RevokeX509AuthorityRequest) returns (RevokeX509AuthorityResponse);
+}
+
+message GetJWTAuthorityStateRequest {}
+
+message GetJWTAuthorityStateResponse {
+        repeated AuthorityState states = 1;
+}
+
+message PrepareJWTAuthorityRequest {}
+
+message PrepareJWTAuthorityResponse {
+        AuthorityState prepared_authority = 1;
+}
+
+message ActivateJWTAuthorityRequest {
+        // Optional. The authority ID of the local authority JWT authority to activate.
+        // This is the JWT Key ID.
+        // By default, the prepared local JWT authority is used.
+        string authority_id = 1;
+}
+
+message ActivateJWTAuthorityResponse {
+        AuthorityState activated_authority = 1;
+}
+
+message TaintJWTAuthorityRequest {
+        // Optional. The authority ID of the local authority JWT authority to taint.
+        // This is the JWT Key ID.
+        // By default, the old local JWT authority is used.
+        string authority_id = 1;
+}
+
+message TaintJWTAuthorityResponse {
+        AuthorityState tainted_authority = 1;
+}
+
+message RevokeJWTAuthorityRequest {
+        // Optional. The authority ID of the local authority JWT authority to revoke.
+        // This is the JWT Key ID.
+        // By default, the old local JWT authority is used.
+        string authority_id = 1;
+}
+
+message RevokeJWTAuthorityResponse {
+        AuthorityState revoked_authority = 1;
+}
+
+message GetX509AuthorityStateRequest {}
+
+message GetX509AuthorityStateResponse {
+        repeated AuthorityState states = 1;
+}
+
+message PrepareX509AuthorityRequest {}
+
+message PrepareX509AuthorityResponse {
+        AuthorityState prepared_authority = 1;
+}
+
+message ActivateX509AuthorityRequest {
+        // Optional. The authority ID of the local X.509 authority to activate.
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate, which is calculated by doing a
+        // SHA-1 hash over the ASN.1 encoding of the public key.
+        // By default, the prepared local X.509 authority is used.
+        string authority_id = 1;
+}
+
+message ActivateX509AuthorityResponse {
+        AuthorityState activated_authority = 1;
+}
+
+message TaintX509AuthorityRequest {
+        // Optional. The authority ID of the local X.509 authority to taint.
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate, which is calculated by doing a
+        // SHA-1 hash over the ASN.1 encoding of the public key.
+        // By default, the old local X.509 authority is used.
+        string authority_id = 1;
+}
+
+message TaintX509AuthorityResponse {
+        AuthorityState tainted_authority = 1;
+}
+
+message RevokeX509AuthorityRequest {
+        // Optional. The authority ID of the local X.509 authority to revoke.
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate, which is calculated by doing a
+        // SHA-1 hash over the ASN.1 encoding of the public key.
+        // By default, the old local X.509 authority is used.
+        string authority_id  = 1;
+}
+
+message RevokeX509AuthorityResponse {
+        AuthorityState revoked_authority = 1;
+}
+
+message AuthorityState {
+        // The authority ID.
+        string authority_id = 1;
+
+        enum Status {
+                // Key status is unknown. This is an error condition and should
+                // never really be encountered.
+                UNKNOWN = 0;
+
+                // This is a new authority that has been added to the bundle
+                // but is not yet in use.
+                PREPARED = 2;
+
+                // This authority is active and is currently being used for
+                // signing operations.
+                ACTIVE = 3;
+
+                // This is an old authority that was previously in use but is
+                // no longer.
+                OLD = 4;
+        }
+
+        // The status of this authority
+        Status status = 2;
+}
