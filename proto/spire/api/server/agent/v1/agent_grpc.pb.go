@@ -58,6 +58,12 @@ type AgentClient interface {
 	//
 	// The caller must be local or present an admin X509-SVID.
 	CreateJoinToken(ctx context.Context, in *CreateJoinTokenRequest, opts ...grpc.CallOption) (*types.JoinToken, error)
+	// PostStatus post Agent status, informing what's the current
+	// bundle that is being used by the agent.
+	//
+	// The caller must present an active agent X509-SVID, i.e. the X509-SVID
+	// returned by the AttestAgent or the most recent RenewAgent call.
+	PostStatus(ctx context.Context, in *PostStatusRequest, opts ...grpc.CallOption) (*PostStatusResponse, error)
 }
 
 type agentClient struct {
@@ -162,6 +168,15 @@ func (c *agentClient) CreateJoinToken(ctx context.Context, in *CreateJoinTokenRe
 	return out, nil
 }
 
+func (c *agentClient) PostStatus(ctx context.Context, in *PostStatusRequest, opts ...grpc.CallOption) (*PostStatusResponse, error) {
+	out := new(PostStatusResponse)
+	err := c.cc.Invoke(ctx, "/spire.api.server.agent.v1.Agent/PostStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AgentServer is the server API for Agent service.
 // All implementations must embed UnimplementedAgentServer
 // for forward compatibility
@@ -205,6 +220,12 @@ type AgentServer interface {
 	//
 	// The caller must be local or present an admin X509-SVID.
 	CreateJoinToken(context.Context, *CreateJoinTokenRequest) (*types.JoinToken, error)
+	// PostStatus post Agent status, informing what's the current
+	// bundle that is being used by the agent.
+	//
+	// The caller must present an active agent X509-SVID, i.e. the X509-SVID
+	// returned by the AttestAgent or the most recent RenewAgent call.
+	PostStatus(context.Context, *PostStatusRequest) (*PostStatusResponse, error)
 	mustEmbedUnimplementedAgentServer()
 }
 
@@ -235,6 +256,9 @@ func (UnimplementedAgentServer) RenewAgent(context.Context, *RenewAgentRequest) 
 }
 func (UnimplementedAgentServer) CreateJoinToken(context.Context, *CreateJoinTokenRequest) (*types.JoinToken, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateJoinToken not implemented")
+}
+func (UnimplementedAgentServer) PostStatus(context.Context, *PostStatusRequest) (*PostStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostStatus not implemented")
 }
 func (UnimplementedAgentServer) mustEmbedUnimplementedAgentServer() {}
 
@@ -401,6 +425,24 @@ func _Agent_CreateJoinToken_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Agent_PostStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).PostStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/spire.api.server.agent.v1.Agent/PostStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).PostStatus(ctx, req.(*PostStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Agent_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "spire.api.server.agent.v1.Agent",
 	HandlerType: (*AgentServer)(nil),
@@ -432,6 +474,10 @@ var _Agent_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateJoinToken",
 			Handler:    _Agent_CreateJoinToken_Handler,
+		},
+		{
+			MethodName: "PostStatus",
+			Handler:    _Agent_PostStatus_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

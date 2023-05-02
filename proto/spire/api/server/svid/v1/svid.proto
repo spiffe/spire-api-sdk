@@ -2,6 +2,7 @@ syntax = "proto3";
 package spire.api.server.svid.v1;
 option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/svid/v1;svidv1";
 
+import "spire/api/types/bundle.proto";
 import "spire/api/types/jwtsvid.proto";
 import "spire/api/types/spiffeid.proto";
 import "spire/api/types/status.proto";
