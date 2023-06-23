@@ -92,10 +92,6 @@ message GetJWTAuthorityStateResponse {
         // Authority in that was previously used for signing operations,
 	// but it is not longer.
         AuthorityState old = 3;
-
-        // Authority without state, This in an error condition and should 
-	// never be encountered.
-        AuthorityState unknown = 4;
 }
 
 message PrepareJWTAuthorityRequest {}
@@ -149,10 +145,6 @@ message GetX509AuthorityStateResponse {
         // Authority in that was previously used for signing operations,
 	// but it is not longer.
         AuthorityState old = 3;
-
-        // Authority without state, This in an error condition and should 
-	// never be encountered.
-        AuthorityState unknown = 4;
 }
 
 message PrepareX509AuthorityRequest {}
@@ -204,24 +196,6 @@ message AuthorityState {
         // The authority ID.
         string authority_id = 1;
 
-        enum Status {
-                // Key status is unknown. This is an error condition and should
-                // never really be encountered.
-                UNKNOWN = 0;
-
-                // This is a new authority that has been added to the bundle
-                // but is not yet in use.
-                PREPARED = 2;
-
-                // This authority is active and is currently being used for
-                // signing operations.
-                ACTIVE = 3;
-
-                // This is an old authority that was previously in use but is
-                // no longer.
-                OLD = 4;
-        }
-
-        // The status of this authority
-        Status status = 2;
+        // Expiration timestamp (seconds since Unix epoch).
+        int64 expires_at = 2;
 }
