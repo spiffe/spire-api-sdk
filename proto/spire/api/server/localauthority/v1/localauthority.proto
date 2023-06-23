@@ -83,19 +83,19 @@ service LocalAuthority {
 message GetJWTAuthorityStateRequest {}
 
 message GetJWTAuthorityStateResponse {
-        // Autority currently beign used for signing operations.
-        AuthorityState Active = 1;
+        // Authority currently being used for signing operations.
+        AuthorityState active = 1;
 
         // Authority added on bundle but is not used yet.
-        AuthorityState Prepared = 2;
+        AuthorityState prepared = 2;
 
         // Authority in that was previously used for signing operations,
 	// but it is not longer.
-        AuthorityState Old = 3;
+        AuthorityState old = 3;
 
         // Authority without state, This in an error condition and should 
 	// never be encountered.
-        AuthorityState Unknown = 4;
+        AuthorityState unknown = 4;
 }
 
 message PrepareJWTAuthorityRequest {}
@@ -140,19 +140,19 @@ message RevokeJWTAuthorityResponse {
 message GetX509AuthorityStateRequest {}
 
 message GetX509AuthorityStateResponse {
-        // Autority currently beign used for signing operations.
-        AuthorityState Active = 1;
+        // Authority currently being used for signing operations.
+        AuthorityState active = 1;
 
         // Authority added on bundle but is not used yet.
-        AuthorityState Prepared = 2;
+        AuthorityState prepared = 2;
 
         // Authority in that was previously used for signing operations,
 	// but it is not longer.
-        AuthorityState Old = 3;
+        AuthorityState old = 3;
 
         // Authority without state, This in an error condition and should 
 	// never be encountered.
-        AuthorityState Unknown = 4;
+        AuthorityState unknown = 4;
 }
 
 message PrepareX509AuthorityRequest {}
