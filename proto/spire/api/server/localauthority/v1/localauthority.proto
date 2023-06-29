@@ -83,7 +83,15 @@ service LocalAuthority {
 message GetJWTAuthorityStateRequest {}
 
 message GetJWTAuthorityStateResponse {
-        repeated AuthorityState states = 1;
+        // Authority currently being used for signing operations.
+        AuthorityState active = 1;
+
+        // Authority added on bundle but is not used yet.
+        AuthorityState prepared = 2;
+
+        // Authority in that was previously used for signing operations,
+	// but it is not longer.
+        AuthorityState old = 3;
 }
 
 message PrepareJWTAuthorityRequest {}
@@ -128,7 +136,15 @@ message RevokeJWTAuthorityResponse {
 message GetX509AuthorityStateRequest {}
 
 message GetX509AuthorityStateResponse {
-        repeated AuthorityState states = 1;
+        // Authority currently being used for signing operations.
+        AuthorityState active = 1;
+
+        // Authority added on bundle but is not used yet.
+        AuthorityState prepared = 2;
+
+        // Authority in that was previously used for signing operations,
+	// but it is not longer.
+        AuthorityState old = 3;
 }
 
 message PrepareX509AuthorityRequest {}
@@ -180,24 +196,6 @@ message AuthorityState {
         // The authority ID.
         string authority_id = 1;
 
-        enum Status {
-                // Key status is unknown. This is an error condition and should
-                // never really be encountered.
-                UNKNOWN = 0;
-
-                // This is a new authority that has been added to the bundle
-                // but is not yet in use.
-                PREPARED = 2;
-
-                // This authority is active and is currently being used for
-                // signing operations.
-                ACTIVE = 3;
-
-                // This is an old authority that was previously in use but is
-                // no longer.
-                OLD = 4;
-        }
-
-        // The status of this authority
-        Status status = 2;
+        // Expiration timestamp (seconds since Unix epoch).
+        int64 expires_at = 2;
 }
