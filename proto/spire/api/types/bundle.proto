@@ -23,6 +23,11 @@ message Bundle {
 message X509Certificate {
     // The ASN.1 DER encoded bytes of the X.509 certificate.
     bytes asn1 = 1;
+
+    // Optional. A hint on where the certificate came from. This is not intended to be
+    // parsed by SPIRE, but rather to be used by the API consumer to determine
+    // how to interpret the certificate.
+    string hint = 2;
 }
 
 message JWTKey {
@@ -35,6 +40,11 @@ message JWTKey {
     // When the key expires (seconds since Unix epoch). If zero, the key does
     // not expire.
     int64 expires_at = 3;
+
+    // Optional. A hint on where the jwt public key came from. This is not intended to be
+    // parsed by SPIRE, but rather to be used by the API consumer to determine
+    // how to interpret the jwt public key.
+    string hint = 4;
 }
 
 message BundleMask {
