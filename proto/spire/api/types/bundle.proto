@@ -18,6 +18,12 @@ message Bundle {
 
     // The sequence number of the bundle.
     uint64 sequence_number = 5;
+
+    repeated X509TaintedKey x509_tainted_keys = 6;
+}
+
+message X509TaintedKey {
+    bytes key = 1;
 }
 
 message X509Certificate {
