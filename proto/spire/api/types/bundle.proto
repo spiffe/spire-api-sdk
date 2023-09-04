@@ -19,19 +19,19 @@ message Bundle {
     // The sequence number of the bundle.
     uint64 sequence_number = 5;
 
+    // The list of X.509 authorities that are no longer secure to use, 
+    // and must be rotated.
     repeated X509TaintedKey x509_tainted_keys = 6;
 }
 
 message X509TaintedKey {
+    // The public key of a X.509 local authority that is no longer secure.
     bytes key = 1;
 }
 
 message X509Certificate {
     // The ASN.1 DER encoded bytes of the X.509 certificate.
     bytes asn1 = 1;
-
-    // This authority is no longer secure and must not be used.
-    bool tainted = 2;
 }
 
 message JWTKey {
