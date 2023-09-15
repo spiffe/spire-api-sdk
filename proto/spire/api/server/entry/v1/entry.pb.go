@@ -304,8 +304,8 @@ type BatchCreateEntryRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// The entries to be created. The entry ID field is output only, and will
-	// be ignored here.
+	// The entries to be created. If no entry ID is provided, one will be
+	// generated.
 	Entries []*types.Entry `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
 	// An output mask indicating the entry fields set in the response.
 	OutputMask *types.EntryMask `protobuf:"bytes,2,opt,name=output_mask,json=outputMask,proto3" json:"output_mask,omitempty"`
