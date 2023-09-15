@@ -97,8 +97,8 @@ message GetEntryRequest {
 }
 
 message BatchCreateEntryRequest {
-    // The entries to be created. The entry ID field is output only, and will
-    // be ignored here.
+    // The entries to be created. If no entry ID is provided, one will be 
+    // generated.
     repeated spire.api.types.Entry entries = 1;
 
     // An output mask indicating the entry fields set in the response.
