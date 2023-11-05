@@ -47,6 +47,19 @@ type EntryClient interface {
 	// The caller must present an active agent X509-SVID. See the Agent
 	// AttestAgent/RenewAgent RPCs.
 	GetAuthorizedEntries(ctx context.Context, in *GetAuthorizedEntriesRequest, opts ...grpc.CallOption) (*GetAuthorizedEntriesResponse, error)
+	// Syncs authorized entries down the caller. The caller controls which
+	// entries the server sends down full details for. The flow is as follows:
+	// 1. Caller opens up sync stream
+	// 2. Server determines authorized entries for caller:
+	//    - If there are less entries than a server-determined page size, go to (5).
+	//    - Otherwise, go to (3).
+	// 3. Server pages "sparse" entries to caller that contain just the entry ID and revision number.
+	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	// 4. Client determines which entries are new or updated (based on revision number) and asks for them by sending a request with the
+	//    IDs.
+	// 5. Server pages down "full" entries to the caller for each ID identified in (4).
+	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	SyncAuthorizedEntries(ctx context.Context, opts ...grpc.CallOption) (Entry_SyncAuthorizedEntriesClient, error)
 }
 
 type entryClient struct {
@@ -120,6 +133,37 @@ func (c *entryClient) GetAuthorizedEntries(ctx context.Context, in *GetAuthorize
 	return out, nil
 }
 
+func (c *entryClient) SyncAuthorizedEntries(ctx context.Context, opts ...grpc.CallOption) (Entry_SyncAuthorizedEntriesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_Entry_serviceDesc.Streams[0], "/spire.api.server.entry.v1.Entry/SyncAuthorizedEntries", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &entrySyncAuthorizedEntriesClient{stream}
+	return x, nil
+}
+
+type Entry_SyncAuthorizedEntriesClient interface {
+	Send(*SyncAuthorizedEntriesRequest) error
+	Recv() (*SyncAuthorizedEntriesResponse, error)
+	grpc.ClientStream
+}
+
+type entrySyncAuthorizedEntriesClient struct {
+	grpc.ClientStream
+}
+
+func (x *entrySyncAuthorizedEntriesClient) Send(m *SyncAuthorizedEntriesRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *entrySyncAuthorizedEntriesClient) Recv() (*SyncAuthorizedEntriesResponse, error) {
+	m := new(SyncAuthorizedEntriesResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // EntryServer is the server API for Entry service.
 // All implementations must embed UnimplementedEntryServer
 // for forward compatibility
@@ -153,6 +197,19 @@ type EntryServer interface {
 	// The caller must present an active agent X509-SVID. See the Agent
 	// AttestAgent/RenewAgent RPCs.
 	GetAuthorizedEntries(context.Context, *GetAuthorizedEntriesRequest) (*GetAuthorizedEntriesResponse, error)
+	// Syncs authorized entries down the caller. The caller controls which
+	// entries the server sends down full details for. The flow is as follows:
+	// 1. Caller opens up sync stream
+	// 2. Server determines authorized entries for caller:
+	//    - If there are less entries than a server-determined page size, go to (5).
+	//    - Otherwise, go to (3).
+	// 3. Server pages "sparse" entries to caller that contain just the entry ID and revision number.
+	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	// 4. Client determines which entries are new or updated (based on revision number) and asks for them by sending a request with the
+	//    IDs.
+	// 5. Server pages down "full" entries to the caller for each ID identified in (4).
+	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	SyncAuthorizedEntries(Entry_SyncAuthorizedEntriesServer) error
 	mustEmbedUnimplementedEntryServer()
 }
 
@@ -180,6 +237,9 @@ func (UnimplementedEntryServer) BatchDeleteEntry(context.Context, *BatchDeleteEn
 }
 func (UnimplementedEntryServer) GetAuthorizedEntries(context.Context, *GetAuthorizedEntriesRequest) (*GetAuthorizedEntriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAuthorizedEntries not implemented")
+}
+func (UnimplementedEntryServer) SyncAuthorizedEntries(Entry_SyncAuthorizedEntriesServer) error {
+	return status.Errorf(codes.Unimplemented, "method SyncAuthorizedEntries not implemented")
 }
 func (UnimplementedEntryServer) mustEmbedUnimplementedEntryServer() {}
 
@@ -320,6 +380,32 @@ func _Entry_GetAuthorizedEntries_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Entry_SyncAuthorizedEntries_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(EntryServer).SyncAuthorizedEntries(&entrySyncAuthorizedEntriesServer{stream})
+}
+
+type Entry_SyncAuthorizedEntriesServer interface {
+	Send(*SyncAuthorizedEntriesResponse) error
+	Recv() (*SyncAuthorizedEntriesRequest, error)
+	grpc.ServerStream
+}
+
+type entrySyncAuthorizedEntriesServer struct {
+	grpc.ServerStream
+}
+
+func (x *entrySyncAuthorizedEntriesServer) Send(m *SyncAuthorizedEntriesResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *entrySyncAuthorizedEntriesServer) Recv() (*SyncAuthorizedEntriesRequest, error) {
+	m := new(SyncAuthorizedEntriesRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 var _Entry_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "spire.api.server.entry.v1.Entry",
 	HandlerType: (*EntryServer)(nil),
@@ -353,6 +439,13 @@ var _Entry_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Entry_GetAuthorizedEntries_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SyncAuthorizedEntries",
+			Handler:       _Entry_SyncAuthorizedEntries_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "spire/api/server/entry/v1/entry.proto",
 }
