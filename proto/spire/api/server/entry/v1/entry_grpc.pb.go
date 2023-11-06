@@ -47,18 +47,21 @@ type EntryClient interface {
 	// The caller must present an active agent X509-SVID. See the Agent
 	// AttestAgent/RenewAgent RPCs.
 	GetAuthorizedEntries(ctx context.Context, in *GetAuthorizedEntriesRequest, opts ...grpc.CallOption) (*GetAuthorizedEntriesResponse, error)
-	// Syncs authorized entries down the caller. The caller controls which
+	// Syncs authorized entries down to the caller. The caller controls which
 	// entries the server sends down full details for. The flow is as follows:
 	// 1. Caller opens up sync stream
 	// 2. Server determines authorized entries for caller:
 	//    - If there are less entries than a server-determined page size, go to (5).
 	//    - Otherwise, go to (3).
-	// 3. Server pages "sparse" entries to caller that contain just the entry ID and revision number.
-	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	// 3. Server pages "sparse" entries to caller that contain just the entry
+	//    ID and revision number. The "more" flag set for all pages but the last
+	//    so that the caller knows when the server is done.
 	// 4. Client determines which entries are new or updated (based on revision number) and asks for them by sending a request with the
 	//    IDs.
-	// 5. Server pages down "full" entries to the caller for each ID identified in (4).
-	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	// 5. Server pages down "full" entries to the caller for each ID identified
+	//    in (4) or every entry in (2) if the number of entryes was less than the
+	//    server-determined page size. The "more" flag set for all pages but the
+	//    last so that the caller knows when the server is done
 	SyncAuthorizedEntries(ctx context.Context, opts ...grpc.CallOption) (Entry_SyncAuthorizedEntriesClient, error)
 }
 
@@ -197,18 +200,21 @@ type EntryServer interface {
 	// The caller must present an active agent X509-SVID. See the Agent
 	// AttestAgent/RenewAgent RPCs.
 	GetAuthorizedEntries(context.Context, *GetAuthorizedEntriesRequest) (*GetAuthorizedEntriesResponse, error)
-	// Syncs authorized entries down the caller. The caller controls which
+	// Syncs authorized entries down to the caller. The caller controls which
 	// entries the server sends down full details for. The flow is as follows:
 	// 1. Caller opens up sync stream
 	// 2. Server determines authorized entries for caller:
 	//    - If there are less entries than a server-determined page size, go to (5).
 	//    - Otherwise, go to (3).
-	// 3. Server pages "sparse" entries to caller that contain just the entry ID and revision number.
-	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	// 3. Server pages "sparse" entries to caller that contain just the entry
+	//    ID and revision number. The "more" flag set for all pages but the last
+	//    so that the caller knows when the server is done.
 	// 4. Client determines which entries are new or updated (based on revision number) and asks for them by sending a request with the
 	//    IDs.
-	// 5. Server pages down "full" entries to the caller for each ID identified in (4).
-	//    - "more" flag set for all pages but the last so that the caller knows when the server is done
+	// 5. Server pages down "full" entries to the caller for each ID identified
+	//    in (4) or every entry in (2) if the number of entryes was less than the
+	//    server-determined page size. The "more" flag set for all pages but the
+	//    last so that the caller knows when the server is done
 	SyncAuthorizedEntries(Entry_SyncAuthorizedEntriesServer) error
 	mustEmbedUnimplementedEntryServer()
 }
