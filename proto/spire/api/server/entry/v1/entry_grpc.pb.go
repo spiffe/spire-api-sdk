@@ -53,15 +53,17 @@ type EntryClient interface {
 	// 2. Server determines authorized entries for caller:
 	//    - If there are less entries than a server-determined page size, go to (5).
 	//    - Otherwise, go to (3).
-	// 3. Server pages "sparse" entries to caller that contain just the entry
-	//    ID and revision number. The "more" flag set for all pages but the last
-	//    so that the caller knows when the server is done.
-	// 4. Client determines which entries are new or updated (based on revision number) and asks for them by sending a request with the
-	//    IDs.
-	// 5. Server pages down "full" entries to the caller for each ID identified
-	//    in (4) or every entry in (2) if the number of entryes was less than the
-	//    server-determined page size. The "more" flag set for all pages but the
-	//    last so that the caller knows when the server is done
+	// 3. Server pages entry revisions to the caller (contains the entry ID and
+	//    revision number). The "more" flag set for all pages but the last so
+	//    that the caller knows when the server is done.
+	// 4. Client determines which entries are new or updated (based on revision
+	//    number) and asks for them by sending a request with the IDs.
+	// 5. Server pages down entries to the caller for each ID identified in (4)
+	//    or every entry in (2) if the number of entries was less than the
+	//    server-determined page size. The "more" flag set for all pages but
+	//    the last so that the caller knows when the server is done.
+	// 6. Steps (4) and (5) are repeated until the caller has synced down the
+	//    details for all new/updated entries and closes the stream.
 	SyncAuthorizedEntries(ctx context.Context, opts ...grpc.CallOption) (Entry_SyncAuthorizedEntriesClient, error)
 }
 
@@ -206,15 +208,17 @@ type EntryServer interface {
 	// 2. Server determines authorized entries for caller:
 	//    - If there are less entries than a server-determined page size, go to (5).
 	//    - Otherwise, go to (3).
-	// 3. Server pages "sparse" entries to caller that contain just the entry
-	//    ID and revision number. The "more" flag set for all pages but the last
-	//    so that the caller knows when the server is done.
-	// 4. Client determines which entries are new or updated (based on revision number) and asks for them by sending a request with the
-	//    IDs.
-	// 5. Server pages down "full" entries to the caller for each ID identified
-	//    in (4) or every entry in (2) if the number of entryes was less than the
-	//    server-determined page size. The "more" flag set for all pages but the
-	//    last so that the caller knows when the server is done
+	// 3. Server pages entry revisions to the caller (contains the entry ID and
+	//    revision number). The "more" flag set for all pages but the last so
+	//    that the caller knows when the server is done.
+	// 4. Client determines which entries are new or updated (based on revision
+	//    number) and asks for them by sending a request with the IDs.
+	// 5. Server pages down entries to the caller for each ID identified in (4)
+	//    or every entry in (2) if the number of entries was less than the
+	//    server-determined page size. The "more" flag set for all pages but
+	//    the last so that the caller knows when the server is done.
+	// 6. Steps (4) and (5) are repeated until the caller has synced down the
+	//    details for all new/updated entries and closes the stream.
 	SyncAuthorizedEntries(Entry_SyncAuthorizedEntriesServer) error
 	mustEmbedUnimplementedEntryServer()
 }
