@@ -4,6 +4,7 @@ option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/agen
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
 import "spire/api/types/agent.proto";
 import "spire/api/types/attestation.proto";
 import "spire/api/types/jointoken.proto";
@@ -87,6 +88,9 @@ message ListAgentsRequest {
 
         // Filters agents that can re-attest.
         google.protobuf.BoolValue by_can_reattest = 4;
+
+        // Filters agents that have an SVID expiring before the given time.
+	    google.protobuf.Timestamp by_expires_before = 5;
     }
 
     // Filters the agents returned by the list operation.
