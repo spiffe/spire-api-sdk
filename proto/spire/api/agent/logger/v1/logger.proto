@@ -6,78 +6,53 @@ import "google/protobuf/empty.proto";
 import "spire/api/types/logger.proto";
 
 service Logger {
-    // Count agents.
-    //
-    // The caller must be local or present an admin X509-SVID.
-    rpc CountLoggers(CountLoggersRequest) returns (CountLoggersResponse);
-
     // Lists loggers.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc ListLoggers(ListLoggersRequest) returns (ListLoggersResponse);
 
-    // Gets an agent.
+    // Gets an logger.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc GetLogger(GetLoggerRequest) returns (spire.api.types.Logger);
 
-    // Deletes an agent. The agent can come back into the trust domain through
-
-    // the Issuer AttestAgent RPC.
+    // Adjusts logger levels.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc AdjustLogger(AdjustLoggerRequest) returns (google.protobuf.Empty);
 }
 
-message CountLoggersRequest {
-}
-
-message CountLoggersResponse {
-    int32 count = 1;
-}
-
 message ListLoggersRequest {
-    message Filter {
-        // Filters agents to those matching the attestation type.
-        string by_name = 1;
+    // The name of the logger tree being requested, "" is the root logger
+    string root_name = 1;
 
-	bool with_subloggers = 2;
-    }
+    // Control over whether sub-loggers under the root should be returned
+    bool with_subloggers = 2;
 
-    // Filters the agents returned by the list operation.
-    Filter filter = 1;
-
-    // An output mask indicating which agent fields are set in the response.
-    spire.api.types.LoggerMask output_mask = 2;
-
-    // The maximum number of results to return. The server may further
-    // constrain this value, or if zero, choose its own.
+    // The maximum number of loggers to return.  If zero, the agent may
+    // impose its own page size
     int32 page_size = 3;
 
-    // The next_page_token value returned from a previous request, if any.
+    // The page of partial responses being requested, "" for the first page.
     string page_token = 4;
 }
 
 message ListLoggersResponse {
-    // The agents.
+    // The returned loggers.
     repeated spire.api.types.Logger loggers = 1;
 
-    // The page token for the next request. Empty if there are no more results.
-    // This field should be checked by clients even when a page_size was not
-    // requested, since the server may choose its own (see page_size).
+    // The page of the next page of partial responses, 
+    // "" when returning the last page.
     string next_page_token = 2;
 }
 
 message GetLoggerRequest {
-    // Required. The SPIFFE ID of the agent.
+    // The logger being requested, "" for the root logger
     string name = 1;
-
-    // An output mask indicating which agent fields are set in the response.
-    spire.api.types.LoggerMask output_mask = 2;
 }
 
 message AdjustLoggerRequest {
-    // Required. The SPIFFE ID of the agent.
+    // The logger being adjusted, "" for the root logger
     string name = 1;
 
     enum LogAdjustment {
@@ -91,8 +66,10 @@ message AdjustLoggerRequest {
         DEFAULT_LEVEL = 7;
     }
 
+    // The new level the logger should assume
     LogAdjustment log_level = 2;
 
-    bool adjust_subloggers = 3;
+    // Control over whether sub-loggers should also be adjusted
+    bool include_subloggers = 3;
 }
 

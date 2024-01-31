@@ -24,10 +24,3 @@ message Logger {
     LogLevel default_level = 3;
 }
 
-message LoggerMask {
-    // attestation_type field mask
-    bool current_level = 2;
-
-    // x509svid_serial_number field mask
-    bool default_level = 3;
-}
