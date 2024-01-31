@@ -19,19 +19,15 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoggerClient interface {
-	// Count agents.
-	//
-	// The caller must be local or present an admin X509-SVID.
-	CountLoggers(ctx context.Context, in *CountLoggersRequest, opts ...grpc.CallOption) (*CountLoggersResponse, error)
 	// Lists loggers.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	ListLoggers(ctx context.Context, in *ListLoggersRequest, opts ...grpc.CallOption) (*ListLoggersResponse, error)
-	// Gets an agent.
+	// Gets an logger.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetLogger(ctx context.Context, in *GetLoggerRequest, opts ...grpc.CallOption) (*types.Logger, error)
-	// the Issuer AttestAgent RPC.
+	// Adjusts logger levels.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	AdjustLogger(ctx context.Context, in *AdjustLoggerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -43,15 +39,6 @@ type loggerClient struct {
 
 func NewLoggerClient(cc grpc.ClientConnInterface) LoggerClient {
 	return &loggerClient{cc}
-}
-
-func (c *loggerClient) CountLoggers(ctx context.Context, in *CountLoggersRequest, opts ...grpc.CallOption) (*CountLoggersResponse, error) {
-	out := new(CountLoggersResponse)
-	err := c.cc.Invoke(ctx, "/spire.api.agent.logger.v1.Logger/CountLoggers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *loggerClient) ListLoggers(ctx context.Context, in *ListLoggersRequest, opts ...grpc.CallOption) (*ListLoggersResponse, error) {
@@ -85,19 +72,15 @@ func (c *loggerClient) AdjustLogger(ctx context.Context, in *AdjustLoggerRequest
 // All implementations must embed UnimplementedLoggerServer
 // for forward compatibility
 type LoggerServer interface {
-	// Count agents.
-	//
-	// The caller must be local or present an admin X509-SVID.
-	CountLoggers(context.Context, *CountLoggersRequest) (*CountLoggersResponse, error)
 	// Lists loggers.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	ListLoggers(context.Context, *ListLoggersRequest) (*ListLoggersResponse, error)
-	// Gets an agent.
+	// Gets an logger.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error)
-	// the Issuer AttestAgent RPC.
+	// Adjusts logger levels.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	AdjustLogger(context.Context, *AdjustLoggerRequest) (*emptypb.Empty, error)
@@ -108,9 +91,6 @@ type LoggerServer interface {
 type UnimplementedLoggerServer struct {
 }
 
-func (UnimplementedLoggerServer) CountLoggers(context.Context, *CountLoggersRequest) (*CountLoggersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CountLoggers not implemented")
-}
 func (UnimplementedLoggerServer) ListLoggers(context.Context, *ListLoggersRequest) (*ListLoggersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLoggers not implemented")
 }
@@ -131,24 +111,6 @@ type UnsafeLoggerServer interface {
 
 func RegisterLoggerServer(s grpc.ServiceRegistrar, srv LoggerServer) {
 	s.RegisterService(&_Logger_serviceDesc, srv)
-}
-
-func _Logger_CountLoggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CountLoggersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LoggerServer).CountLoggers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/spire.api.agent.logger.v1.Logger/CountLoggers",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoggerServer).CountLoggers(ctx, req.(*CountLoggersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Logger_ListLoggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -209,10 +171,6 @@ var _Logger_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "spire.api.agent.logger.v1.Logger",
 	HandlerType: (*LoggerServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CountLoggers",
-			Handler:    _Logger_CountLoggers_Handler,
-		},
 		{
 			MethodName: "ListLoggers",
 			Handler:    _Logger_ListLoggers_Handler,
