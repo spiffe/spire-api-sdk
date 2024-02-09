@@ -15,7 +15,7 @@ service Logger {
     // Sets the logger level
     //
     // The caller must be local or present an admin X509-SVID.
-    rpc SetLogger(SetLogLevelRequest) returns (google.protobuf.Empty);
+    rpc SetLogger(SetLogLevelRequest) returns (spire.api.types.Logger);
 
 }
 
