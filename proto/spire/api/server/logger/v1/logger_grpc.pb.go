@@ -19,14 +19,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoggerClient interface {
-	// Gets the root logger level.
+	// Gets the logger level.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetLogger(ctx context.Context, in *GetLoggerRequest, opts ...grpc.CallOption) (*types.Logger, error)
-	// Adjusts the root logger level
+	// Sets the logger level
 	//
 	// The caller must be local or present an admin X509-SVID.
-	AdjustLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SetLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type loggerClient struct {
@@ -46,9 +46,9 @@ func (c *loggerClient) GetLogger(ctx context.Context, in *GetLoggerRequest, opts
 	return out, nil
 }
 
-func (c *loggerClient) AdjustLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *loggerClient) SetLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/spire.api.server.logger.v1.Logger/AdjustLogger", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/spire.api.server.logger.v1.Logger/SetLogger", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -59,14 +59,14 @@ func (c *loggerClient) AdjustLogger(ctx context.Context, in *SetLogLevelRequest,
 // All implementations must embed UnimplementedLoggerServer
 // for forward compatibility
 type LoggerServer interface {
-	// Gets the root logger level.
+	// Gets the logger level.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error)
-	// Adjusts the root logger level
+	// Sets the logger level
 	//
 	// The caller must be local or present an admin X509-SVID.
-	AdjustLogger(context.Context, *SetLogLevelRequest) (*emptypb.Empty, error)
+	SetLogger(context.Context, *SetLogLevelRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedLoggerServer()
 }
 
@@ -77,8 +77,8 @@ type UnimplementedLoggerServer struct {
 func (UnimplementedLoggerServer) GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLogger not implemented")
 }
-func (UnimplementedLoggerServer) AdjustLogger(context.Context, *SetLogLevelRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AdjustLogger not implemented")
+func (UnimplementedLoggerServer) SetLogger(context.Context, *SetLogLevelRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetLogger not implemented")
 }
 func (UnimplementedLoggerServer) mustEmbedUnimplementedLoggerServer() {}
 
@@ -111,20 +111,20 @@ func _Logger_GetLogger_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Logger_AdjustLogger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Logger_SetLogger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetLogLevelRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LoggerServer).AdjustLogger(ctx, in)
+		return srv.(LoggerServer).SetLogger(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/spire.api.server.logger.v1.Logger/AdjustLogger",
+		FullMethod: "/spire.api.server.logger.v1.Logger/SetLogger",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoggerServer).AdjustLogger(ctx, req.(*SetLogLevelRequest))
+		return srv.(LoggerServer).SetLogger(ctx, req.(*SetLogLevelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -138,8 +138,8 @@ var _Logger_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Logger_GetLogger_Handler,
 		},
 		{
-			MethodName: "AdjustLogger",
-			Handler:    _Logger_AdjustLogger_Handler,
+			MethodName: "SetLogger",
+			Handler:    _Logger_SetLogger_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
