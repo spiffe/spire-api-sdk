@@ -14,13 +14,11 @@ message Logger {
         DEBUG_LEVEL = 5;
         TRACE_LEVEL = 6;
     }
-    // Output only. The method by which the agent attested.
-    string name = 1;
 
     // Output only. The logger's current log level.
-    LogLevel current_level = 2;
+    LogLevel current_level = 1;
 
     // Output only. The logger's normal log level.
-    LogLevel default_level = 3;
+    LogLevel default_level = 2;
 }
 

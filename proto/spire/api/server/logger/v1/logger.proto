@@ -6,56 +6,25 @@ import "google/protobuf/empty.proto";
 import "spire/api/types/logger.proto";
 
 service Logger {
-    // Lists loggers.
-    //
-    // The caller must be local or present an admin X509-SVID.
-    rpc ListLoggers(ListLoggersRequest) returns (ListLoggersResponse);
 
-    // Gets an logger.
+    // Gets the root logger level.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc GetLogger(GetLoggerRequest) returns (spire.api.types.Logger);
 
-    // Adjusts logger levels.
+    // Adjusts the root logger level
     //
     // The caller must be local or present an admin X509-SVID.
-    rpc AdjustLogger(AdjustLoggerRequest) returns (google.protobuf.Empty);
-}
+    rpc AdjustLogger(SetLogLevelRequest) returns (google.protobuf.Empty);
 
-message ListLoggersRequest {
-    // The name of the logger tree being requested, "" is the root logger
-    string root_name = 1;
-
-    // Control over whether sub-loggers under the root should be returned
-    bool with_subloggers = 2;
-
-    // The maximum number of loggers to return.  If zero, the server may
-    // impose its own page size
-    int32 page_size = 3;
-
-    // The page of partial responses being requested, "" for the first page.
-    string page_token = 4;
-}
-
-message ListLoggersResponse {
-    // The returned loggers.
-    repeated spire.api.types.Logger loggers = 1;
-
-    // The page of the next page of partial responses, 
-    // "" when returning the last page.
-    string next_page_token = 2;
 }
 
 message GetLoggerRequest {
-    // The logger being requested, "" for the root logger
-    string name = 1;
 }
 
-message AdjustLoggerRequest {
-    // The logger being adjusted, "" for the root logger
-    string name = 1;
+message SetLogLevelRequest {
 
-    enum LogAdjustment {
+    enum SetValue {
         PANIC_LEVEL   = 0;
         FATAL_LEVEL   = 1;
         ERROR_LEVEL   = 2;
@@ -67,9 +36,7 @@ message AdjustLoggerRequest {
     }
 
     // The new level the logger should assume
-    LogAdjustment log_level = 2;
+    SetValue log_level = 1;
 
-    // Control over whether sub-loggers should also be adjusted
-    bool include_subloggers = 3;
 }
 
