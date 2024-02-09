@@ -8,7 +8,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -26,7 +25,7 @@ type LoggerClient interface {
 	// Sets the logger level
 	//
 	// The caller must be local or present an admin X509-SVID.
-	SetLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SetLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*types.Logger, error)
 }
 
 type loggerClient struct {
@@ -46,8 +45,8 @@ func (c *loggerClient) GetLogger(ctx context.Context, in *GetLoggerRequest, opts
 	return out, nil
 }
 
-func (c *loggerClient) SetLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *loggerClient) SetLogger(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*types.Logger, error) {
+	out := new(types.Logger)
 	err := c.cc.Invoke(ctx, "/spire.api.server.logger.v1.Logger/SetLogger", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -66,7 +65,7 @@ type LoggerServer interface {
 	// Sets the logger level
 	//
 	// The caller must be local or present an admin X509-SVID.
-	SetLogger(context.Context, *SetLogLevelRequest) (*emptypb.Empty, error)
+	SetLogger(context.Context, *SetLogLevelRequest) (*types.Logger, error)
 	mustEmbedUnimplementedLoggerServer()
 }
 
@@ -77,7 +76,7 @@ type UnimplementedLoggerServer struct {
 func (UnimplementedLoggerServer) GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLogger not implemented")
 }
-func (UnimplementedLoggerServer) SetLogger(context.Context, *SetLogLevelRequest) (*emptypb.Empty, error) {
+func (UnimplementedLoggerServer) SetLogger(context.Context, *SetLogLevelRequest) (*types.Logger, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetLogger not implemented")
 }
 func (UnimplementedLoggerServer) mustEmbedUnimplementedLoggerServer() {}
