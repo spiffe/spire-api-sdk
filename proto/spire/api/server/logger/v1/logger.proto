@@ -7,15 +7,15 @@ import "spire/api/types/logger.proto";
 
 service Logger {
 
-    // Gets the root logger level.
+    // Gets the logger level.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc GetLogger(GetLoggerRequest) returns (spire.api.types.Logger);
 
-    // Adjusts the root logger level
+    // Sets the logger level
     //
     // The caller must be local or present an admin X509-SVID.
-    rpc AdjustLogger(SetLogLevelRequest) returns (google.protobuf.Empty);
+    rpc SetLogger(SetLogLevelRequest) returns (google.protobuf.Empty);
 
 }
 
