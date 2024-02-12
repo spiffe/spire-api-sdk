@@ -6,13 +6,13 @@ import "google/protobuf/wrappers.proto";
 
 message Logger {
     enum LogLevel {
-        PANIC_LEVEL = 0;
-        FATAL_LEVEL = 1;
-        ERROR_LEVEL = 2;
-        WARN_LEVEL  = 3;
-        INFO_LEVEL  = 4;
-        DEBUG_LEVEL = 5;
-        TRACE_LEVEL = 6;
+        panic = 0;
+        fatal = 1;
+        error = 2;
+        warn  = 3;
+        info  = 4;
+        debug = 5;
+        trace = 6;
     }
 
     // Output only. The logger's current log level.

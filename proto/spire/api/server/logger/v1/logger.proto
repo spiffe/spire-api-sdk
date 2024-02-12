@@ -25,14 +25,14 @@ message GetLoggerRequest {
 message SetLogLevelRequest {
 
     enum SetValue {
-        PANIC_LEVEL   = 0;
-        FATAL_LEVEL   = 1;
-        ERROR_LEVEL   = 2;
-        WARN_LEVEL    = 3;
-        INFO_LEVEL    = 4;
-        DEBUG_LEVEL   = 5;
-        TRACE_LEVEL   = 6;
-        DEFAULT_LEVEL = 7;
+        PANIC   = 0;
+        FATAL   = 1;
+        ERROR   = 2;
+        WARN    = 3;
+        INFO    = 4;
+        DEBUG   = 5;
+        TRACE   = 6;
+        DEFAULT = 7;
     }
 
     // The new level the logger should assume
