@@ -6,20 +6,17 @@ import "google/protobuf/empty.proto";
 import "spire/api/types/logger.proto";
 
 service Logger {
-    // Lists loggers.
-    //
-    // The caller must be local or present an admin X509-SVID.
-    rpc ListLoggers(ListLoggersRequest) returns (ListLoggersResponse);
 
-    // Gets an logger.
+    // Gets the logger level.
     //
     // The caller must be local or present an admin X509-SVID.
     rpc GetLogger(GetLoggerRequest) returns (spire.api.types.Logger);
 
-    // Adjusts logger levels.
+    // Sets the logger level
     //
     // The caller must be local or present an admin X509-SVID.
-    rpc AdjustLogger(AdjustLoggerRequest) returns (google.protobuf.Empty);
+    rpc SetLogLevel(SetLogLevelRequest) returns (spire.api.types.Logger);
+
 }
 
 message ListLoggersRequest {
@@ -37,39 +34,24 @@ message ListLoggersRequest {
     string page_token = 4;
 }
 
-message ListLoggersResponse {
-    // The returned loggers.
-    repeated spire.api.types.Logger loggers = 1;
-
-    // The page of the next page of partial responses, 
-    // "" when returning the last page.
-    string next_page_token = 2;
-}
-
 message GetLoggerRequest {
-    // The logger being requested, "" for the root logger
-    string name = 1;
 }
 
-message AdjustLoggerRequest {
-    // The logger being adjusted, "" for the root logger
-    string name = 1;
+message SetLogLevelRequest {
 
-    enum LogAdjustment {
-        PANIC_LEVEL   = 0;
-        FATAL_LEVEL   = 1;
-        ERROR_LEVEL   = 2;
-        WARN_LEVEL    = 3;
-        INFO_LEVEL    = 4;
-        DEBUG_LEVEL   = 5;
-        TRACE_LEVEL   = 6;
-        DEFAULT_LEVEL = 7;
+    enum SetValue {
+        PANIC   = 0;
+        FATAL   = 1;
+        ERROR   = 2;
+        WARN    = 3;
+        INFO    = 4;
+        DEBUG   = 5;
+        TRACE   = 6;
+        DEFAULT = 7;
     }
 
     // The new level the logger should assume
-    LogAdjustment log_level = 2;
+    SetValue set_level = 1;
 
-    // Control over whether sub-loggers should also be adjusted
-    bool include_subloggers = 3;
 }
 
