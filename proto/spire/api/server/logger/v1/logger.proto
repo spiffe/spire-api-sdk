@@ -36,7 +36,7 @@ message SetLogLevelRequest {
     }
 
     // The new level the logger should assume
-    SetValue log_level = 1;
+    SetValue set_level = 1;
 
 }
 

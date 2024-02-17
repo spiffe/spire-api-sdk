@@ -8,7 +8,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,18 +18,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LoggerClient interface {
-	// Lists loggers.
-	//
-	// The caller must be local or present an admin X509-SVID.
-	ListLoggers(ctx context.Context, in *ListLoggersRequest, opts ...grpc.CallOption) (*ListLoggersResponse, error)
-	// Gets an logger.
+	// Gets the logger level.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetLogger(ctx context.Context, in *GetLoggerRequest, opts ...grpc.CallOption) (*types.Logger, error)
-	// Adjusts logger levels.
+	// Sets the logger level
 	//
 	// The caller must be local or present an admin X509-SVID.
-	AdjustLogger(ctx context.Context, in *AdjustLoggerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SetLogLevel(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*types.Logger, error)
 }
 
 type loggerClient struct {
@@ -39,15 +34,6 @@ type loggerClient struct {
 
 func NewLoggerClient(cc grpc.ClientConnInterface) LoggerClient {
 	return &loggerClient{cc}
-}
-
-func (c *loggerClient) ListLoggers(ctx context.Context, in *ListLoggersRequest, opts ...grpc.CallOption) (*ListLoggersResponse, error) {
-	out := new(ListLoggersResponse)
-	err := c.cc.Invoke(ctx, "/spire.api.agent.logger.v1.Logger/ListLoggers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *loggerClient) GetLogger(ctx context.Context, in *GetLoggerRequest, opts ...grpc.CallOption) (*types.Logger, error) {
@@ -59,9 +45,9 @@ func (c *loggerClient) GetLogger(ctx context.Context, in *GetLoggerRequest, opts
 	return out, nil
 }
 
-func (c *loggerClient) AdjustLogger(ctx context.Context, in *AdjustLoggerRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/spire.api.agent.logger.v1.Logger/AdjustLogger", in, out, opts...)
+func (c *loggerClient) SetLogLevel(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*types.Logger, error) {
+	out := new(types.Logger)
+	err := c.cc.Invoke(ctx, "/spire.api.agent.logger.v1.Logger/SetLogLevel", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,18 +58,14 @@ func (c *loggerClient) AdjustLogger(ctx context.Context, in *AdjustLoggerRequest
 // All implementations must embed UnimplementedLoggerServer
 // for forward compatibility
 type LoggerServer interface {
-	// Lists loggers.
-	//
-	// The caller must be local or present an admin X509-SVID.
-	ListLoggers(context.Context, *ListLoggersRequest) (*ListLoggersResponse, error)
-	// Gets an logger.
+	// Gets the logger level.
 	//
 	// The caller must be local or present an admin X509-SVID.
 	GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error)
-	// Adjusts logger levels.
+	// Sets the logger level
 	//
 	// The caller must be local or present an admin X509-SVID.
-	AdjustLogger(context.Context, *AdjustLoggerRequest) (*emptypb.Empty, error)
+	SetLogLevel(context.Context, *SetLogLevelRequest) (*types.Logger, error)
 	mustEmbedUnimplementedLoggerServer()
 }
 
@@ -91,14 +73,11 @@ type LoggerServer interface {
 type UnimplementedLoggerServer struct {
 }
 
-func (UnimplementedLoggerServer) ListLoggers(context.Context, *ListLoggersRequest) (*ListLoggersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListLoggers not implemented")
-}
 func (UnimplementedLoggerServer) GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLogger not implemented")
 }
-func (UnimplementedLoggerServer) AdjustLogger(context.Context, *AdjustLoggerRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AdjustLogger not implemented")
+func (UnimplementedLoggerServer) SetLogLevel(context.Context, *SetLogLevelRequest) (*types.Logger, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetLogLevel not implemented")
 }
 func (UnimplementedLoggerServer) mustEmbedUnimplementedLoggerServer() {}
 
@@ -111,24 +90,6 @@ type UnsafeLoggerServer interface {
 
 func RegisterLoggerServer(s grpc.ServiceRegistrar, srv LoggerServer) {
 	s.RegisterService(&_Logger_serviceDesc, srv)
-}
-
-func _Logger_ListLoggers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListLoggersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LoggerServer).ListLoggers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/spire.api.agent.logger.v1.Logger/ListLoggers",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoggerServer).ListLoggers(ctx, req.(*ListLoggersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Logger_GetLogger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -149,20 +110,20 @@ func _Logger_GetLogger_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Logger_AdjustLogger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AdjustLoggerRequest)
+func _Logger_SetLogLevel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetLogLevelRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LoggerServer).AdjustLogger(ctx, in)
+		return srv.(LoggerServer).SetLogLevel(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/spire.api.agent.logger.v1.Logger/AdjustLogger",
+		FullMethod: "/spire.api.agent.logger.v1.Logger/SetLogLevel",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LoggerServer).AdjustLogger(ctx, req.(*AdjustLoggerRequest))
+		return srv.(LoggerServer).SetLogLevel(ctx, req.(*SetLogLevelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -172,16 +133,12 @@ var _Logger_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*LoggerServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListLoggers",
-			Handler:    _Logger_ListLoggers_Handler,
-		},
-		{
 			MethodName: "GetLogger",
 			Handler:    _Logger_GetLogger_Handler,
 		},
 		{
-			MethodName: "AdjustLogger",
-			Handler:    _Logger_AdjustLogger_Handler,
+			MethodName: "SetLogLevel",
+			Handler:    _Logger_SetLogLevel_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
