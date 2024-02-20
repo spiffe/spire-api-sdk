@@ -2,7 +2,6 @@ syntax = "proto3";
 package spire.api.agent.logger.v1;
 option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/agent/logger/v1;loggerv1";
 
-import "google/protobuf/empty.proto";
 import "spire/api/types/logger.proto";
 
 service Logger {
@@ -17,21 +16,6 @@ service Logger {
     // The caller must be local or present an admin X509-SVID.
     rpc SetLogLevel(SetLogLevelRequest) returns (spire.api.types.Logger);
 
-}
-
-message ListLoggersRequest {
-    // The name of the logger tree being requested, "" is the root logger
-    string root_name = 1;
-
-    // Control over whether sub-loggers under the root should be returned
-    bool with_subloggers = 2;
-
-    // The maximum number of loggers to return.  If zero, the agent may
-    // impose its own page size
-    int32 page_size = 3;
-
-    // The page of partial responses being requested, "" for the first page.
-    string page_token = 4;
 }
 
 message GetLoggerRequest {
