@@ -2,7 +2,6 @@ syntax = "proto3";
 package spire.api.server.logger.v1;
 option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/logger/v1;loggerv1";
 
-import "google/protobuf/empty.proto";
 import "spire/api/types/logger.proto";
 
 service Logger {
