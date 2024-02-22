@@ -20,15 +20,15 @@ const _ = grpc.SupportPackageIsVersion7
 type LoggerClient interface {
 	// Gets the logger level.
 	//
-	// The caller must be local or present an admin X509-SVID.
+	// This message is intended for the Agent Admin Socket.
 	GetLogger(ctx context.Context, in *GetLoggerRequest, opts ...grpc.CallOption) (*types.Logger, error)
 	// Sets the logger to a specified log level.
 	//
-	// The caller must be local or present an admin X509-SVID.
+	// This message is intended for the Agent Admin Socket.
 	SetLogLevel(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*types.Logger, error)
 	// Resets the logger level to the level configured at launch.
 	//
-	// The caller must be local or present an admin X509-SVID.
+	// This message is intended for the Agent Admin Socket.
 	ResetLogLevel(ctx context.Context, in *ResetLogLevelRequest, opts ...grpc.CallOption) (*types.Logger, error)
 }
 
@@ -73,15 +73,15 @@ func (c *loggerClient) ResetLogLevel(ctx context.Context, in *ResetLogLevelReque
 type LoggerServer interface {
 	// Gets the logger level.
 	//
-	// The caller must be local or present an admin X509-SVID.
+	// This message is intended for the Agent Admin Socket.
 	GetLogger(context.Context, *GetLoggerRequest) (*types.Logger, error)
 	// Sets the logger to a specified log level.
 	//
-	// The caller must be local or present an admin X509-SVID.
+	// This message is intended for the Agent Admin Socket.
 	SetLogLevel(context.Context, *SetLogLevelRequest) (*types.Logger, error)
 	// Resets the logger level to the level configured at launch.
 	//
-	// The caller must be local or present an admin X509-SVID.
+	// This message is intended for the Agent Admin Socket.
 	ResetLogLevel(context.Context, *ResetLogLevelRequest) (*types.Logger, error)
 	mustEmbedUnimplementedLoggerServer()
 }

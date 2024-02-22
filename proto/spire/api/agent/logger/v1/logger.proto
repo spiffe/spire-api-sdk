@@ -8,25 +8,26 @@ service Logger {
 
     // Gets the logger level.
     //
-    // The caller must be local or present an admin X509-SVID.
+    // This message is intended for the Agent Admin Socket.
     rpc GetLogger(GetLoggerRequest) returns (spire.api.types.Logger);
 
     // Sets the logger to a specified log level.
     //
-    // The caller must be local or present an admin X509-SVID.
+    // This message is intended for the Agent Admin Socket.
     rpc SetLogLevel(SetLogLevelRequest) returns (spire.api.types.Logger);
 
     // Resets the logger level to the level configured at launch.
     //
-    // The caller must be local or present an admin X509-SVID.
+    // This message is intended for the Agent Admin Socket.
     rpc ResetLogLevel(ResetLogLevelRequest) returns (spire.api.types.Logger);
 
 }
 
-// Empty Get Logger Request :essage for future extension
+// Empty Get Logger Request message for future extension
 message GetLoggerRequest {
 }
 
+// Set Log Level Request message
 message SetLogLevelRequest {
 
     // The new level the logger should assume

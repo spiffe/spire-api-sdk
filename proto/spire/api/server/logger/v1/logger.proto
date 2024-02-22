@@ -23,11 +23,11 @@ service Logger {
 
 }
 
-// Empty Get Logger Request :essage for future extension
+// Empty Get Logger Request message for future extension
 message GetLoggerRequest {
 }
 
-// The requested log level the Logger should assume.
+// Set Log Level Request message
 message SetLogLevelRequest {
 
     // The new level the logger should assume

@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Empty Get Logger Request :essage for future extension
+// Empty Get Logger Request message for future extension
 type GetLoggerRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -60,6 +60,7 @@ func (*GetLoggerRequest) Descriptor() ([]byte, []int) {
 	return file_spire_api_agent_logger_v1_logger_proto_rawDescGZIP(), []int{0}
 }
 
+// Set Log Level Request message
 type SetLogLevelRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
