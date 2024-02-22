@@ -1,0 +1,40 @@
+syntax = "proto3";
+package spire.api.agent.logger.v1;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/agent/logger/v1;loggerv1";
+
+import "spire/api/types/logger.proto";
+
+service Logger {
+
+    // Gets the logger level.
+    //
+    // This message is intended for the Agent Admin Socket.
+    rpc GetLogger(GetLoggerRequest) returns (spire.api.types.Logger);
+
+    // Sets the logger to a specified log level.
+    //
+    // This message is intended for the Agent Admin Socket.
+    rpc SetLogLevel(SetLogLevelRequest) returns (spire.api.types.Logger);
+
+    // Resets the logger level to the level configured at launch.
+    //
+    // This message is intended for the Agent Admin Socket.
+    rpc ResetLogLevel(ResetLogLevelRequest) returns (spire.api.types.Logger);
+
+}
+
+// Empty Get Logger Request message for future extension
+message GetLoggerRequest {
+}
+
+// Set Log Level Request message
+message SetLogLevelRequest {
+
+    // The new level the logger should assume
+    spire.api.types.LogLevel new_level = 1;
+}
+
+// Empty Reset Log Level Request message for future extension
+message ResetLogLevelRequest {
+}
+
