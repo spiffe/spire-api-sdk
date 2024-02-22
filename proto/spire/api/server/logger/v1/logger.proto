@@ -31,7 +31,7 @@ message GetLoggerRequest {
 message SetLogLevelRequest {
 
     // The new level the logger should assume
-    spire.api.types.LogLevel set_level = 1;
+    spire.api.types.LogLevel new_level = 1;
 
 }
 
