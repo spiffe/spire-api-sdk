@@ -68,6 +68,25 @@ service Agent {
 }
 
 message CountAgentsRequest {
+    message Filter {
+        // Filters agents to those matching the attestation type.
+        string by_attestation_type = 1;
+
+        // Filters agents to those satisfying the selector match.
+        spire.api.types.SelectorMatch by_selector_match = 2;
+
+        // Filters agents to those that are banned.
+        google.protobuf.BoolValue by_banned = 3;
+
+        // Filters agents that can re-attest.
+        google.protobuf.BoolValue by_can_reattest = 4;
+
+        // Filters agents by those expires before.
+        string by_expires_before = 5;
+    }
+
+    // Filters the agents returned by the list operation.
+    Filter filter = 1;
 }
 
 message CountAgentsResponse {
@@ -87,6 +106,9 @@ message ListAgentsRequest {
 
         // Filters agents that can re-attest.
         google.protobuf.BoolValue by_can_reattest = 4;
+
+        // Filters agents by those expires before.
+        string by_expires_before = 5;
     }
 
     // Filters the agents returned by the list operation.
