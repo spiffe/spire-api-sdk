@@ -23,6 +23,7 @@ protos := \
 	proto/spire/api/types/federateswith.proto \
 	proto/spire/api/types/jointoken.proto \
 	proto/spire/api/types/jwtsvid.proto \
+	proto/spire/api/types/logger.proto \
 	proto/spire/api/types/selector.proto \
 	proto/spire/api/types/spiffeid.proto \
 	proto/spire/api/types/status.proto \
@@ -32,11 +33,13 @@ protos := \
 apiprotos := \
 	proto/spire/api/agent/debug/v1/debug.proto \
 	proto/spire/api/agent/delegatedidentity/v1/delegatedidentity.proto \
+	proto/spire/api/agent/logger/v1/logger.proto \
 	proto/spire/api/server/agent/v1/agent.proto \
 	proto/spire/api/server/bundle/v1/bundle.proto \
 	proto/spire/api/server/debug/v1/debug.proto \
 	proto/spire/api/server/entry/v1/entry.proto \
 	proto/spire/api/server/localauthority/v1/localauthority.proto \
+	proto/spire/api/server/logger/v1/logger.proto \
 	proto/spire/api/server/trustdomain/v1/trustdomain.proto \
 	proto/spire/api/server/svid/v1/svid.proto \
 
