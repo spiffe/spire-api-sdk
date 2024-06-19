@@ -26,6 +26,11 @@ message X509Certificate {
 
     // This authority is no longer secure and must not be used.
     bool tainted = 2;
+
+    // Optional. A hint on where the certificate came from. This is not intended to be
+    // parsed by SPIRE, but rather to be used by the API consumer to determine
+    // how to interpret the certificate.
+    string hint = 3;
 }
 
 message JWTKey {
@@ -41,6 +46,11 @@ message JWTKey {
 
     // This authority is no longer secure and must not be used
     bool tainted = 4;
+
+    // Optional. A hint on where the certificate came from. This is not intended to be
+    // parsed by SPIRE, but rather to be used by the API consumer to determine
+    // how to interpret the jwt key.
+    string hint = 5;
 }
 
 message BundleMask {
