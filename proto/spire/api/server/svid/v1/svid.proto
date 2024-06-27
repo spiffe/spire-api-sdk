@@ -115,6 +115,11 @@ message NewDownstreamX509CARequest {
     // CSR is only used to convey the public key; other fields in the CSR are
     // ignored. The X509-SVID attributes are determined by the downstream entry.
     bytes csr = 1;
+
+    // Optional. The TTL preferred by the downstream SPIRE Server for the
+    // signed intermediate CA. If zero, the upstream SPIRE Server will use its
+    // own default.
+    int32 preferred_ttl = 2;
 }
 
 message NewDownstreamX509CAResponse {
