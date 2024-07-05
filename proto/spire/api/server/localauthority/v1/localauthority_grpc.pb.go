@@ -66,12 +66,27 @@ type LocalAuthorityClient interface {
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
-	// It can receive the public key of an old X.509 authority.
+	// It can receive the authority ID of an old X.509 authority.
+	//
+	// If upstream authority is configured, local authorities can not be tainted,
+	// a FailedPrecondition error will be returned.
 	//
 	// If a previously active X.509 authority does not exist (e.g. if one
 	// has been prepared but not activated yet), a FailedPrecondition
 	// error will be returned.
 	TaintX509Authority(ctx context.Context, in *TaintX509AuthorityRequest, opts ...grpc.CallOption) (*TaintX509AuthorityResponse, error)
+	// TaintX509UpstreamAuthority marks the provided upstream authority as
+	// being tainted. SPIRE Agents observing an authority to be tainted
+	// will perform proactive rotations of any key material related to
+	// the tainted authority. The result of this action will be observed
+	// cluster-wide.
+	// It is important to change active upstream authority before taiting it,
+	// and taint will force the rotation of any bundle that is using the old upstream authority.
+	// It can receive the authority ID of an old X.509 authority.
+	//
+	// If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
+	// error will be returned.
+	TaintX509UpstreamAuthority(ctx context.Context, in *TaintX509UpstreamAuthorityRequest, opts ...grpc.CallOption) (*TaintX509UpstreamAuthorityResponse, error)
 	// RevokeX509Authority revokes the previously active X.509 authority by
 	// removing it from the bundle and propagating this update throughout
 	// the cluster.
@@ -172,6 +187,15 @@ func (c *localAuthorityClient) TaintX509Authority(ctx context.Context, in *Taint
 	return out, nil
 }
 
+func (c *localAuthorityClient) TaintX509UpstreamAuthority(ctx context.Context, in *TaintX509UpstreamAuthorityRequest, opts ...grpc.CallOption) (*TaintX509UpstreamAuthorityResponse, error) {
+	out := new(TaintX509UpstreamAuthorityResponse)
+	err := c.cc.Invoke(ctx, "/spire.api.server.localauthority.v1.LocalAuthority/TaintX509UpstreamAuthority", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *localAuthorityClient) RevokeX509Authority(ctx context.Context, in *RevokeX509AuthorityRequest, opts ...grpc.CallOption) (*RevokeX509AuthorityResponse, error) {
 	out := new(RevokeX509AuthorityResponse)
 	err := c.cc.Invoke(ctx, "/spire.api.server.localauthority.v1.LocalAuthority/RevokeX509Authority", in, out, opts...)
@@ -234,12 +258,27 @@ type LocalAuthorityServer interface {
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
-	// It can receive the public key of an old X.509 authority.
+	// It can receive the authority ID of an old X.509 authority.
+	//
+	// If upstream authority is configured, local authorities can not be tainted,
+	// a FailedPrecondition error will be returned.
 	//
 	// If a previously active X.509 authority does not exist (e.g. if one
 	// has been prepared but not activated yet), a FailedPrecondition
 	// error will be returned.
 	TaintX509Authority(context.Context, *TaintX509AuthorityRequest) (*TaintX509AuthorityResponse, error)
+	// TaintX509UpstreamAuthority marks the provided upstream authority as
+	// being tainted. SPIRE Agents observing an authority to be tainted
+	// will perform proactive rotations of any key material related to
+	// the tainted authority. The result of this action will be observed
+	// cluster-wide.
+	// It is important to change active upstream authority before taiting it,
+	// and taint will force the rotation of any bundle that is using the old upstream authority.
+	// It can receive the authority ID of an old X.509 authority.
+	//
+	// If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
+	// error will be returned.
+	TaintX509UpstreamAuthority(context.Context, *TaintX509UpstreamAuthorityRequest) (*TaintX509UpstreamAuthorityResponse, error)
 	// RevokeX509Authority revokes the previously active X.509 authority by
 	// removing it from the bundle and propagating this update throughout
 	// the cluster.
@@ -282,6 +321,9 @@ func (UnimplementedLocalAuthorityServer) ActivateX509Authority(context.Context, 
 }
 func (UnimplementedLocalAuthorityServer) TaintX509Authority(context.Context, *TaintX509AuthorityRequest) (*TaintX509AuthorityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TaintX509Authority not implemented")
+}
+func (UnimplementedLocalAuthorityServer) TaintX509UpstreamAuthority(context.Context, *TaintX509UpstreamAuthorityRequest) (*TaintX509UpstreamAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaintX509UpstreamAuthority not implemented")
 }
 func (UnimplementedLocalAuthorityServer) RevokeX509Authority(context.Context, *RevokeX509AuthorityRequest) (*RevokeX509AuthorityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeX509Authority not implemented")
@@ -461,6 +503,24 @@ func _LocalAuthority_TaintX509Authority_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LocalAuthority_TaintX509UpstreamAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaintX509UpstreamAuthorityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).TaintX509UpstreamAuthority(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/spire.api.server.localauthority.v1.LocalAuthority/TaintX509UpstreamAuthority",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).TaintX509UpstreamAuthority(ctx, req.(*TaintX509UpstreamAuthorityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _LocalAuthority_RevokeX509Authority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RevokeX509AuthorityRequest)
 	if err := dec(in); err != nil {
@@ -518,6 +578,10 @@ var _LocalAuthority_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TaintX509Authority",
 			Handler:    _LocalAuthority_TaintX509Authority_Handler,
+		},
+		{
+			MethodName: "TaintX509UpstreamAuthority",
+			Handler:    _LocalAuthority_TaintX509UpstreamAuthority_Handler,
 		},
 		{
 			MethodName: "RevokeX509Authority",

@@ -62,12 +62,28 @@ service LocalAuthority {
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
-        // It can receive the public key of an old X.509 authority.
+        // It can receive the authority ID of an old X.509 authority.
+	// 
+	// If upstream authority is configured, local authorities can not be tainted,
+	// a FailedPrecondition error will be returned.
         //
         // If a previously active X.509 authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
         // error will be returned.
         rpc TaintX509Authority(TaintX509AuthorityRequest) returns (TaintX509AuthorityResponse);
+
+        // TaintX509UpstreamAuthority marks the provided upstream authority as
+        // being tainted. SPIRE Agents observing an authority to be tainted
+        // will perform proactive rotations of any key material related to
+        // the tainted authority. The result of this action will be observed
+        // cluster-wide.
+	// It is important to change active upstream authority before taiting it, 
+	// and taint will force the rotation of any bundle that is using the old upstream authority.
+        // It can receive the authority ID of an old X.509 authority.
+        //
+        // If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
+        // error will be returned.
+        rpc TaintX509UpstreamAuthority(TaintX509UpstreamAuthorityRequest) returns (TaintX509UpstreamAuthorityResponse);
 
         // RevokeX509Authority revokes the previously active X.509 authority by
         // removing it from the bundle and propagating this update throughout
@@ -176,6 +192,20 @@ message TaintX509AuthorityRequest {
 }
 
 message TaintX509AuthorityResponse {
+        AuthorityState tainted_authority = 1;
+}
+
+message TaintX509UpstreamAuthorityRequest {
+        // Optional. The authority ID of an old X.509 upstream authority to taint.
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate, which is calculated by doing a
+        // SHA-1 hash over the ASN.1 encoding of the public key.
+        // By default, the upstream authority used to sign the old local 
+	// X.509 authority is used.
+        string authority_id = 1;
+}
+
+message TaintX509UpstreamAuthorityResponse {
         AuthorityState tainted_authority = 1;
 }
 
