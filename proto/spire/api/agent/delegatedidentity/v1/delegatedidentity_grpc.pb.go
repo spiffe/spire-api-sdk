@@ -25,7 +25,7 @@ type DelegatedIdentityClient interface {
 	//
 	// Subscribers are expected to ensure that the PID they use is not recycled
 	// for the lifetime of the stream, and in the event that it is, are expected
-	// to close the stream.
+	// to immediately close the stream.
 	// TODO do we want this caveat? I think we either have to live with this,
 	// _or_ not allow delegates to start subscriptions via PID.
 	SubscribeToX509SVIDsByPID(ctx context.Context, in *SubscribeToX509SVIDsByPIDRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToX509SVIDsByPIDClient, error)
@@ -39,6 +39,7 @@ type DelegatedIdentityClient interface {
 	// for the requested audience.
 	// Subscribers are expected to ensure that the PID they use is not recycled
 	// from the time this call is made until the time a response is returned.
+	// Failing this, the response must be discarded.
 	FetchJWTSVIDsByPID(ctx context.Context, in *FetchJWTSVIDsByPIDRequest, opts ...grpc.CallOption) (*FetchJWTSVIDsResponse, error)
 	// Subscribe to get local and all federated JWKS bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
@@ -211,7 +212,7 @@ type DelegatedIdentityServer interface {
 	//
 	// Subscribers are expected to ensure that the PID they use is not recycled
 	// for the lifetime of the stream, and in the event that it is, are expected
-	// to close the stream.
+	// to immediately close the stream.
 	// TODO do we want this caveat? I think we either have to live with this,
 	// _or_ not allow delegates to start subscriptions via PID.
 	SubscribeToX509SVIDsByPID(*SubscribeToX509SVIDsByPIDRequest, DelegatedIdentity_SubscribeToX509SVIDsByPIDServer) error
@@ -225,6 +226,7 @@ type DelegatedIdentityServer interface {
 	// for the requested audience.
 	// Subscribers are expected to ensure that the PID they use is not recycled
 	// from the time this call is made until the time a response is returned.
+	// Failing this, the response must be discarded.
 	FetchJWTSVIDsByPID(context.Context, *FetchJWTSVIDsByPIDRequest) (*FetchJWTSVIDsResponse, error)
 	// Subscribe to get local and all federated JWKS bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
