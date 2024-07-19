@@ -23,24 +23,12 @@ type DelegatedIdentityClient interface {
 	// Subscribe to get X.509-SVIDs for workloads that match the given selectors.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	//
-	// Subscribers are expected to ensure that the PID they use is not recycled
-	// for the lifetime of the stream, and in the event that it is, are expected
-	// to immediately close the stream.
-	// TODO do we want this caveat? I think we either have to live with this,
-	// _or_ not allow delegates to start subscriptions via PID.
-	SubscribeToX509SVIDsByPID(ctx context.Context, in *SubscribeToX509SVIDsByPIDRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToX509SVIDsByPIDClient, error)
 	// Subscribe to get local and all federated bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	SubscribeToX509Bundles(ctx context.Context, in *SubscribeToX509BundlesRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToX509BundlesClient, error)
 	// Fetch JWT-SVIDs for workloads that match the given selectors, and
 	// for the requested audience.
 	FetchJWTSVIDs(ctx context.Context, in *FetchJWTSVIDsRequest, opts ...grpc.CallOption) (*FetchJWTSVIDsResponse, error)
-	// Fetch JWT-SVIDs for workloads that match the given selectors, and
-	// for the requested audience.
-	// Subscribers are expected to ensure that the PID they use is not recycled
-	// from the time this call is made until the time a response is returned.
-	// Failing this, the response must be discarded.
-	FetchJWTSVIDsByPID(ctx context.Context, in *FetchJWTSVIDsByPIDRequest, opts ...grpc.CallOption) (*FetchJWTSVIDsResponse, error)
 	// Subscribe to get local and all federated JWKS bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	SubscribeToJWTBundles(ctx context.Context, in *SubscribeToJWTBundlesRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToJWTBundlesClient, error)
@@ -86,40 +74,8 @@ func (x *delegatedIdentitySubscribeToX509SVIDsClient) Recv() (*SubscribeToX509SV
 	return m, nil
 }
 
-func (c *delegatedIdentityClient) SubscribeToX509SVIDsByPID(ctx context.Context, in *SubscribeToX509SVIDsByPIDRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToX509SVIDsByPIDClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_DelegatedIdentity_serviceDesc.Streams[1], "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/SubscribeToX509SVIDsByPID", opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &delegatedIdentitySubscribeToX509SVIDsByPIDClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type DelegatedIdentity_SubscribeToX509SVIDsByPIDClient interface {
-	Recv() (*SubscribeToX509SVIDsResponse, error)
-	grpc.ClientStream
-}
-
-type delegatedIdentitySubscribeToX509SVIDsByPIDClient struct {
-	grpc.ClientStream
-}
-
-func (x *delegatedIdentitySubscribeToX509SVIDsByPIDClient) Recv() (*SubscribeToX509SVIDsResponse, error) {
-	m := new(SubscribeToX509SVIDsResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *delegatedIdentityClient) SubscribeToX509Bundles(ctx context.Context, in *SubscribeToX509BundlesRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToX509BundlesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_DelegatedIdentity_serviceDesc.Streams[2], "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/SubscribeToX509Bundles", opts...)
+	stream, err := c.cc.NewStream(ctx, &_DelegatedIdentity_serviceDesc.Streams[1], "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/SubscribeToX509Bundles", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -159,17 +115,8 @@ func (c *delegatedIdentityClient) FetchJWTSVIDs(ctx context.Context, in *FetchJW
 	return out, nil
 }
 
-func (c *delegatedIdentityClient) FetchJWTSVIDsByPID(ctx context.Context, in *FetchJWTSVIDsByPIDRequest, opts ...grpc.CallOption) (*FetchJWTSVIDsResponse, error) {
-	out := new(FetchJWTSVIDsResponse)
-	err := c.cc.Invoke(ctx, "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/FetchJWTSVIDsByPID", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *delegatedIdentityClient) SubscribeToJWTBundles(ctx context.Context, in *SubscribeToJWTBundlesRequest, opts ...grpc.CallOption) (DelegatedIdentity_SubscribeToJWTBundlesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_DelegatedIdentity_serviceDesc.Streams[3], "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/SubscribeToJWTBundles", opts...)
+	stream, err := c.cc.NewStream(ctx, &_DelegatedIdentity_serviceDesc.Streams[2], "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/SubscribeToJWTBundles", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -210,24 +157,12 @@ type DelegatedIdentityServer interface {
 	// Subscribe to get X.509-SVIDs for workloads that match the given selectors.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	//
-	// Subscribers are expected to ensure that the PID they use is not recycled
-	// for the lifetime of the stream, and in the event that it is, are expected
-	// to immediately close the stream.
-	// TODO do we want this caveat? I think we either have to live with this,
-	// _or_ not allow delegates to start subscriptions via PID.
-	SubscribeToX509SVIDsByPID(*SubscribeToX509SVIDsByPIDRequest, DelegatedIdentity_SubscribeToX509SVIDsByPIDServer) error
 	// Subscribe to get local and all federated bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	SubscribeToX509Bundles(*SubscribeToX509BundlesRequest, DelegatedIdentity_SubscribeToX509BundlesServer) error
 	// Fetch JWT-SVIDs for workloads that match the given selectors, and
 	// for the requested audience.
 	FetchJWTSVIDs(context.Context, *FetchJWTSVIDsRequest) (*FetchJWTSVIDsResponse, error)
-	// Fetch JWT-SVIDs for workloads that match the given selectors, and
-	// for the requested audience.
-	// Subscribers are expected to ensure that the PID they use is not recycled
-	// from the time this call is made until the time a response is returned.
-	// Failing this, the response must be discarded.
-	FetchJWTSVIDsByPID(context.Context, *FetchJWTSVIDsByPIDRequest) (*FetchJWTSVIDsResponse, error)
 	// Subscribe to get local and all federated JWKS bundles.
 	// The lifetime of the subscription aligns to the lifetime of the stream.
 	SubscribeToJWTBundles(*SubscribeToJWTBundlesRequest, DelegatedIdentity_SubscribeToJWTBundlesServer) error
@@ -241,17 +176,11 @@ type UnimplementedDelegatedIdentityServer struct {
 func (UnimplementedDelegatedIdentityServer) SubscribeToX509SVIDs(*SubscribeToX509SVIDsRequest, DelegatedIdentity_SubscribeToX509SVIDsServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToX509SVIDs not implemented")
 }
-func (UnimplementedDelegatedIdentityServer) SubscribeToX509SVIDsByPID(*SubscribeToX509SVIDsByPIDRequest, DelegatedIdentity_SubscribeToX509SVIDsByPIDServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToX509SVIDsByPID not implemented")
-}
 func (UnimplementedDelegatedIdentityServer) SubscribeToX509Bundles(*SubscribeToX509BundlesRequest, DelegatedIdentity_SubscribeToX509BundlesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToX509Bundles not implemented")
 }
 func (UnimplementedDelegatedIdentityServer) FetchJWTSVIDs(context.Context, *FetchJWTSVIDsRequest) (*FetchJWTSVIDsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FetchJWTSVIDs not implemented")
-}
-func (UnimplementedDelegatedIdentityServer) FetchJWTSVIDsByPID(context.Context, *FetchJWTSVIDsByPIDRequest) (*FetchJWTSVIDsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchJWTSVIDsByPID not implemented")
 }
 func (UnimplementedDelegatedIdentityServer) SubscribeToJWTBundles(*SubscribeToJWTBundlesRequest, DelegatedIdentity_SubscribeToJWTBundlesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SubscribeToJWTBundles not implemented")
@@ -287,27 +216,6 @@ type delegatedIdentitySubscribeToX509SVIDsServer struct {
 }
 
 func (x *delegatedIdentitySubscribeToX509SVIDsServer) Send(m *SubscribeToX509SVIDsResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _DelegatedIdentity_SubscribeToX509SVIDsByPID_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToX509SVIDsByPIDRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(DelegatedIdentityServer).SubscribeToX509SVIDsByPID(m, &delegatedIdentitySubscribeToX509SVIDsByPIDServer{stream})
-}
-
-type DelegatedIdentity_SubscribeToX509SVIDsByPIDServer interface {
-	Send(*SubscribeToX509SVIDsResponse) error
-	grpc.ServerStream
-}
-
-type delegatedIdentitySubscribeToX509SVIDsByPIDServer struct {
-	grpc.ServerStream
-}
-
-func (x *delegatedIdentitySubscribeToX509SVIDsByPIDServer) Send(m *SubscribeToX509SVIDsResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -350,24 +258,6 @@ func _DelegatedIdentity_FetchJWTSVIDs_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DelegatedIdentity_FetchJWTSVIDsByPID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FetchJWTSVIDsByPIDRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DelegatedIdentityServer).FetchJWTSVIDsByPID(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/spire.api.agent.delegatedidentity.v1.DelegatedIdentity/FetchJWTSVIDsByPID",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DelegatedIdentityServer).FetchJWTSVIDsByPID(ctx, req.(*FetchJWTSVIDsByPIDRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _DelegatedIdentity_SubscribeToJWTBundles_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(SubscribeToJWTBundlesRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -397,20 +287,11 @@ var _DelegatedIdentity_serviceDesc = grpc.ServiceDesc{
 			MethodName: "FetchJWTSVIDs",
 			Handler:    _DelegatedIdentity_FetchJWTSVIDs_Handler,
 		},
-		{
-			MethodName: "FetchJWTSVIDsByPID",
-			Handler:    _DelegatedIdentity_FetchJWTSVIDsByPID_Handler,
-		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "SubscribeToX509SVIDs",
 			Handler:       _DelegatedIdentity_SubscribeToX509SVIDs_Handler,
-			ServerStreams: true,
-		},
-		{
-			StreamName:    "SubscribeToX509SVIDsByPID",
-			Handler:       _DelegatedIdentity_SubscribeToX509SVIDsByPID_Handler,
 			ServerStreams: true,
 		},
 		{
