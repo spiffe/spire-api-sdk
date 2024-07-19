@@ -83,7 +83,7 @@ type LocalAuthorityClient interface {
 	// It is important to change active upstream authority before taiting it,
 	// since taint will force the rotation of any bundle that is using
 	// the old upstream authority.
-	// It can receive the public key of an old X.509 authority.
+	// It receive the X.509 Subject Key Identifier (or SKID) of an old X.509 authority.
 	//
 	// If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
 	// error will be returned.
@@ -276,7 +276,7 @@ type LocalAuthorityServer interface {
 	// It is important to change active upstream authority before taiting it,
 	// since taint will force the rotation of any bundle that is using
 	// the old upstream authority.
-	// It can receive the public key of an old X.509 authority.
+	// It receive the X.509 Subject Key Identifier (or SKID) of an old X.509 authority.
 	//
 	// If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
 	// error will be returned.
