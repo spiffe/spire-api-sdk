@@ -60,11 +60,11 @@ message X509SVIDWithKey {
 // in a `oneof` without creating and nesting an intermediate `message` type, which would break
 // back compat - so we accept both and check for mutual exclusion in the handler
 message SubscribeToX509SVIDsRequest {
-    // Selectors describing the workload to subscribe to. Mutually exclusive with `pid`
+    // Selectors describing the workload to subscribe to. Mutually exclusive with `pid`.
     repeated spire.api.types.Selector selectors = 1;
 
     // PID for the workload to subscribe to. Mutually exclusive with `selectors`
-    int32 pid = 3;
+    int32 pid = 2;
 }
 
 message SubscribeToX509SVIDsResponse {
@@ -105,8 +105,8 @@ message FetchJWTSVIDsRequest {
     // Selectors describing the workload to subscribe to. Mutually exclusive with `pid`
     repeated spire.api.types.Selector selectors = 2;
 
-    // PID for the workload to subscribe to. Mutually exclusive with `selectors`
-    int32 pid = 4;
+    // PID for the workload to subscribe to. Mutually exclusive with `selectors`.
+    int32 pid = 3;
 }
 
 // The FetchJWTSVIDsResponse message conveys JWT-SVIDs.
