@@ -97,6 +97,14 @@ type LocalAuthorityClient interface {
 	// has been prepared but not activated yet), a FailedPrecondition
 	// error will be returned.
 	RevokeX509Authority(ctx context.Context, in *RevokeX509AuthorityRequest, opts ...grpc.CallOption) (*RevokeX509AuthorityResponse, error)
+	// RevokeX509UpstreamAuthority revokes the previously active X.509 upstream authority by
+	// removing it from the bundle and propagating this update throughout
+	// the cluster.
+	// It receive the subject key ID an old X.509 upstream authority.
+	//
+	// If a previously active X.509 upstream authority does not exist, a FailedPrecondition
+	// error will be returned.
+	RevokeX509UpstreamAuthority(ctx context.Context, in *RevokeX509UpstreamAuthorityRequest, opts ...grpc.CallOption) (*RevokeX509UpstreamAuthorityResponse, error)
 }
 
 type localAuthorityClient struct {
@@ -206,6 +214,15 @@ func (c *localAuthorityClient) RevokeX509Authority(ctx context.Context, in *Revo
 	return out, nil
 }
 
+func (c *localAuthorityClient) RevokeX509UpstreamAuthority(ctx context.Context, in *RevokeX509UpstreamAuthorityRequest, opts ...grpc.CallOption) (*RevokeX509UpstreamAuthorityResponse, error) {
+	out := new(RevokeX509UpstreamAuthorityResponse)
+	err := c.cc.Invoke(ctx, "/spire.api.server.localauthority.v1.LocalAuthority/RevokeX509UpstreamAuthority", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LocalAuthorityServer is the server API for LocalAuthority service.
 // All implementations must embed UnimplementedLocalAuthorityServer
 // for forward compatibility
@@ -290,6 +307,14 @@ type LocalAuthorityServer interface {
 	// has been prepared but not activated yet), a FailedPrecondition
 	// error will be returned.
 	RevokeX509Authority(context.Context, *RevokeX509AuthorityRequest) (*RevokeX509AuthorityResponse, error)
+	// RevokeX509UpstreamAuthority revokes the previously active X.509 upstream authority by
+	// removing it from the bundle and propagating this update throughout
+	// the cluster.
+	// It receive the subject key ID an old X.509 upstream authority.
+	//
+	// If a previously active X.509 upstream authority does not exist, a FailedPrecondition
+	// error will be returned.
+	RevokeX509UpstreamAuthority(context.Context, *RevokeX509UpstreamAuthorityRequest) (*RevokeX509UpstreamAuthorityResponse, error)
 	mustEmbedUnimplementedLocalAuthorityServer()
 }
 
@@ -329,6 +354,9 @@ func (UnimplementedLocalAuthorityServer) TaintX509UpstreamAuthority(context.Cont
 }
 func (UnimplementedLocalAuthorityServer) RevokeX509Authority(context.Context, *RevokeX509AuthorityRequest) (*RevokeX509AuthorityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeX509Authority not implemented")
+}
+func (UnimplementedLocalAuthorityServer) RevokeX509UpstreamAuthority(context.Context, *RevokeX509UpstreamAuthorityRequest) (*RevokeX509UpstreamAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeX509UpstreamAuthority not implemented")
 }
 func (UnimplementedLocalAuthorityServer) mustEmbedUnimplementedLocalAuthorityServer() {}
 
@@ -541,6 +569,24 @@ func _LocalAuthority_RevokeX509Authority_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LocalAuthority_RevokeX509UpstreamAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeX509UpstreamAuthorityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).RevokeX509UpstreamAuthority(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/spire.api.server.localauthority.v1.LocalAuthority/RevokeX509UpstreamAuthority",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).RevokeX509UpstreamAuthority(ctx, req.(*RevokeX509UpstreamAuthorityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _LocalAuthority_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "spire.api.server.localauthority.v1.LocalAuthority",
 	HandlerType: (*LocalAuthorityServer)(nil),
@@ -588,6 +634,10 @@ var _LocalAuthority_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeX509Authority",
 			Handler:    _LocalAuthority_RevokeX509Authority_Handler,
+		},
+		{
+			MethodName: "RevokeX509UpstreamAuthority",
+			Handler:    _LocalAuthority_RevokeX509UpstreamAuthority_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
