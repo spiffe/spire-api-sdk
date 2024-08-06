@@ -81,11 +81,11 @@ type LocalAuthorityClient interface {
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
 	// It is important to change active upstream authority before taiting it,
-	// since taint will force the rotation of any bundle that is using
+	// since tainting will force the rotation of any bundle that is using
 	// the old upstream authority.
-	// It receive the X.509 Subject Key Identifier (or SKID) of an old X.509 authority.
+	// It receives the X.509 Subject Key Identifier (or SKID) of an old X.509 authority.
 	//
-	// If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
+	// If an X.509 upstream authority does not exist or it is active, a FailedPrecondition
 	// error will be returned.
 	TaintX509UpstreamAuthority(ctx context.Context, in *TaintX509UpstreamAuthorityRequest, opts ...grpc.CallOption) (*TaintX509UpstreamAuthorityResponse, error)
 	// RevokeX509Authority revokes the previously active X.509 authority by
@@ -100,7 +100,8 @@ type LocalAuthorityClient interface {
 	// RevokeX509UpstreamAuthority revokes the previously active X.509 upstream authority by
 	// removing it from the bundle and propagating this update throughout
 	// the cluster.
-	// It receive the subject key ID an old X.509 upstream authority.
+	// It receives the subject key ID of the authority's CA certificate of the
+	// upstream X.509 authority to revoke.
 	//
 	// If a previously active X.509 upstream authority does not exist, a FailedPrecondition
 	// error will be returned.
@@ -291,11 +292,11 @@ type LocalAuthorityServer interface {
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
 	// It is important to change active upstream authority before taiting it,
-	// since taint will force the rotation of any bundle that is using
+	// since tainting will force the rotation of any bundle that is using
 	// the old upstream authority.
-	// It receive the X.509 Subject Key Identifier (or SKID) of an old X.509 authority.
+	// It receives the X.509 Subject Key Identifier (or SKID) of an old X.509 authority.
 	//
-	// If a X.509 upstream authority does not exist or it is active, a FailedPrecondition
+	// If an X.509 upstream authority does not exist or it is active, a FailedPrecondition
 	// error will be returned.
 	TaintX509UpstreamAuthority(context.Context, *TaintX509UpstreamAuthorityRequest) (*TaintX509UpstreamAuthorityResponse, error)
 	// RevokeX509Authority revokes the previously active X.509 authority by
@@ -310,7 +311,8 @@ type LocalAuthorityServer interface {
 	// RevokeX509UpstreamAuthority revokes the previously active X.509 upstream authority by
 	// removing it from the bundle and propagating this update throughout
 	// the cluster.
-	// It receive the subject key ID an old X.509 upstream authority.
+	// It receives the subject key ID of the authority's CA certificate of the
+	// upstream X.509 authority to revoke.
 	//
 	// If a previously active X.509 upstream authority does not exist, a FailedPrecondition
 	// error will be returned.
