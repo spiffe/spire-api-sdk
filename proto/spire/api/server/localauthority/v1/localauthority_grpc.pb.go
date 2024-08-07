@@ -66,7 +66,7 @@ type LocalAuthorityClient interface {
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
-	// It can receive the authority ID of an old X.509 authority.
+	// The X.509 authority to taint is identified using the provided X.509 Subject Key
 	//
 	// If an upstream authority is configured then local authorities cannot be tainted,
 	// and a FailedPrecondition error will be returned.
@@ -76,7 +76,7 @@ type LocalAuthorityClient interface {
 	// error will be returned.
 	TaintX509Authority(ctx context.Context, in *TaintX509AuthorityRequest, opts ...grpc.CallOption) (*TaintX509AuthorityResponse, error)
 	// TaintX509UpstreamAuthority marks the provided upstream authority as
-	// being tainted. SPIRE Agents observing a tainted authority to be tainted
+	// being tainted. SPIRE Agents observing a tainted authority
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
@@ -278,7 +278,7 @@ type LocalAuthorityServer interface {
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.
-	// It can receive the authority ID of an old X.509 authority.
+	// The X.509 authority to taint is identified using the provided X.509 Subject Key
 	//
 	// If an upstream authority is configured then local authorities cannot be tainted,
 	// and a FailedPrecondition error will be returned.
@@ -288,7 +288,7 @@ type LocalAuthorityServer interface {
 	// error will be returned.
 	TaintX509Authority(context.Context, *TaintX509AuthorityRequest) (*TaintX509AuthorityResponse, error)
 	// TaintX509UpstreamAuthority marks the provided upstream authority as
-	// being tainted. SPIRE Agents observing a tainted authority to be tainted
+	// being tainted. SPIRE Agents observing a tainted authority
 	// will perform proactive rotations of any key material related to
 	// the tainted authority. The result of this action will be observed
 	// cluster-wide.

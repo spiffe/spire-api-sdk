@@ -62,7 +62,7 @@ service LocalAuthority {
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
-        // It can receive the authority ID of an old X.509 authority.
+        // The X.509 authority to taint is identified using the provided X.509 Subject Key
 	// 
 	// If an upstream authority is configured then local authorities cannot be tainted,
 	// and a FailedPrecondition error will be returned.
@@ -73,7 +73,7 @@ service LocalAuthority {
         rpc TaintX509Authority(TaintX509AuthorityRequest) returns (TaintX509AuthorityResponse);
 
         // TaintX509UpstreamAuthority marks the provided upstream authority as
-        // being tainted. SPIRE Agents observing a tainted authority to be tainted
+        // being tainted. SPIRE Agents observing a tainted authority
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
