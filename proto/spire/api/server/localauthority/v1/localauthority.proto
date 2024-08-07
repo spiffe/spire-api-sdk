@@ -62,12 +62,30 @@ service LocalAuthority {
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
-        // It can receive the public key of an old X.509 authority.
+        // The X.509 authority to taint is identified using the provided X.509 Subject Key
+	// 
+	// If an upstream authority is configured then local authorities cannot be tainted,
+	// and a FailedPrecondition error will be returned.
         //
         // If a previously active X.509 authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
         // error will be returned.
         rpc TaintX509Authority(TaintX509AuthorityRequest) returns (TaintX509AuthorityResponse);
+
+        // TaintX509UpstreamAuthority marks the provided upstream authority as
+        // being tainted. SPIRE Agents observing a tainted authority
+        // will perform proactive rotations of any key material related to
+        // the tainted authority. The result of this action will be observed
+        // cluster-wide.
+	// It is important to change to a new active upstream authority before tainting the old one,
+	// since tainting will force the rotation of any bundle that is using
+	// the old upstream authority.
+	// The X.509 authority to taint is identified using the provided X.509 Subject Key
+	// Identifier (or SKID) of the old X.509 authority.
+        //
+        // If an X.509 upstream authority is not configured, or the identified upstream
+	// X.509 authority is active, a FailedPrecondition error will be returned.
+        rpc TaintX509UpstreamAuthority(TaintX509UpstreamAuthorityRequest) returns (TaintX509UpstreamAuthorityResponse);
 
         // RevokeX509Authority revokes the previously active X.509 authority by
         // removing it from the bundle and propagating this update throughout
@@ -78,6 +96,16 @@ service LocalAuthority {
         // has been prepared but not activated yet), a FailedPrecondition
         // error will be returned.
         rpc RevokeX509Authority(RevokeX509AuthorityRequest) returns (RevokeX509AuthorityResponse);
+
+        // RevokeX509UpstreamAuthority revokes the previously active X.509 upstream authority by
+        // removing it from the bundle and propagating this update throughout
+        // the cluster.
+	// The X.509 authority to revoke is identified using the provided subject key ID of
+	// the authority's CA certificate.
+        //
+        // If a previously active X.509 upstream authority does not exist, a FailedPrecondition
+        // error will be returned.
+        rpc RevokeX509UpstreamAuthority(RevokeX509UpstreamAuthorityRequest) returns (RevokeX509UpstreamAuthorityResponse);
 }
 
 message GetJWTAuthorityStateRequest {}
@@ -177,6 +205,24 @@ message TaintX509AuthorityRequest {
 
 message TaintX509AuthorityResponse {
         AuthorityState tainted_authority = 1;
+}
+
+message TaintX509UpstreamAuthorityRequest {
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate of the upstream X.509 authority to taint.
+        string subject_key_id = 1;
+}
+
+message TaintX509UpstreamAuthorityResponse {
+}
+
+message RevokeX509UpstreamAuthorityRequest {
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate of the upstream X.509 authority to revoke.
+        string subject_key_id = 1;
+}
+
+message RevokeX509UpstreamAuthorityResponse {
 }
 
 message RevokeX509AuthorityRequest {
