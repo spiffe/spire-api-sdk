@@ -209,6 +209,9 @@ message TaintX509UpstreamAuthorityRequest {
 }
 
 message TaintX509UpstreamAuthorityResponse {
+        // The Subject Key Identifier (or SKID) of the upstream authority
+        // tainted.
+        string upstream_authority_subject_key_id = 1;
 }
 
 message RevokeX509UpstreamAuthorityRequest {
@@ -218,6 +221,9 @@ message RevokeX509UpstreamAuthorityRequest {
 }
 
 message RevokeX509UpstreamAuthorityResponse {
+        // The Subject Key Identifier (or SKID) of the upstream authority
+        // revoked.
+        string upstream_authority_subject_key_id = 1;
 }
 
 message RevokeX509AuthorityRequest {
