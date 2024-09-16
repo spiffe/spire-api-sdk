@@ -129,9 +129,8 @@ message PrepareJWTAuthorityResponse {
 }
 
 message ActivateJWTAuthorityRequest {
-        // Optional. The authority ID of the local authority JWT authority to activate.
+        // The authority ID of the local authority JWT authority to activate.
         // This is the JWT Key ID.
-        // By default, the prepared local JWT authority is used.
         string authority_id = 1;
 }
 
@@ -140,9 +139,8 @@ message ActivateJWTAuthorityResponse {
 }
 
 message TaintJWTAuthorityRequest {
-        // Optional. The authority ID of the local authority JWT authority to taint.
+        // The authority ID of the local authority JWT authority to taint.
         // This is the JWT Key ID.
-        // By default, the old local JWT authority is used.
         string authority_id = 1;
 }
 
@@ -151,9 +149,8 @@ message TaintJWTAuthorityResponse {
 }
 
 message RevokeJWTAuthorityRequest {
-        // Optional. The authority ID of the local authority JWT authority to revoke.
+        // The authority ID of the local authority JWT authority to revoke.
         // This is the JWT Key ID.
-        // By default, the old local JWT authority is used.
         string authority_id = 1;
 }
 
@@ -182,11 +179,10 @@ message PrepareX509AuthorityResponse {
 }
 
 message ActivateX509AuthorityRequest {
-        // Optional. The authority ID of the local X.509 authority to activate.
+        // The authority ID of the local X.509 authority to activate.
         // This is the X.509 Subject Key Identifier (or SKID) of the
         // authority's CA certificate, which is calculated by doing a
         // SHA-1 hash over the ASN.1 encoding of the public key.
-        // By default, the prepared local X.509 authority is used.
         string authority_id = 1;
 }
 
@@ -195,11 +191,10 @@ message ActivateX509AuthorityResponse {
 }
 
 message TaintX509AuthorityRequest {
-        // Optional. The authority ID of the local X.509 authority to taint.
+        // The authority ID of the local X.509 authority to taint.
         // This is the X.509 Subject Key Identifier (or SKID) of the
         // authority's CA certificate, which is calculated by doing a
         // SHA-1 hash over the ASN.1 encoding of the public key.
-        // By default, the old local X.509 authority is used.
         string authority_id = 1;
 }
 
@@ -214,6 +209,9 @@ message TaintX509UpstreamAuthorityRequest {
 }
 
 message TaintX509UpstreamAuthorityResponse {
+        // The Subject Key Identifier (or SKID) of the upstream authority
+        // tainted.
+        string upstream_authority_subject_key_id = 1;
 }
 
 message RevokeX509UpstreamAuthorityRequest {
@@ -223,14 +221,16 @@ message RevokeX509UpstreamAuthorityRequest {
 }
 
 message RevokeX509UpstreamAuthorityResponse {
+        // The Subject Key Identifier (or SKID) of the upstream authority
+        // revoked.
+        string upstream_authority_subject_key_id = 1;
 }
 
 message RevokeX509AuthorityRequest {
-        // Optional. The authority ID of the local X.509 authority to revoke.
+        // The authority ID of the local X.509 authority to revoke.
         // This is the X.509 Subject Key Identifier (or SKID) of the
         // authority's CA certificate, which is calculated by doing a
         // SHA-1 hash over the ASN.1 encoding of the public key.
-        // By default, the old local X.509 authority is used.
         string authority_id  = 1;
 }
 
@@ -244,4 +244,8 @@ message AuthorityState {
 
         // Expiration timestamp (seconds since Unix epoch).
         int64 expires_at = 2;
+
+        // The Subject Key Identifier (or SKID) of the upstream authority,
+        // applicable only for X.509 authorities.
+        string upstream_authority_subject_key_id = 3;
 }
