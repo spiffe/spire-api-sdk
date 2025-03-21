@@ -62,12 +62,30 @@ service LocalAuthority {
         // will perform proactive rotations of any key material related to
         // the tainted authority. The result of this action will be observed
         // cluster-wide.
-        // It can receive the public key of an old X.509 authority.
+        // The X.509 authority to taint is identified using the provided X.509 Subject Key
+	// 
+	// If an upstream authority is configured then local authorities cannot be tainted,
+	// and a FailedPrecondition error will be returned.
         //
         // If a previously active X.509 authority does not exist (e.g. if one
         // has been prepared but not activated yet), a FailedPrecondition
         // error will be returned.
         rpc TaintX509Authority(TaintX509AuthorityRequest) returns (TaintX509AuthorityResponse);
+
+        // TaintX509UpstreamAuthority marks the provided upstream authority as
+        // being tainted. SPIRE Agents observing a tainted authority
+        // will perform proactive rotations of any key material related to
+        // the tainted authority. The result of this action will be observed
+        // cluster-wide.
+	// It is important to change to a new active upstream authority before tainting the old one,
+	// since tainting will force the rotation of any bundle that is using
+	// the old upstream authority.
+	// The X.509 authority to taint is identified using the provided X.509 Subject Key
+	// Identifier (or SKID) of the old X.509 authority.
+        //
+        // If an X.509 upstream authority is not configured, or the identified upstream
+	// X.509 authority is active, a FailedPrecondition error will be returned.
+        rpc TaintX509UpstreamAuthority(TaintX509UpstreamAuthorityRequest) returns (TaintX509UpstreamAuthorityResponse);
 
         // RevokeX509Authority revokes the previously active X.509 authority by
         // removing it from the bundle and propagating this update throughout
@@ -78,6 +96,16 @@ service LocalAuthority {
         // has been prepared but not activated yet), a FailedPrecondition
         // error will be returned.
         rpc RevokeX509Authority(RevokeX509AuthorityRequest) returns (RevokeX509AuthorityResponse);
+
+        // RevokeX509UpstreamAuthority revokes the previously active X.509 upstream authority by
+        // removing it from the bundle and propagating this update throughout
+        // the cluster.
+	// The X.509 authority to revoke is identified using the provided subject key ID of
+	// the authority's CA certificate.
+        //
+        // If a previously active X.509 upstream authority does not exist, a FailedPrecondition
+        // error will be returned.
+        rpc RevokeX509UpstreamAuthority(RevokeX509UpstreamAuthorityRequest) returns (RevokeX509UpstreamAuthorityResponse);
 }
 
 message GetJWTAuthorityStateRequest {}
@@ -101,9 +129,8 @@ message PrepareJWTAuthorityResponse {
 }
 
 message ActivateJWTAuthorityRequest {
-        // Optional. The authority ID of the local authority JWT authority to activate.
+        // The authority ID of the local authority JWT authority to activate.
         // This is the JWT Key ID.
-        // By default, the prepared local JWT authority is used.
         string authority_id = 1;
 }
 
@@ -112,9 +139,8 @@ message ActivateJWTAuthorityResponse {
 }
 
 message TaintJWTAuthorityRequest {
-        // Optional. The authority ID of the local authority JWT authority to taint.
+        // The authority ID of the local authority JWT authority to taint.
         // This is the JWT Key ID.
-        // By default, the old local JWT authority is used.
         string authority_id = 1;
 }
 
@@ -123,9 +149,8 @@ message TaintJWTAuthorityResponse {
 }
 
 message RevokeJWTAuthorityRequest {
-        // Optional. The authority ID of the local authority JWT authority to revoke.
+        // The authority ID of the local authority JWT authority to revoke.
         // This is the JWT Key ID.
-        // By default, the old local JWT authority is used.
         string authority_id = 1;
 }
 
@@ -154,11 +179,10 @@ message PrepareX509AuthorityResponse {
 }
 
 message ActivateX509AuthorityRequest {
-        // Optional. The authority ID of the local X.509 authority to activate.
+        // The authority ID of the local X.509 authority to activate.
         // This is the X.509 Subject Key Identifier (or SKID) of the
         // authority's CA certificate, which is calculated by doing a
         // SHA-1 hash over the ASN.1 encoding of the public key.
-        // By default, the prepared local X.509 authority is used.
         string authority_id = 1;
 }
 
@@ -167,11 +191,10 @@ message ActivateX509AuthorityResponse {
 }
 
 message TaintX509AuthorityRequest {
-        // Optional. The authority ID of the local X.509 authority to taint.
+        // The authority ID of the local X.509 authority to taint.
         // This is the X.509 Subject Key Identifier (or SKID) of the
         // authority's CA certificate, which is calculated by doing a
         // SHA-1 hash over the ASN.1 encoding of the public key.
-        // By default, the old local X.509 authority is used.
         string authority_id = 1;
 }
 
@@ -179,12 +202,35 @@ message TaintX509AuthorityResponse {
         AuthorityState tainted_authority = 1;
 }
 
+message TaintX509UpstreamAuthorityRequest {
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate of the upstream X.509 authority to taint.
+        string subject_key_id = 1;
+}
+
+message TaintX509UpstreamAuthorityResponse {
+        // The Subject Key Identifier (or SKID) of the upstream authority
+        // tainted.
+        string upstream_authority_subject_key_id = 1;
+}
+
+message RevokeX509UpstreamAuthorityRequest {
+        // This is the X.509 Subject Key Identifier (or SKID) of the
+        // authority's CA certificate of the upstream X.509 authority to revoke.
+        string subject_key_id = 1;
+}
+
+message RevokeX509UpstreamAuthorityResponse {
+        // The Subject Key Identifier (or SKID) of the upstream authority
+        // revoked.
+        string upstream_authority_subject_key_id = 1;
+}
+
 message RevokeX509AuthorityRequest {
-        // Optional. The authority ID of the local X.509 authority to revoke.
+        // The authority ID of the local X.509 authority to revoke.
         // This is the X.509 Subject Key Identifier (or SKID) of the
         // authority's CA certificate, which is calculated by doing a
         // SHA-1 hash over the ASN.1 encoding of the public key.
-        // By default, the old local X.509 authority is used.
         string authority_id  = 1;
 }
 
@@ -198,4 +244,8 @@ message AuthorityState {
 
         // Expiration timestamp (seconds since Unix epoch).
         int64 expires_at = 2;
+
+        // The Subject Key Identifier (or SKID) of the upstream authority,
+        // applicable only for X.509 authorities.
+        string upstream_authority_subject_key_id = 3;
 }

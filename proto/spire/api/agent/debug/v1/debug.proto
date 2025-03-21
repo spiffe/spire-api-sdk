@@ -27,7 +27,14 @@ message GetInfoResponse {
     // Agent uptime in seconds
     int32 uptime = 2;
     // Number of SVIDs cached in memory
-    int32 svids_count = 3;
+    // Deprecated in favor of cached_x509_svids_count, cached_jwt_svids_count, and cached_svidstore_x509_svids_count
+    int32 svids_count = 3 [deprecated=true];
     // last successful sync with server (in seconds since unix epoch)
     int64 last_sync_success = 4;
+    // Number of X.509-SVIDs in Agent primary in-memory cache
+    int32 cached_x509_svids_count = 5;
+    // Number of JWT-SVIDs in Agent primary in-memory cache
+    int32 cached_jwt_svids_count = 6;
+    // Number of X.509-SVIDs in Agent svidstore in-memory cache
+    int32 cached_svidstore_x509_svids_count = 7;
 }
