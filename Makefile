@@ -108,8 +108,12 @@ endif
 # protoc
 #############################################################################
 
-protoc_version = 3.20.1
-ifeq ($(arch2),arm64)
+protoc_version = 30.2
+ifeq ($(os1),windows)
+protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-win64.zip
+else ifeq ($(arch1),arm64)
+protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-$(os2)-aarch_64.zip
+else ifeq ($(arch1),aarch64)
 protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-$(os2)-aarch_64.zip
 else
 protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-$(os2)-$(arch1).zip
@@ -142,7 +146,7 @@ $(protoc_gen_go_bin): | go-check
 # protoc-gen-go-grpc
 #############################################################################
 
-protoc_gen_go_grpc_version := v1.0.1
+protoc_gen_go_grpc_version := v1.5.1
 protoc_gen_go_grpc_base_dir := $(build_dir)/protoc-gen-go-grpc
 protoc_gen_go_grpc_dir := $(protoc_gen_go_grpc_base_dir)/$(protoc_gen_go_grpc_version)-go$(go_version)
 protoc_gen_go_grpc_bin := $(protoc_gen_go_grpc_dir)/protoc-gen-go-grpc
