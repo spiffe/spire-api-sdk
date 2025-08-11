@@ -65,6 +65,10 @@ type EntryClient interface {
 	// 6. Steps (4) and (5) are repeated until the caller has synced down the
 	//    details for all new/updated entries and closes the stream.
 	SyncAuthorizedEntries(ctx context.Context, opts ...grpc.CallOption) (Entry_SyncAuthorizedEntriesClient, error)
+	// Locks the entry service. No new entries can be created, and no existing entries can be updated.
+	//
+	// The caller must be local or present an admin X509-SVID.
+	LockService(ctx context.Context, in *LockRequest, opts ...grpc.CallOption) (*LockResponse, error)
 }
 
 type entryClient struct {
@@ -169,6 +173,15 @@ func (x *entrySyncAuthorizedEntriesClient) Recv() (*SyncAuthorizedEntriesRespons
 	return m, nil
 }
 
+func (c *entryClient) LockService(ctx context.Context, in *LockRequest, opts ...grpc.CallOption) (*LockResponse, error) {
+	out := new(LockResponse)
+	err := c.cc.Invoke(ctx, "/spire.api.server.entry.v1.Entry/LockService", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // EntryServer is the server API for Entry service.
 // All implementations must embed UnimplementedEntryServer
 // for forward compatibility
@@ -220,6 +233,10 @@ type EntryServer interface {
 	// 6. Steps (4) and (5) are repeated until the caller has synced down the
 	//    details for all new/updated entries and closes the stream.
 	SyncAuthorizedEntries(Entry_SyncAuthorizedEntriesServer) error
+	// Locks the entry service. No new entries can be created, and no existing entries can be updated.
+	//
+	// The caller must be local or present an admin X509-SVID.
+	LockService(context.Context, *LockRequest) (*LockResponse, error)
 	mustEmbedUnimplementedEntryServer()
 }
 
@@ -250,6 +267,9 @@ func (UnimplementedEntryServer) GetAuthorizedEntries(context.Context, *GetAuthor
 }
 func (UnimplementedEntryServer) SyncAuthorizedEntries(Entry_SyncAuthorizedEntriesServer) error {
 	return status.Errorf(codes.Unimplemented, "method SyncAuthorizedEntries not implemented")
+}
+func (UnimplementedEntryServer) LockService(context.Context, *LockRequest) (*LockResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LockService not implemented")
 }
 func (UnimplementedEntryServer) mustEmbedUnimplementedEntryServer() {}
 
@@ -416,6 +436,24 @@ func (x *entrySyncAuthorizedEntriesServer) Recv() (*SyncAuthorizedEntriesRequest
 	return m, nil
 }
 
+func _Entry_LockService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EntryServer).LockService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/spire.api.server.entry.v1.Entry/LockService",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EntryServer).LockService(ctx, req.(*LockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Entry_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "spire.api.server.entry.v1.Entry",
 	HandlerType: (*EntryServer)(nil),
@@ -447,6 +485,10 @@ var _Entry_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAuthorizedEntries",
 			Handler:    _Entry_GetAuthorizedEntries_Handler,
+		},
+		{
+			MethodName: "LockService",
+			Handler:    _Entry_LockService_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -65,6 +65,11 @@ service Entry {
     // 6. Steps (4) and (5) are repeated until the caller has synced down the
     //    details for all new/updated entries and closes the stream.
     rpc SyncAuthorizedEntries(stream SyncAuthorizedEntriesRequest) returns (stream SyncAuthorizedEntriesResponse);
+
+    // Locks the entry service. No new entries can be created, and no existing entries can be updated.
+    //
+    // The caller must be local or present an admin X509-SVID.
+    rpc LockService(LockRequest) returns (LockResponse);
 }
 
 message CountEntriesRequest {
@@ -247,3 +252,6 @@ message EntryRevision {
     // When the entry was created (seconds since Unix epoch).
     int64 created_at = 3;
 }
+
+message LockRequest {}
+message LockResponse {}
