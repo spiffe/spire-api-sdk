@@ -79,7 +79,7 @@ build_dir := ${CURDIR}/.build/$(os1)-$(arch1)
 #############################################################################
 
 go_version_full := $(shell cat .go-version)
-go_version := $(go_version_full:.0=)
+go_version := $(go_version_full:.0=.0)
 go_dir := $(build_dir)/go/$(go_version)
 go_bin_dir := $(go_dir)/bin
 go_url = https://storage.googleapis.com/golang/go$(go_version).$(os1)-$(arch2).tar.gz
@@ -98,6 +98,7 @@ ifneq (go$(go_version), $(shell $(go_path) go version 2>/dev/null | cut -f3 -d' 
 ifeq ($(go_version),)
 	$(error unable to determine go version)
 endif
+	@echo "go_url:" $(go_url)
 	@echo "Installing go$(go_version)..."
 	@rm -rf $(dir $(go_dir))
 	@mkdir -p $(go_dir)
@@ -108,8 +109,12 @@ endif
 # protoc
 #############################################################################
 
-protoc_version = 3.20.1
-ifeq ($(arch2),arm64)
+protoc_version = 30.2
+ifeq ($(os1),windows)
+protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-win64.zip
+else ifeq ($(arch1),arm64)
+protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-$(os2)-aarch_64.zip
+else ifeq ($(arch1),aarch64)
 protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-$(os2)-aarch_64.zip
 else
 protoc_url = https://github.com/protocolbuffers/protobuf/releases/download/v$(protoc_version)/protoc-$(protoc_version)-$(os2)-$(arch1).zip
@@ -142,7 +147,7 @@ $(protoc_gen_go_bin): | go-check
 # protoc-gen-go-grpc
 #############################################################################
 
-protoc_gen_go_grpc_version := v1.0.1
+protoc_gen_go_grpc_version := v1.5.1
 protoc_gen_go_grpc_base_dir := $(build_dir)/protoc-gen-go-grpc
 protoc_gen_go_grpc_dir := $(protoc_gen_go_grpc_base_dir)/$(protoc_gen_go_grpc_version)-go$(go_version)
 protoc_gen_go_grpc_bin := $(protoc_gen_go_grpc_dir)/protoc-gen-go-grpc
