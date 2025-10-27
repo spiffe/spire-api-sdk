@@ -28,6 +28,7 @@ protos := \
 	proto/spire/api/types/spiffeid.proto \
 	proto/spire/api/types/status.proto \
 	proto/spire/api/types/x509svid.proto \
+	proto/spire/api/types/witsvid.proto \
 
 
 apiprotos := \

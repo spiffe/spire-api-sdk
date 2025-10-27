@@ -31,6 +31,11 @@ const (
 	LocalAuthority_TaintX509UpstreamAuthority_FullMethodName  = "/spire.api.server.localauthority.v1.LocalAuthority/TaintX509UpstreamAuthority"
 	LocalAuthority_RevokeX509Authority_FullMethodName         = "/spire.api.server.localauthority.v1.LocalAuthority/RevokeX509Authority"
 	LocalAuthority_RevokeX509UpstreamAuthority_FullMethodName = "/spire.api.server.localauthority.v1.LocalAuthority/RevokeX509UpstreamAuthority"
+	LocalAuthority_GetWITAuthorityState_FullMethodName        = "/spire.api.server.localauthority.v1.LocalAuthority/GetWITAuthorityState"
+	LocalAuthority_PrepareWITAuthority_FullMethodName         = "/spire.api.server.localauthority.v1.LocalAuthority/PrepareWITAuthority"
+	LocalAuthority_ActivateWITAuthority_FullMethodName        = "/spire.api.server.localauthority.v1.LocalAuthority/ActivateWITAuthority"
+	LocalAuthority_TaintWITAuthority_FullMethodName           = "/spire.api.server.localauthority.v1.LocalAuthority/TaintWITAuthority"
+	LocalAuthority_RevokeWITAuthority_FullMethodName          = "/spire.api.server.localauthority.v1.LocalAuthority/RevokeWITAuthority"
 )
 
 // LocalAuthorityClient is the client API for LocalAuthority service.
@@ -130,6 +135,40 @@ type LocalAuthorityClient interface {
 	// If a previously active X.509 upstream authority does not exist, a FailedPrecondition
 	// error will be returned.
 	RevokeX509UpstreamAuthority(ctx context.Context, in *RevokeX509UpstreamAuthorityRequest, opts ...grpc.CallOption) (*RevokeX509UpstreamAuthorityResponse, error)
+	// GetWITAuthorityState returns the state of all locally configured
+	// WIT authorities.
+	GetWITAuthorityState(ctx context.Context, in *GetWITAuthorityStateRequest, opts ...grpc.CallOption) (*GetWITAuthorityStateResponse, error)
+	// PrepareWITAuthority prepares a new WIT authority for use by
+	// generating a new key and injecting it into the bundle. This action
+	// will propagate the new public key cluster-wide.
+	PrepareWITAuthority(ctx context.Context, in *PrepareWITAuthorityRequest, opts ...grpc.CallOption) (*PrepareWITAuthorityResponse, error)
+	// ActivateWITAuthority activates a prepared WIT authority for use,
+	// which will cause it to be used for all WIT signing operations
+	// serviced by this server going forward. If a new WIT authority has
+	// not already been prepared, a FailedPrecondition error will be returned.
+	ActivateWITAuthority(ctx context.Context, in *ActivateWITAuthorityRequest, opts ...grpc.CallOption) (*ActivateWITAuthorityResponse, error)
+	// TaintWITAuthority marks the previously active WIT authority as
+	// being tainted. SPIRE Agents observing an authority to be tainted
+	// will perform proactive rotations of any key material related to
+	// the tainted authority. The result of this action will be observed
+	// cluster-wide.
+	// The WIT authority to taint is identified using the authority ID of
+	// the old WIT authority.
+	//
+	// If a previously active WIT authority does not exist (e.g. if one
+	// has been prepared but not activated yet), a FailedPrecondition
+	// error will be returned.
+	TaintWITAuthority(ctx context.Context, in *TaintWITAuthorityRequest, opts ...grpc.CallOption) (*TaintWITAuthorityResponse, error)
+	// RevokeWITAuthority revokes the previously active WIT authority by
+	// removing it from the bundle and propagating this update throughout
+	// the cluster.
+	// The WIT authority to revoke is identified using the authority ID of
+	// the old WIT authority.
+	//
+	// If a previously active WIT authority does not exist (e.g. if one
+	// has been prepared but not activated yet), a FailedPrecondition
+	// error will be returned.
+	RevokeWITAuthority(ctx context.Context, in *RevokeWITAuthorityRequest, opts ...grpc.CallOption) (*RevokeWITAuthorityResponse, error)
 }
 
 type localAuthorityClient struct {
@@ -260,6 +299,56 @@ func (c *localAuthorityClient) RevokeX509UpstreamAuthority(ctx context.Context, 
 	return out, nil
 }
 
+func (c *localAuthorityClient) GetWITAuthorityState(ctx context.Context, in *GetWITAuthorityStateRequest, opts ...grpc.CallOption) (*GetWITAuthorityStateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWITAuthorityStateResponse)
+	err := c.cc.Invoke(ctx, LocalAuthority_GetWITAuthorityState_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *localAuthorityClient) PrepareWITAuthority(ctx context.Context, in *PrepareWITAuthorityRequest, opts ...grpc.CallOption) (*PrepareWITAuthorityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PrepareWITAuthorityResponse)
+	err := c.cc.Invoke(ctx, LocalAuthority_PrepareWITAuthority_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *localAuthorityClient) ActivateWITAuthority(ctx context.Context, in *ActivateWITAuthorityRequest, opts ...grpc.CallOption) (*ActivateWITAuthorityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ActivateWITAuthorityResponse)
+	err := c.cc.Invoke(ctx, LocalAuthority_ActivateWITAuthority_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *localAuthorityClient) TaintWITAuthority(ctx context.Context, in *TaintWITAuthorityRequest, opts ...grpc.CallOption) (*TaintWITAuthorityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TaintWITAuthorityResponse)
+	err := c.cc.Invoke(ctx, LocalAuthority_TaintWITAuthority_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *localAuthorityClient) RevokeWITAuthority(ctx context.Context, in *RevokeWITAuthorityRequest, opts ...grpc.CallOption) (*RevokeWITAuthorityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RevokeWITAuthorityResponse)
+	err := c.cc.Invoke(ctx, LocalAuthority_RevokeWITAuthority_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LocalAuthorityServer is the server API for LocalAuthority service.
 // All implementations must embed UnimplementedLocalAuthorityServer
 // for forward compatibility.
@@ -357,6 +446,40 @@ type LocalAuthorityServer interface {
 	// If a previously active X.509 upstream authority does not exist, a FailedPrecondition
 	// error will be returned.
 	RevokeX509UpstreamAuthority(context.Context, *RevokeX509UpstreamAuthorityRequest) (*RevokeX509UpstreamAuthorityResponse, error)
+	// GetWITAuthorityState returns the state of all locally configured
+	// WIT authorities.
+	GetWITAuthorityState(context.Context, *GetWITAuthorityStateRequest) (*GetWITAuthorityStateResponse, error)
+	// PrepareWITAuthority prepares a new WIT authority for use by
+	// generating a new key and injecting it into the bundle. This action
+	// will propagate the new public key cluster-wide.
+	PrepareWITAuthority(context.Context, *PrepareWITAuthorityRequest) (*PrepareWITAuthorityResponse, error)
+	// ActivateWITAuthority activates a prepared WIT authority for use,
+	// which will cause it to be used for all WIT signing operations
+	// serviced by this server going forward. If a new WIT authority has
+	// not already been prepared, a FailedPrecondition error will be returned.
+	ActivateWITAuthority(context.Context, *ActivateWITAuthorityRequest) (*ActivateWITAuthorityResponse, error)
+	// TaintWITAuthority marks the previously active WIT authority as
+	// being tainted. SPIRE Agents observing an authority to be tainted
+	// will perform proactive rotations of any key material related to
+	// the tainted authority. The result of this action will be observed
+	// cluster-wide.
+	// The WIT authority to taint is identified using the authority ID of
+	// the old WIT authority.
+	//
+	// If a previously active WIT authority does not exist (e.g. if one
+	// has been prepared but not activated yet), a FailedPrecondition
+	// error will be returned.
+	TaintWITAuthority(context.Context, *TaintWITAuthorityRequest) (*TaintWITAuthorityResponse, error)
+	// RevokeWITAuthority revokes the previously active WIT authority by
+	// removing it from the bundle and propagating this update throughout
+	// the cluster.
+	// The WIT authority to revoke is identified using the authority ID of
+	// the old WIT authority.
+	//
+	// If a previously active WIT authority does not exist (e.g. if one
+	// has been prepared but not activated yet), a FailedPrecondition
+	// error will be returned.
+	RevokeWITAuthority(context.Context, *RevokeWITAuthorityRequest) (*RevokeWITAuthorityResponse, error)
 	mustEmbedUnimplementedLocalAuthorityServer()
 }
 
@@ -402,6 +525,21 @@ func (UnimplementedLocalAuthorityServer) RevokeX509Authority(context.Context, *R
 }
 func (UnimplementedLocalAuthorityServer) RevokeX509UpstreamAuthority(context.Context, *RevokeX509UpstreamAuthorityRequest) (*RevokeX509UpstreamAuthorityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeX509UpstreamAuthority not implemented")
+}
+func (UnimplementedLocalAuthorityServer) GetWITAuthorityState(context.Context, *GetWITAuthorityStateRequest) (*GetWITAuthorityStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWITAuthorityState not implemented")
+}
+func (UnimplementedLocalAuthorityServer) PrepareWITAuthority(context.Context, *PrepareWITAuthorityRequest) (*PrepareWITAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PrepareWITAuthority not implemented")
+}
+func (UnimplementedLocalAuthorityServer) ActivateWITAuthority(context.Context, *ActivateWITAuthorityRequest) (*ActivateWITAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActivateWITAuthority not implemented")
+}
+func (UnimplementedLocalAuthorityServer) TaintWITAuthority(context.Context, *TaintWITAuthorityRequest) (*TaintWITAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaintWITAuthority not implemented")
+}
+func (UnimplementedLocalAuthorityServer) RevokeWITAuthority(context.Context, *RevokeWITAuthorityRequest) (*RevokeWITAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RevokeWITAuthority not implemented")
 }
 func (UnimplementedLocalAuthorityServer) mustEmbedUnimplementedLocalAuthorityServer() {}
 func (UnimplementedLocalAuthorityServer) testEmbeddedByValue()                        {}
@@ -640,6 +778,96 @@ func _LocalAuthority_RevokeX509UpstreamAuthority_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LocalAuthority_GetWITAuthorityState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWITAuthorityStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).GetWITAuthorityState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LocalAuthority_GetWITAuthorityState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).GetWITAuthorityState(ctx, req.(*GetWITAuthorityStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LocalAuthority_PrepareWITAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PrepareWITAuthorityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).PrepareWITAuthority(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LocalAuthority_PrepareWITAuthority_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).PrepareWITAuthority(ctx, req.(*PrepareWITAuthorityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LocalAuthority_ActivateWITAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ActivateWITAuthorityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).ActivateWITAuthority(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LocalAuthority_ActivateWITAuthority_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).ActivateWITAuthority(ctx, req.(*ActivateWITAuthorityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LocalAuthority_TaintWITAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaintWITAuthorityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).TaintWITAuthority(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LocalAuthority_TaintWITAuthority_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).TaintWITAuthority(ctx, req.(*TaintWITAuthorityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LocalAuthority_RevokeWITAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeWITAuthorityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LocalAuthorityServer).RevokeWITAuthority(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LocalAuthority_RevokeWITAuthority_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LocalAuthorityServer).RevokeWITAuthority(ctx, req.(*RevokeWITAuthorityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LocalAuthority_ServiceDesc is the grpc.ServiceDesc for LocalAuthority service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -694,6 +922,26 @@ var LocalAuthority_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RevokeX509UpstreamAuthority",
 			Handler:    _LocalAuthority_RevokeX509UpstreamAuthority_Handler,
+		},
+		{
+			MethodName: "GetWITAuthorityState",
+			Handler:    _LocalAuthority_GetWITAuthorityState_Handler,
+		},
+		{
+			MethodName: "PrepareWITAuthority",
+			Handler:    _LocalAuthority_PrepareWITAuthority_Handler,
+		},
+		{
+			MethodName: "ActivateWITAuthority",
+			Handler:    _LocalAuthority_ActivateWITAuthority_Handler,
+		},
+		{
+			MethodName: "TaintWITAuthority",
+			Handler:    _LocalAuthority_TaintWITAuthority_Handler,
+		},
+		{
+			MethodName: "RevokeWITAuthority",
+			Handler:    _LocalAuthority_RevokeWITAuthority_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

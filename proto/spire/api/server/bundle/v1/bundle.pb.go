@@ -209,9 +209,11 @@ type AppendBundleRequest struct {
 	// JWT authorities to append.
 	JwtAuthorities []*types.JWTKey `protobuf:"bytes,2,rep,name=jwt_authorities,json=jwtAuthorities,proto3" json:"jwt_authorities,omitempty"`
 	// An output mask indicating which bundle fields are set in the response.
-	OutputMask    *types.BundleMask `protobuf:"bytes,3,opt,name=output_mask,json=outputMask,proto3" json:"output_mask,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	OutputMask *types.BundleMask `protobuf:"bytes,3,opt,name=output_mask,json=outputMask,proto3" json:"output_mask,omitempty"`
+	// WIT authorities to append.
+	WitAuthorities []*types.WITKey `protobuf:"bytes,4,rep,name=wit_authorities,json=witAuthorities,proto3" json:"wit_authorities,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AppendBundleRequest) Reset() {
@@ -261,6 +263,13 @@ func (x *AppendBundleRequest) GetJwtAuthorities() []*types.JWTKey {
 func (x *AppendBundleRequest) GetOutputMask() *types.BundleMask {
 	if x != nil {
 		return x.OutputMask
+	}
+	return nil
+}
+
+func (x *AppendBundleRequest) GetWitAuthorities() []*types.WITKey {
+	if x != nil {
+		return x.WitAuthorities
 	}
 	return nil
 }
@@ -1161,12 +1170,13 @@ const file_spire_api_server_bundle_v1_bundle_proto_rawDesc = "" +
 	"\x05count\x18\x01 \x01(\x05R\x05count\"P\n" +
 	"\x10GetBundleRequest\x12<\n" +
 	"\voutput_mask\x18\x01 \x01(\v2\x1b.spire.api.types.BundleMaskR\n" +
-	"outputMask\"\xe2\x01\n" +
+	"outputMask\"\xa4\x02\n" +
 	"\x13AppendBundleRequest\x12K\n" +
 	"\x10x509_authorities\x18\x01 \x03(\v2 .spire.api.types.X509CertificateR\x0fx509Authorities\x12@\n" +
 	"\x0fjwt_authorities\x18\x02 \x03(\v2\x17.spire.api.types.JWTKeyR\x0ejwtAuthorities\x12<\n" +
 	"\voutput_mask\x18\x03 \x01(\v2\x1b.spire.api.types.BundleMaskR\n" +
-	"outputMask\"Z\n" +
+	"outputMask\x12@\n" +
+	"\x0fwit_authorities\x18\x04 \x03(\v2\x17.spire.api.types.WITKeyR\x0ewitAuthorities\"Z\n" +
 	"\x1aPublishJWTAuthorityRequest\x12<\n" +
 	"\rjwt_authority\x18\x01 \x01(\v2\x17.spire.api.types.JWTKeyR\fjwtAuthority\"_\n" +
 	"\x1bPublishJWTAuthorityResponse\x12@\n" +
@@ -1280,63 +1290,65 @@ var file_spire_api_server_bundle_v1_bundle_proto_goTypes = []any{
 	(*types.BundleMask)(nil),                          // 22: spire.api.types.BundleMask
 	(*types.X509Certificate)(nil),                     // 23: spire.api.types.X509Certificate
 	(*types.JWTKey)(nil),                              // 24: spire.api.types.JWTKey
-	(*types.Bundle)(nil),                              // 25: spire.api.types.Bundle
-	(*types.Status)(nil),                              // 26: spire.api.types.Status
+	(*types.WITKey)(nil),                              // 25: spire.api.types.WITKey
+	(*types.Bundle)(nil),                              // 26: spire.api.types.Bundle
+	(*types.Status)(nil),                              // 27: spire.api.types.Status
 }
 var file_spire_api_server_bundle_v1_bundle_proto_depIdxs = []int32{
 	22, // 0: spire.api.server.bundle.v1.GetBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
 	23, // 1: spire.api.server.bundle.v1.AppendBundleRequest.x509_authorities:type_name -> spire.api.types.X509Certificate
 	24, // 2: spire.api.server.bundle.v1.AppendBundleRequest.jwt_authorities:type_name -> spire.api.types.JWTKey
 	22, // 3: spire.api.server.bundle.v1.AppendBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
-	24, // 4: spire.api.server.bundle.v1.PublishJWTAuthorityRequest.jwt_authority:type_name -> spire.api.types.JWTKey
-	24, // 5: spire.api.server.bundle.v1.PublishJWTAuthorityResponse.jwt_authorities:type_name -> spire.api.types.JWTKey
-	22, // 6: spire.api.server.bundle.v1.ListFederatedBundlesRequest.output_mask:type_name -> spire.api.types.BundleMask
-	25, // 7: spire.api.server.bundle.v1.ListFederatedBundlesResponse.bundles:type_name -> spire.api.types.Bundle
-	22, // 8: spire.api.server.bundle.v1.GetFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
-	25, // 9: spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest.bundle:type_name -> spire.api.types.Bundle
-	22, // 10: spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
-	18, // 11: spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.Result
-	25, // 12: spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest.bundle:type_name -> spire.api.types.Bundle
-	22, // 13: spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest.input_mask:type_name -> spire.api.types.BundleMask
-	22, // 14: spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
-	19, // 15: spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.Result
-	25, // 16: spire.api.server.bundle.v1.BatchSetFederatedBundleRequest.bundle:type_name -> spire.api.types.Bundle
-	22, // 17: spire.api.server.bundle.v1.BatchSetFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
-	20, // 18: spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.Result
-	0,  // 19: spire.api.server.bundle.v1.BatchDeleteFederatedBundleRequest.mode:type_name -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleRequest.Mode
-	21, // 20: spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse.Result
-	26, // 21: spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
-	25, // 22: spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.Result.bundle:type_name -> spire.api.types.Bundle
-	26, // 23: spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
-	25, // 24: spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.Result.bundle:type_name -> spire.api.types.Bundle
-	26, // 25: spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
-	25, // 26: spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.Result.bundle:type_name -> spire.api.types.Bundle
-	26, // 27: spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
-	1,  // 28: spire.api.server.bundle.v1.Bundle.CountBundles:input_type -> spire.api.server.bundle.v1.CountBundlesRequest
-	3,  // 29: spire.api.server.bundle.v1.Bundle.GetBundle:input_type -> spire.api.server.bundle.v1.GetBundleRequest
-	4,  // 30: spire.api.server.bundle.v1.Bundle.AppendBundle:input_type -> spire.api.server.bundle.v1.AppendBundleRequest
-	5,  // 31: spire.api.server.bundle.v1.Bundle.PublishJWTAuthority:input_type -> spire.api.server.bundle.v1.PublishJWTAuthorityRequest
-	7,  // 32: spire.api.server.bundle.v1.Bundle.ListFederatedBundles:input_type -> spire.api.server.bundle.v1.ListFederatedBundlesRequest
-	9,  // 33: spire.api.server.bundle.v1.Bundle.GetFederatedBundle:input_type -> spire.api.server.bundle.v1.GetFederatedBundleRequest
-	10, // 34: spire.api.server.bundle.v1.Bundle.BatchCreateFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest
-	12, // 35: spire.api.server.bundle.v1.Bundle.BatchUpdateFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest
-	14, // 36: spire.api.server.bundle.v1.Bundle.BatchSetFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchSetFederatedBundleRequest
-	16, // 37: spire.api.server.bundle.v1.Bundle.BatchDeleteFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleRequest
-	2,  // 38: spire.api.server.bundle.v1.Bundle.CountBundles:output_type -> spire.api.server.bundle.v1.CountBundlesResponse
-	25, // 39: spire.api.server.bundle.v1.Bundle.GetBundle:output_type -> spire.api.types.Bundle
-	25, // 40: spire.api.server.bundle.v1.Bundle.AppendBundle:output_type -> spire.api.types.Bundle
-	6,  // 41: spire.api.server.bundle.v1.Bundle.PublishJWTAuthority:output_type -> spire.api.server.bundle.v1.PublishJWTAuthorityResponse
-	8,  // 42: spire.api.server.bundle.v1.Bundle.ListFederatedBundles:output_type -> spire.api.server.bundle.v1.ListFederatedBundlesResponse
-	25, // 43: spire.api.server.bundle.v1.Bundle.GetFederatedBundle:output_type -> spire.api.types.Bundle
-	11, // 44: spire.api.server.bundle.v1.Bundle.BatchCreateFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse
-	13, // 45: spire.api.server.bundle.v1.Bundle.BatchUpdateFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse
-	15, // 46: spire.api.server.bundle.v1.Bundle.BatchSetFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchSetFederatedBundleResponse
-	17, // 47: spire.api.server.bundle.v1.Bundle.BatchDeleteFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse
-	38, // [38:48] is the sub-list for method output_type
-	28, // [28:38] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	25, // 4: spire.api.server.bundle.v1.AppendBundleRequest.wit_authorities:type_name -> spire.api.types.WITKey
+	24, // 5: spire.api.server.bundle.v1.PublishJWTAuthorityRequest.jwt_authority:type_name -> spire.api.types.JWTKey
+	24, // 6: spire.api.server.bundle.v1.PublishJWTAuthorityResponse.jwt_authorities:type_name -> spire.api.types.JWTKey
+	22, // 7: spire.api.server.bundle.v1.ListFederatedBundlesRequest.output_mask:type_name -> spire.api.types.BundleMask
+	26, // 8: spire.api.server.bundle.v1.ListFederatedBundlesResponse.bundles:type_name -> spire.api.types.Bundle
+	22, // 9: spire.api.server.bundle.v1.GetFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
+	26, // 10: spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest.bundle:type_name -> spire.api.types.Bundle
+	22, // 11: spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
+	18, // 12: spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.Result
+	26, // 13: spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest.bundle:type_name -> spire.api.types.Bundle
+	22, // 14: spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest.input_mask:type_name -> spire.api.types.BundleMask
+	22, // 15: spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
+	19, // 16: spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.Result
+	26, // 17: spire.api.server.bundle.v1.BatchSetFederatedBundleRequest.bundle:type_name -> spire.api.types.Bundle
+	22, // 18: spire.api.server.bundle.v1.BatchSetFederatedBundleRequest.output_mask:type_name -> spire.api.types.BundleMask
+	20, // 19: spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.Result
+	0,  // 20: spire.api.server.bundle.v1.BatchDeleteFederatedBundleRequest.mode:type_name -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleRequest.Mode
+	21, // 21: spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse.results:type_name -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse.Result
+	27, // 22: spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
+	26, // 23: spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse.Result.bundle:type_name -> spire.api.types.Bundle
+	27, // 24: spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
+	26, // 25: spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse.Result.bundle:type_name -> spire.api.types.Bundle
+	27, // 26: spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
+	26, // 27: spire.api.server.bundle.v1.BatchSetFederatedBundleResponse.Result.bundle:type_name -> spire.api.types.Bundle
+	27, // 28: spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse.Result.status:type_name -> spire.api.types.Status
+	1,  // 29: spire.api.server.bundle.v1.Bundle.CountBundles:input_type -> spire.api.server.bundle.v1.CountBundlesRequest
+	3,  // 30: spire.api.server.bundle.v1.Bundle.GetBundle:input_type -> spire.api.server.bundle.v1.GetBundleRequest
+	4,  // 31: spire.api.server.bundle.v1.Bundle.AppendBundle:input_type -> spire.api.server.bundle.v1.AppendBundleRequest
+	5,  // 32: spire.api.server.bundle.v1.Bundle.PublishJWTAuthority:input_type -> spire.api.server.bundle.v1.PublishJWTAuthorityRequest
+	7,  // 33: spire.api.server.bundle.v1.Bundle.ListFederatedBundles:input_type -> spire.api.server.bundle.v1.ListFederatedBundlesRequest
+	9,  // 34: spire.api.server.bundle.v1.Bundle.GetFederatedBundle:input_type -> spire.api.server.bundle.v1.GetFederatedBundleRequest
+	10, // 35: spire.api.server.bundle.v1.Bundle.BatchCreateFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest
+	12, // 36: spire.api.server.bundle.v1.Bundle.BatchUpdateFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchUpdateFederatedBundleRequest
+	14, // 37: spire.api.server.bundle.v1.Bundle.BatchSetFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchSetFederatedBundleRequest
+	16, // 38: spire.api.server.bundle.v1.Bundle.BatchDeleteFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleRequest
+	2,  // 39: spire.api.server.bundle.v1.Bundle.CountBundles:output_type -> spire.api.server.bundle.v1.CountBundlesResponse
+	26, // 40: spire.api.server.bundle.v1.Bundle.GetBundle:output_type -> spire.api.types.Bundle
+	26, // 41: spire.api.server.bundle.v1.Bundle.AppendBundle:output_type -> spire.api.types.Bundle
+	6,  // 42: spire.api.server.bundle.v1.Bundle.PublishJWTAuthority:output_type -> spire.api.server.bundle.v1.PublishJWTAuthorityResponse
+	8,  // 43: spire.api.server.bundle.v1.Bundle.ListFederatedBundles:output_type -> spire.api.server.bundle.v1.ListFederatedBundlesResponse
+	26, // 44: spire.api.server.bundle.v1.Bundle.GetFederatedBundle:output_type -> spire.api.types.Bundle
+	11, // 45: spire.api.server.bundle.v1.Bundle.BatchCreateFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse
+	13, // 46: spire.api.server.bundle.v1.Bundle.BatchUpdateFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchUpdateFederatedBundleResponse
+	15, // 47: spire.api.server.bundle.v1.Bundle.BatchSetFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchSetFederatedBundleResponse
+	17, // 48: spire.api.server.bundle.v1.Bundle.BatchDeleteFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchDeleteFederatedBundleResponse
+	39, // [39:49] is the sub-list for method output_type
+	29, // [29:39] is the sub-list for method input_type
+	29, // [29:29] is the sub-list for extension type_name
+	29, // [29:29] is the sub-list for extension extendee
+	0,  // [0:29] is the sub-list for field type_name
 }
 
 func init() { file_spire_api_server_bundle_v1_bundle_proto_init() }

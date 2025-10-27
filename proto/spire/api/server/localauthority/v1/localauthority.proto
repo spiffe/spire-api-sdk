@@ -106,6 +106,45 @@ service LocalAuthority {
         // If a previously active X.509 upstream authority does not exist, a FailedPrecondition
         // error will be returned.
         rpc RevokeX509UpstreamAuthority(RevokeX509UpstreamAuthorityRequest) returns (RevokeX509UpstreamAuthorityResponse);
+
+        // GetWITAuthorityState returns the state of all locally configured
+        // WIT authorities.
+        rpc GetWITAuthorityState(GetWITAuthorityStateRequest) returns (GetWITAuthorityStateResponse);
+
+        // PrepareWITAuthority prepares a new WIT authority for use by
+        // generating a new key and injecting it into the bundle. This action
+        // will propagate the new public key cluster-wide.
+        rpc PrepareWITAuthority(PrepareWITAuthorityRequest) returns (PrepareWITAuthorityResponse);
+
+        // ActivateWITAuthority activates a prepared WIT authority for use,
+        // which will cause it to be used for all WIT signing operations
+        // serviced by this server going forward. If a new WIT authority has
+        // not already been prepared, a FailedPrecondition error will be returned.
+        rpc ActivateWITAuthority(ActivateWITAuthorityRequest) returns (ActivateWITAuthorityResponse);
+
+        // TaintWITAuthority marks the previously active WIT authority as
+        // being tainted. SPIRE Agents observing an authority to be tainted
+        // will perform proactive rotations of any key material related to
+        // the tainted authority. The result of this action will be observed
+        // cluster-wide.
+        // The WIT authority to taint is identified using the authority ID of 
+        // the old WIT authority.
+        //
+        // If a previously active WIT authority does not exist (e.g. if one
+        // has been prepared but not activated yet), a FailedPrecondition
+        // error will be returned.
+        rpc TaintWITAuthority(TaintWITAuthorityRequest) returns (TaintWITAuthorityResponse);
+
+        // RevokeWITAuthority revokes the previously active WIT authority by
+        // removing it from the bundle and propagating this update throughout
+        // the cluster.
+        // The WIT authority to revoke is identified using the authority ID of
+        // the old WIT authority.
+        //
+        // If a previously active WIT authority does not exist (e.g. if one
+        // has been prepared but not activated yet), a FailedPrecondition
+        // error will be returned.
+        rpc RevokeWITAuthority(RevokeWITAuthorityRequest) returns (RevokeWITAuthorityResponse);
 }
 
 message GetJWTAuthorityStateRequest {}
@@ -235,6 +274,56 @@ message RevokeX509AuthorityRequest {
 }
 
 message RevokeX509AuthorityResponse {
+        AuthorityState revoked_authority = 1;
+}
+
+message GetWITAuthorityStateRequest {}
+
+message GetWITAuthorityStateResponse {
+        // Authority currently being used for signing operations.
+        AuthorityState active = 1;
+
+        // Authority added on bundle but is not used yet.
+        AuthorityState prepared = 2;
+
+        // Authority in that was previously used for signing operations,
+        // but it is not longer.
+        AuthorityState old = 3;
+}
+
+message PrepareWITAuthorityRequest {}
+
+message PrepareWITAuthorityResponse {
+        AuthorityState prepared_authority = 1;
+}
+
+message ActivateWITAuthorityRequest {
+        // The authority ID of the local authority JWT authority to activate.
+        // This is the JWT Key ID.
+        string authority_id = 1;
+}
+
+message ActivateWITAuthorityResponse {
+        AuthorityState activated_authority = 1;
+}
+
+message TaintWITAuthorityRequest {
+        // The authority ID of the local authority JWT authority to taint.
+        // This is the JWT Key ID.
+        string authority_id = 1;
+}
+
+message TaintWITAuthorityResponse {
+        AuthorityState tainted_authority = 1;
+}
+
+message RevokeWITAuthorityRequest {
+        // The authority ID of the local authority JWT authority to revoke.
+        // This is the JWT Key ID.
+        string authority_id = 1;
+}
+
+message RevokeWITAuthorityResponse {
         AuthorityState revoked_authority = 1;
 }
 

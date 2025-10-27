@@ -1111,6 +1111,456 @@ func (x *RevokeX509AuthorityResponse) GetRevokedAuthority() *AuthorityState {
 	return nil
 }
 
+type GetWITAuthorityStateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWITAuthorityStateRequest) Reset() {
+	*x = GetWITAuthorityStateRequest{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWITAuthorityStateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWITAuthorityStateRequest) ProtoMessage() {}
+
+func (x *GetWITAuthorityStateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWITAuthorityStateRequest.ProtoReflect.Descriptor instead.
+func (*GetWITAuthorityStateRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{24}
+}
+
+type GetWITAuthorityStateResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Authority currently being used for signing operations.
+	Active *AuthorityState `protobuf:"bytes,1,opt,name=active,proto3" json:"active,omitempty"`
+	// Authority added on bundle but is not used yet.
+	Prepared *AuthorityState `protobuf:"bytes,2,opt,name=prepared,proto3" json:"prepared,omitempty"`
+	// Authority in that was previously used for signing operations,
+	// but it is not longer.
+	Old           *AuthorityState `protobuf:"bytes,3,opt,name=old,proto3" json:"old,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWITAuthorityStateResponse) Reset() {
+	*x = GetWITAuthorityStateResponse{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWITAuthorityStateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWITAuthorityStateResponse) ProtoMessage() {}
+
+func (x *GetWITAuthorityStateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWITAuthorityStateResponse.ProtoReflect.Descriptor instead.
+func (*GetWITAuthorityStateResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GetWITAuthorityStateResponse) GetActive() *AuthorityState {
+	if x != nil {
+		return x.Active
+	}
+	return nil
+}
+
+func (x *GetWITAuthorityStateResponse) GetPrepared() *AuthorityState {
+	if x != nil {
+		return x.Prepared
+	}
+	return nil
+}
+
+func (x *GetWITAuthorityStateResponse) GetOld() *AuthorityState {
+	if x != nil {
+		return x.Old
+	}
+	return nil
+}
+
+type PrepareWITAuthorityRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PrepareWITAuthorityRequest) Reset() {
+	*x = PrepareWITAuthorityRequest{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PrepareWITAuthorityRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PrepareWITAuthorityRequest) ProtoMessage() {}
+
+func (x *PrepareWITAuthorityRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PrepareWITAuthorityRequest.ProtoReflect.Descriptor instead.
+func (*PrepareWITAuthorityRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{26}
+}
+
+type PrepareWITAuthorityResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	PreparedAuthority *AuthorityState        `protobuf:"bytes,1,opt,name=prepared_authority,json=preparedAuthority,proto3" json:"prepared_authority,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *PrepareWITAuthorityResponse) Reset() {
+	*x = PrepareWITAuthorityResponse{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PrepareWITAuthorityResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PrepareWITAuthorityResponse) ProtoMessage() {}
+
+func (x *PrepareWITAuthorityResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PrepareWITAuthorityResponse.ProtoReflect.Descriptor instead.
+func (*PrepareWITAuthorityResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *PrepareWITAuthorityResponse) GetPreparedAuthority() *AuthorityState {
+	if x != nil {
+		return x.PreparedAuthority
+	}
+	return nil
+}
+
+type ActivateWITAuthorityRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The authority ID of the local authority JWT authority to activate.
+	// This is the JWT Key ID.
+	AuthorityId   string `protobuf:"bytes,1,opt,name=authority_id,json=authorityId,proto3" json:"authority_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ActivateWITAuthorityRequest) Reset() {
+	*x = ActivateWITAuthorityRequest{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateWITAuthorityRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateWITAuthorityRequest) ProtoMessage() {}
+
+func (x *ActivateWITAuthorityRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateWITAuthorityRequest.ProtoReflect.Descriptor instead.
+func (*ActivateWITAuthorityRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *ActivateWITAuthorityRequest) GetAuthorityId() string {
+	if x != nil {
+		return x.AuthorityId
+	}
+	return ""
+}
+
+type ActivateWITAuthorityResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	ActivatedAuthority *AuthorityState        `protobuf:"bytes,1,opt,name=activated_authority,json=activatedAuthority,proto3" json:"activated_authority,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *ActivateWITAuthorityResponse) Reset() {
+	*x = ActivateWITAuthorityResponse{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ActivateWITAuthorityResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ActivateWITAuthorityResponse) ProtoMessage() {}
+
+func (x *ActivateWITAuthorityResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ActivateWITAuthorityResponse.ProtoReflect.Descriptor instead.
+func (*ActivateWITAuthorityResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *ActivateWITAuthorityResponse) GetActivatedAuthority() *AuthorityState {
+	if x != nil {
+		return x.ActivatedAuthority
+	}
+	return nil
+}
+
+type TaintWITAuthorityRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The authority ID of the local authority JWT authority to taint.
+	// This is the JWT Key ID.
+	AuthorityId   string `protobuf:"bytes,1,opt,name=authority_id,json=authorityId,proto3" json:"authority_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TaintWITAuthorityRequest) Reset() {
+	*x = TaintWITAuthorityRequest{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaintWITAuthorityRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaintWITAuthorityRequest) ProtoMessage() {}
+
+func (x *TaintWITAuthorityRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaintWITAuthorityRequest.ProtoReflect.Descriptor instead.
+func (*TaintWITAuthorityRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *TaintWITAuthorityRequest) GetAuthorityId() string {
+	if x != nil {
+		return x.AuthorityId
+	}
+	return ""
+}
+
+type TaintWITAuthorityResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	TaintedAuthority *AuthorityState        `protobuf:"bytes,1,opt,name=tainted_authority,json=taintedAuthority,proto3" json:"tainted_authority,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *TaintWITAuthorityResponse) Reset() {
+	*x = TaintWITAuthorityResponse{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TaintWITAuthorityResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TaintWITAuthorityResponse) ProtoMessage() {}
+
+func (x *TaintWITAuthorityResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TaintWITAuthorityResponse.ProtoReflect.Descriptor instead.
+func (*TaintWITAuthorityResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *TaintWITAuthorityResponse) GetTaintedAuthority() *AuthorityState {
+	if x != nil {
+		return x.TaintedAuthority
+	}
+	return nil
+}
+
+type RevokeWITAuthorityRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The authority ID of the local authority JWT authority to revoke.
+	// This is the JWT Key ID.
+	AuthorityId   string `protobuf:"bytes,1,opt,name=authority_id,json=authorityId,proto3" json:"authority_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeWITAuthorityRequest) Reset() {
+	*x = RevokeWITAuthorityRequest{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeWITAuthorityRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeWITAuthorityRequest) ProtoMessage() {}
+
+func (x *RevokeWITAuthorityRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeWITAuthorityRequest.ProtoReflect.Descriptor instead.
+func (*RevokeWITAuthorityRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *RevokeWITAuthorityRequest) GetAuthorityId() string {
+	if x != nil {
+		return x.AuthorityId
+	}
+	return ""
+}
+
+type RevokeWITAuthorityResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	RevokedAuthority *AuthorityState        `protobuf:"bytes,1,opt,name=revoked_authority,json=revokedAuthority,proto3" json:"revoked_authority,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *RevokeWITAuthorityResponse) Reset() {
+	*x = RevokeWITAuthorityResponse{}
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeWITAuthorityResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeWITAuthorityResponse) ProtoMessage() {}
+
+func (x *RevokeWITAuthorityResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeWITAuthorityResponse.ProtoReflect.Descriptor instead.
+func (*RevokeWITAuthorityResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *RevokeWITAuthorityResponse) GetRevokedAuthority() *AuthorityState {
+	if x != nil {
+		return x.RevokedAuthority
+	}
+	return nil
+}
+
 type AuthorityState struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The authority ID.
@@ -1126,7 +1576,7 @@ type AuthorityState struct {
 
 func (x *AuthorityState) Reset() {
 	*x = AuthorityState{}
-	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[24]
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1138,7 +1588,7 @@ func (x *AuthorityState) String() string {
 func (*AuthorityState) ProtoMessage() {}
 
 func (x *AuthorityState) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[24]
+	mi := &file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1151,7 +1601,7 @@ func (x *AuthorityState) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AuthorityState.ProtoReflect.Descriptor instead.
 func (*AuthorityState) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{24}
+	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *AuthorityState) GetAuthorityId() string {
@@ -1227,12 +1677,32 @@ const file_spire_api_server_localauthority_v1_localauthority_proto_rawDesc = "" 
 	"\x1aRevokeX509AuthorityRequest\x12!\n" +
 	"\fauthority_id\x18\x01 \x01(\tR\vauthorityId\"~\n" +
 	"\x1bRevokeX509AuthorityResponse\x12_\n" +
+	"\x11revoked_authority\x18\x01 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x10revokedAuthority\"\x1d\n" +
+	"\x1bGetWITAuthorityStateRequest\"\x80\x02\n" +
+	"\x1cGetWITAuthorityStateResponse\x12J\n" +
+	"\x06active\x18\x01 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x06active\x12N\n" +
+	"\bprepared\x18\x02 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\bprepared\x12D\n" +
+	"\x03old\x18\x03 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x03old\"\x1c\n" +
+	"\x1aPrepareWITAuthorityRequest\"\x80\x01\n" +
+	"\x1bPrepareWITAuthorityResponse\x12a\n" +
+	"\x12prepared_authority\x18\x01 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x11preparedAuthority\"@\n" +
+	"\x1bActivateWITAuthorityRequest\x12!\n" +
+	"\fauthority_id\x18\x01 \x01(\tR\vauthorityId\"\x83\x01\n" +
+	"\x1cActivateWITAuthorityResponse\x12c\n" +
+	"\x13activated_authority\x18\x01 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x12activatedAuthority\"=\n" +
+	"\x18TaintWITAuthorityRequest\x12!\n" +
+	"\fauthority_id\x18\x01 \x01(\tR\vauthorityId\"|\n" +
+	"\x19TaintWITAuthorityResponse\x12_\n" +
+	"\x11tainted_authority\x18\x01 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x10taintedAuthority\">\n" +
+	"\x19RevokeWITAuthorityRequest\x12!\n" +
+	"\fauthority_id\x18\x01 \x01(\tR\vauthorityId\"}\n" +
+	"\x1aRevokeWITAuthorityResponse\x12_\n" +
 	"\x11revoked_authority\x18\x01 \x01(\v22.spire.api.server.localauthority.v1.AuthorityStateR\x10revokedAuthority\"\x9c\x01\n" +
 	"\x0eAuthorityState\x12!\n" +
 	"\fauthority_id\x18\x01 \x01(\tR\vauthorityId\x12\x1d\n" +
 	"\n" +
 	"expires_at\x18\x02 \x01(\x03R\texpiresAt\x12H\n" +
-	"!upstream_authority_subject_key_id\x18\x03 \x01(\tR\x1dupstreamAuthoritySubjectKeyId2\xf2\x0e\n" +
+	"!upstream_authority_subject_key_id\x18\x03 \x01(\tR\x1dupstreamAuthoritySubjectKeyId2\xec\x14\n" +
 	"\x0eLocalAuthority\x12\x99\x01\n" +
 	"\x14GetJWTAuthorityState\x12?.spire.api.server.localauthority.v1.GetJWTAuthorityStateRequest\x1a@.spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse\x12\x96\x01\n" +
 	"\x13PrepareJWTAuthority\x12>.spire.api.server.localauthority.v1.PrepareJWTAuthorityRequest\x1a?.spire.api.server.localauthority.v1.PrepareJWTAuthorityResponse\x12\x99\x01\n" +
@@ -1245,7 +1715,12 @@ const file_spire_api_server_localauthority_v1_localauthority_proto_rawDesc = "" 
 	"\x12TaintX509Authority\x12=.spire.api.server.localauthority.v1.TaintX509AuthorityRequest\x1a>.spire.api.server.localauthority.v1.TaintX509AuthorityResponse\x12\xab\x01\n" +
 	"\x1aTaintX509UpstreamAuthority\x12E.spire.api.server.localauthority.v1.TaintX509UpstreamAuthorityRequest\x1aF.spire.api.server.localauthority.v1.TaintX509UpstreamAuthorityResponse\x12\x96\x01\n" +
 	"\x13RevokeX509Authority\x12>.spire.api.server.localauthority.v1.RevokeX509AuthorityRequest\x1a?.spire.api.server.localauthority.v1.RevokeX509AuthorityResponse\x12\xae\x01\n" +
-	"\x1bRevokeX509UpstreamAuthority\x12F.spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityRequest\x1aG.spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityResponseB[ZYgithub.com/spiffe/spire-api-sdk/proto/spire/api/server/localauthority/v1;localauthorityv1b\x06proto3"
+	"\x1bRevokeX509UpstreamAuthority\x12F.spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityRequest\x1aG.spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityResponse\x12\x99\x01\n" +
+	"\x14GetWITAuthorityState\x12?.spire.api.server.localauthority.v1.GetWITAuthorityStateRequest\x1a@.spire.api.server.localauthority.v1.GetWITAuthorityStateResponse\x12\x96\x01\n" +
+	"\x13PrepareWITAuthority\x12>.spire.api.server.localauthority.v1.PrepareWITAuthorityRequest\x1a?.spire.api.server.localauthority.v1.PrepareWITAuthorityResponse\x12\x99\x01\n" +
+	"\x14ActivateWITAuthority\x12?.spire.api.server.localauthority.v1.ActivateWITAuthorityRequest\x1a@.spire.api.server.localauthority.v1.ActivateWITAuthorityResponse\x12\x90\x01\n" +
+	"\x11TaintWITAuthority\x12<.spire.api.server.localauthority.v1.TaintWITAuthorityRequest\x1a=.spire.api.server.localauthority.v1.TaintWITAuthorityResponse\x12\x93\x01\n" +
+	"\x12RevokeWITAuthority\x12=.spire.api.server.localauthority.v1.RevokeWITAuthorityRequest\x1a>.spire.api.server.localauthority.v1.RevokeWITAuthorityResponseB[ZYgithub.com/spiffe/spire-api-sdk/proto/spire/api/server/localauthority/v1;localauthorityv1b\x06proto3"
 
 var (
 	file_spire_api_server_localauthority_v1_localauthority_proto_rawDescOnce sync.Once
@@ -1259,7 +1734,7 @@ func file_spire_api_server_localauthority_v1_localauthority_proto_rawDescGZIP() 
 	return file_spire_api_server_localauthority_v1_localauthority_proto_rawDescData
 }
 
-var file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_spire_api_server_localauthority_v1_localauthority_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
 var file_spire_api_server_localauthority_v1_localauthority_proto_goTypes = []any{
 	(*GetJWTAuthorityStateRequest)(nil),         // 0: spire.api.server.localauthority.v1.GetJWTAuthorityStateRequest
 	(*GetJWTAuthorityStateResponse)(nil),        // 1: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse
@@ -1285,52 +1760,79 @@ var file_spire_api_server_localauthority_v1_localauthority_proto_goTypes = []any
 	(*RevokeX509UpstreamAuthorityResponse)(nil), // 21: spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityResponse
 	(*RevokeX509AuthorityRequest)(nil),          // 22: spire.api.server.localauthority.v1.RevokeX509AuthorityRequest
 	(*RevokeX509AuthorityResponse)(nil),         // 23: spire.api.server.localauthority.v1.RevokeX509AuthorityResponse
-	(*AuthorityState)(nil),                      // 24: spire.api.server.localauthority.v1.AuthorityState
+	(*GetWITAuthorityStateRequest)(nil),         // 24: spire.api.server.localauthority.v1.GetWITAuthorityStateRequest
+	(*GetWITAuthorityStateResponse)(nil),        // 25: spire.api.server.localauthority.v1.GetWITAuthorityStateResponse
+	(*PrepareWITAuthorityRequest)(nil),          // 26: spire.api.server.localauthority.v1.PrepareWITAuthorityRequest
+	(*PrepareWITAuthorityResponse)(nil),         // 27: spire.api.server.localauthority.v1.PrepareWITAuthorityResponse
+	(*ActivateWITAuthorityRequest)(nil),         // 28: spire.api.server.localauthority.v1.ActivateWITAuthorityRequest
+	(*ActivateWITAuthorityResponse)(nil),        // 29: spire.api.server.localauthority.v1.ActivateWITAuthorityResponse
+	(*TaintWITAuthorityRequest)(nil),            // 30: spire.api.server.localauthority.v1.TaintWITAuthorityRequest
+	(*TaintWITAuthorityResponse)(nil),           // 31: spire.api.server.localauthority.v1.TaintWITAuthorityResponse
+	(*RevokeWITAuthorityRequest)(nil),           // 32: spire.api.server.localauthority.v1.RevokeWITAuthorityRequest
+	(*RevokeWITAuthorityResponse)(nil),          // 33: spire.api.server.localauthority.v1.RevokeWITAuthorityResponse
+	(*AuthorityState)(nil),                      // 34: spire.api.server.localauthority.v1.AuthorityState
 }
 var file_spire_api_server_localauthority_v1_localauthority_proto_depIdxs = []int32{
-	24, // 0: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse.active:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 1: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse.prepared:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 2: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse.old:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 3: spire.api.server.localauthority.v1.PrepareJWTAuthorityResponse.prepared_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 4: spire.api.server.localauthority.v1.ActivateJWTAuthorityResponse.activated_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 5: spire.api.server.localauthority.v1.TaintJWTAuthorityResponse.tainted_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 6: spire.api.server.localauthority.v1.RevokeJWTAuthorityResponse.revoked_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 7: spire.api.server.localauthority.v1.GetX509AuthorityStateResponse.active:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 8: spire.api.server.localauthority.v1.GetX509AuthorityStateResponse.prepared:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 9: spire.api.server.localauthority.v1.GetX509AuthorityStateResponse.old:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 10: spire.api.server.localauthority.v1.PrepareX509AuthorityResponse.prepared_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 11: spire.api.server.localauthority.v1.ActivateX509AuthorityResponse.activated_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 12: spire.api.server.localauthority.v1.TaintX509AuthorityResponse.tainted_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	24, // 13: spire.api.server.localauthority.v1.RevokeX509AuthorityResponse.revoked_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
-	0,  // 14: spire.api.server.localauthority.v1.LocalAuthority.GetJWTAuthorityState:input_type -> spire.api.server.localauthority.v1.GetJWTAuthorityStateRequest
-	2,  // 15: spire.api.server.localauthority.v1.LocalAuthority.PrepareJWTAuthority:input_type -> spire.api.server.localauthority.v1.PrepareJWTAuthorityRequest
-	4,  // 16: spire.api.server.localauthority.v1.LocalAuthority.ActivateJWTAuthority:input_type -> spire.api.server.localauthority.v1.ActivateJWTAuthorityRequest
-	6,  // 17: spire.api.server.localauthority.v1.LocalAuthority.TaintJWTAuthority:input_type -> spire.api.server.localauthority.v1.TaintJWTAuthorityRequest
-	8,  // 18: spire.api.server.localauthority.v1.LocalAuthority.RevokeJWTAuthority:input_type -> spire.api.server.localauthority.v1.RevokeJWTAuthorityRequest
-	10, // 19: spire.api.server.localauthority.v1.LocalAuthority.GetX509AuthorityState:input_type -> spire.api.server.localauthority.v1.GetX509AuthorityStateRequest
-	12, // 20: spire.api.server.localauthority.v1.LocalAuthority.PrepareX509Authority:input_type -> spire.api.server.localauthority.v1.PrepareX509AuthorityRequest
-	14, // 21: spire.api.server.localauthority.v1.LocalAuthority.ActivateX509Authority:input_type -> spire.api.server.localauthority.v1.ActivateX509AuthorityRequest
-	16, // 22: spire.api.server.localauthority.v1.LocalAuthority.TaintX509Authority:input_type -> spire.api.server.localauthority.v1.TaintX509AuthorityRequest
-	18, // 23: spire.api.server.localauthority.v1.LocalAuthority.TaintX509UpstreamAuthority:input_type -> spire.api.server.localauthority.v1.TaintX509UpstreamAuthorityRequest
-	22, // 24: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509Authority:input_type -> spire.api.server.localauthority.v1.RevokeX509AuthorityRequest
-	20, // 25: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509UpstreamAuthority:input_type -> spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityRequest
-	1,  // 26: spire.api.server.localauthority.v1.LocalAuthority.GetJWTAuthorityState:output_type -> spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse
-	3,  // 27: spire.api.server.localauthority.v1.LocalAuthority.PrepareJWTAuthority:output_type -> spire.api.server.localauthority.v1.PrepareJWTAuthorityResponse
-	5,  // 28: spire.api.server.localauthority.v1.LocalAuthority.ActivateJWTAuthority:output_type -> spire.api.server.localauthority.v1.ActivateJWTAuthorityResponse
-	7,  // 29: spire.api.server.localauthority.v1.LocalAuthority.TaintJWTAuthority:output_type -> spire.api.server.localauthority.v1.TaintJWTAuthorityResponse
-	9,  // 30: spire.api.server.localauthority.v1.LocalAuthority.RevokeJWTAuthority:output_type -> spire.api.server.localauthority.v1.RevokeJWTAuthorityResponse
-	11, // 31: spire.api.server.localauthority.v1.LocalAuthority.GetX509AuthorityState:output_type -> spire.api.server.localauthority.v1.GetX509AuthorityStateResponse
-	13, // 32: spire.api.server.localauthority.v1.LocalAuthority.PrepareX509Authority:output_type -> spire.api.server.localauthority.v1.PrepareX509AuthorityResponse
-	15, // 33: spire.api.server.localauthority.v1.LocalAuthority.ActivateX509Authority:output_type -> spire.api.server.localauthority.v1.ActivateX509AuthorityResponse
-	17, // 34: spire.api.server.localauthority.v1.LocalAuthority.TaintX509Authority:output_type -> spire.api.server.localauthority.v1.TaintX509AuthorityResponse
-	19, // 35: spire.api.server.localauthority.v1.LocalAuthority.TaintX509UpstreamAuthority:output_type -> spire.api.server.localauthority.v1.TaintX509UpstreamAuthorityResponse
-	23, // 36: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509Authority:output_type -> spire.api.server.localauthority.v1.RevokeX509AuthorityResponse
-	21, // 37: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509UpstreamAuthority:output_type -> spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityResponse
-	26, // [26:38] is the sub-list for method output_type
-	14, // [14:26] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	34, // 0: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse.active:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 1: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse.prepared:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 2: spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse.old:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 3: spire.api.server.localauthority.v1.PrepareJWTAuthorityResponse.prepared_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 4: spire.api.server.localauthority.v1.ActivateJWTAuthorityResponse.activated_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 5: spire.api.server.localauthority.v1.TaintJWTAuthorityResponse.tainted_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 6: spire.api.server.localauthority.v1.RevokeJWTAuthorityResponse.revoked_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 7: spire.api.server.localauthority.v1.GetX509AuthorityStateResponse.active:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 8: spire.api.server.localauthority.v1.GetX509AuthorityStateResponse.prepared:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 9: spire.api.server.localauthority.v1.GetX509AuthorityStateResponse.old:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 10: spire.api.server.localauthority.v1.PrepareX509AuthorityResponse.prepared_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 11: spire.api.server.localauthority.v1.ActivateX509AuthorityResponse.activated_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 12: spire.api.server.localauthority.v1.TaintX509AuthorityResponse.tainted_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 13: spire.api.server.localauthority.v1.RevokeX509AuthorityResponse.revoked_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 14: spire.api.server.localauthority.v1.GetWITAuthorityStateResponse.active:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 15: spire.api.server.localauthority.v1.GetWITAuthorityStateResponse.prepared:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 16: spire.api.server.localauthority.v1.GetWITAuthorityStateResponse.old:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 17: spire.api.server.localauthority.v1.PrepareWITAuthorityResponse.prepared_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 18: spire.api.server.localauthority.v1.ActivateWITAuthorityResponse.activated_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 19: spire.api.server.localauthority.v1.TaintWITAuthorityResponse.tainted_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	34, // 20: spire.api.server.localauthority.v1.RevokeWITAuthorityResponse.revoked_authority:type_name -> spire.api.server.localauthority.v1.AuthorityState
+	0,  // 21: spire.api.server.localauthority.v1.LocalAuthority.GetJWTAuthorityState:input_type -> spire.api.server.localauthority.v1.GetJWTAuthorityStateRequest
+	2,  // 22: spire.api.server.localauthority.v1.LocalAuthority.PrepareJWTAuthority:input_type -> spire.api.server.localauthority.v1.PrepareJWTAuthorityRequest
+	4,  // 23: spire.api.server.localauthority.v1.LocalAuthority.ActivateJWTAuthority:input_type -> spire.api.server.localauthority.v1.ActivateJWTAuthorityRequest
+	6,  // 24: spire.api.server.localauthority.v1.LocalAuthority.TaintJWTAuthority:input_type -> spire.api.server.localauthority.v1.TaintJWTAuthorityRequest
+	8,  // 25: spire.api.server.localauthority.v1.LocalAuthority.RevokeJWTAuthority:input_type -> spire.api.server.localauthority.v1.RevokeJWTAuthorityRequest
+	10, // 26: spire.api.server.localauthority.v1.LocalAuthority.GetX509AuthorityState:input_type -> spire.api.server.localauthority.v1.GetX509AuthorityStateRequest
+	12, // 27: spire.api.server.localauthority.v1.LocalAuthority.PrepareX509Authority:input_type -> spire.api.server.localauthority.v1.PrepareX509AuthorityRequest
+	14, // 28: spire.api.server.localauthority.v1.LocalAuthority.ActivateX509Authority:input_type -> spire.api.server.localauthority.v1.ActivateX509AuthorityRequest
+	16, // 29: spire.api.server.localauthority.v1.LocalAuthority.TaintX509Authority:input_type -> spire.api.server.localauthority.v1.TaintX509AuthorityRequest
+	18, // 30: spire.api.server.localauthority.v1.LocalAuthority.TaintX509UpstreamAuthority:input_type -> spire.api.server.localauthority.v1.TaintX509UpstreamAuthorityRequest
+	22, // 31: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509Authority:input_type -> spire.api.server.localauthority.v1.RevokeX509AuthorityRequest
+	20, // 32: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509UpstreamAuthority:input_type -> spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityRequest
+	24, // 33: spire.api.server.localauthority.v1.LocalAuthority.GetWITAuthorityState:input_type -> spire.api.server.localauthority.v1.GetWITAuthorityStateRequest
+	26, // 34: spire.api.server.localauthority.v1.LocalAuthority.PrepareWITAuthority:input_type -> spire.api.server.localauthority.v1.PrepareWITAuthorityRequest
+	28, // 35: spire.api.server.localauthority.v1.LocalAuthority.ActivateWITAuthority:input_type -> spire.api.server.localauthority.v1.ActivateWITAuthorityRequest
+	30, // 36: spire.api.server.localauthority.v1.LocalAuthority.TaintWITAuthority:input_type -> spire.api.server.localauthority.v1.TaintWITAuthorityRequest
+	32, // 37: spire.api.server.localauthority.v1.LocalAuthority.RevokeWITAuthority:input_type -> spire.api.server.localauthority.v1.RevokeWITAuthorityRequest
+	1,  // 38: spire.api.server.localauthority.v1.LocalAuthority.GetJWTAuthorityState:output_type -> spire.api.server.localauthority.v1.GetJWTAuthorityStateResponse
+	3,  // 39: spire.api.server.localauthority.v1.LocalAuthority.PrepareJWTAuthority:output_type -> spire.api.server.localauthority.v1.PrepareJWTAuthorityResponse
+	5,  // 40: spire.api.server.localauthority.v1.LocalAuthority.ActivateJWTAuthority:output_type -> spire.api.server.localauthority.v1.ActivateJWTAuthorityResponse
+	7,  // 41: spire.api.server.localauthority.v1.LocalAuthority.TaintJWTAuthority:output_type -> spire.api.server.localauthority.v1.TaintJWTAuthorityResponse
+	9,  // 42: spire.api.server.localauthority.v1.LocalAuthority.RevokeJWTAuthority:output_type -> spire.api.server.localauthority.v1.RevokeJWTAuthorityResponse
+	11, // 43: spire.api.server.localauthority.v1.LocalAuthority.GetX509AuthorityState:output_type -> spire.api.server.localauthority.v1.GetX509AuthorityStateResponse
+	13, // 44: spire.api.server.localauthority.v1.LocalAuthority.PrepareX509Authority:output_type -> spire.api.server.localauthority.v1.PrepareX509AuthorityResponse
+	15, // 45: spire.api.server.localauthority.v1.LocalAuthority.ActivateX509Authority:output_type -> spire.api.server.localauthority.v1.ActivateX509AuthorityResponse
+	17, // 46: spire.api.server.localauthority.v1.LocalAuthority.TaintX509Authority:output_type -> spire.api.server.localauthority.v1.TaintX509AuthorityResponse
+	19, // 47: spire.api.server.localauthority.v1.LocalAuthority.TaintX509UpstreamAuthority:output_type -> spire.api.server.localauthority.v1.TaintX509UpstreamAuthorityResponse
+	23, // 48: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509Authority:output_type -> spire.api.server.localauthority.v1.RevokeX509AuthorityResponse
+	21, // 49: spire.api.server.localauthority.v1.LocalAuthority.RevokeX509UpstreamAuthority:output_type -> spire.api.server.localauthority.v1.RevokeX509UpstreamAuthorityResponse
+	25, // 50: spire.api.server.localauthority.v1.LocalAuthority.GetWITAuthorityState:output_type -> spire.api.server.localauthority.v1.GetWITAuthorityStateResponse
+	27, // 51: spire.api.server.localauthority.v1.LocalAuthority.PrepareWITAuthority:output_type -> spire.api.server.localauthority.v1.PrepareWITAuthorityResponse
+	29, // 52: spire.api.server.localauthority.v1.LocalAuthority.ActivateWITAuthority:output_type -> spire.api.server.localauthority.v1.ActivateWITAuthorityResponse
+	31, // 53: spire.api.server.localauthority.v1.LocalAuthority.TaintWITAuthority:output_type -> spire.api.server.localauthority.v1.TaintWITAuthorityResponse
+	33, // 54: spire.api.server.localauthority.v1.LocalAuthority.RevokeWITAuthority:output_type -> spire.api.server.localauthority.v1.RevokeWITAuthorityResponse
+	38, // [38:55] is the sub-list for method output_type
+	21, // [21:38] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_spire_api_server_localauthority_v1_localauthority_proto_init() }
@@ -1344,7 +1846,7 @@ func file_spire_api_server_localauthority_v1_localauthority_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_spire_api_server_localauthority_v1_localauthority_proto_rawDesc), len(file_spire_api_server_localauthority_v1_localauthority_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   35,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
