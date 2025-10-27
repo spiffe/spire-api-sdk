@@ -42,7 +42,7 @@ service Bundle {
     // the server appends the WIT authority to its own bundle.
     //
     // The caller must present a downstream X509-SVID.
-    rpc PublisWITTAuthority(PublishWITAuthorityRequest) returns (PublishWITAuthorityResponse);
+    rpc PublishWITAuthority(PublishWITAuthorityRequest) returns (PublishWITAuthorityResponse);
 
     // Lists federated bundles.
     //

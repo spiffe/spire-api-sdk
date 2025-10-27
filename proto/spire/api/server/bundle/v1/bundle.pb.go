@@ -1336,7 +1336,7 @@ const file_spire_api_server_bundle_v1_bundle_proto_rawDesc = "" +
 	"\tGetBundle\x12,.spire.api.server.bundle.v1.GetBundleRequest\x1a\x17.spire.api.types.Bundle\x12X\n" +
 	"\fAppendBundle\x12/.spire.api.server.bundle.v1.AppendBundleRequest\x1a\x17.spire.api.types.Bundle\x12\x86\x01\n" +
 	"\x13PublishJWTAuthority\x126.spire.api.server.bundle.v1.PublishJWTAuthorityRequest\x1a7.spire.api.server.bundle.v1.PublishJWTAuthorityResponse\x12\x86\x01\n" +
-	"\x13PublisWITTAuthority\x126.spire.api.server.bundle.v1.PublishWITAuthorityRequest\x1a7.spire.api.server.bundle.v1.PublishWITAuthorityResponse\x12\x89\x01\n" +
+	"\x13PublishWITAuthority\x126.spire.api.server.bundle.v1.PublishWITAuthorityRequest\x1a7.spire.api.server.bundle.v1.PublishWITAuthorityResponse\x12\x89\x01\n" +
 	"\x14ListFederatedBundles\x127.spire.api.server.bundle.v1.ListFederatedBundlesRequest\x1a8.spire.api.server.bundle.v1.ListFederatedBundlesResponse\x12d\n" +
 	"\x12GetFederatedBundle\x125.spire.api.server.bundle.v1.GetFederatedBundleRequest\x1a\x17.spire.api.types.Bundle\x12\x9b\x01\n" +
 	"\x1aBatchCreateFederatedBundle\x12=.spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest\x1a>.spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse\x12\x9b\x01\n" +
@@ -1426,7 +1426,7 @@ var file_spire_api_server_bundle_v1_bundle_proto_depIdxs = []int32{
 	3,  // 32: spire.api.server.bundle.v1.Bundle.GetBundle:input_type -> spire.api.server.bundle.v1.GetBundleRequest
 	4,  // 33: spire.api.server.bundle.v1.Bundle.AppendBundle:input_type -> spire.api.server.bundle.v1.AppendBundleRequest
 	5,  // 34: spire.api.server.bundle.v1.Bundle.PublishJWTAuthority:input_type -> spire.api.server.bundle.v1.PublishJWTAuthorityRequest
-	7,  // 35: spire.api.server.bundle.v1.Bundle.PublisWITTAuthority:input_type -> spire.api.server.bundle.v1.PublishWITAuthorityRequest
+	7,  // 35: spire.api.server.bundle.v1.Bundle.PublishWITAuthority:input_type -> spire.api.server.bundle.v1.PublishWITAuthorityRequest
 	9,  // 36: spire.api.server.bundle.v1.Bundle.ListFederatedBundles:input_type -> spire.api.server.bundle.v1.ListFederatedBundlesRequest
 	11, // 37: spire.api.server.bundle.v1.Bundle.GetFederatedBundle:input_type -> spire.api.server.bundle.v1.GetFederatedBundleRequest
 	12, // 38: spire.api.server.bundle.v1.Bundle.BatchCreateFederatedBundle:input_type -> spire.api.server.bundle.v1.BatchCreateFederatedBundleRequest
@@ -1437,7 +1437,7 @@ var file_spire_api_server_bundle_v1_bundle_proto_depIdxs = []int32{
 	28, // 43: spire.api.server.bundle.v1.Bundle.GetBundle:output_type -> spire.api.types.Bundle
 	28, // 44: spire.api.server.bundle.v1.Bundle.AppendBundle:output_type -> spire.api.types.Bundle
 	6,  // 45: spire.api.server.bundle.v1.Bundle.PublishJWTAuthority:output_type -> spire.api.server.bundle.v1.PublishJWTAuthorityResponse
-	8,  // 46: spire.api.server.bundle.v1.Bundle.PublisWITTAuthority:output_type -> spire.api.server.bundle.v1.PublishWITAuthorityResponse
+	8,  // 46: spire.api.server.bundle.v1.Bundle.PublishWITAuthority:output_type -> spire.api.server.bundle.v1.PublishWITAuthorityResponse
 	10, // 47: spire.api.server.bundle.v1.Bundle.ListFederatedBundles:output_type -> spire.api.server.bundle.v1.ListFederatedBundlesResponse
 	28, // 48: spire.api.server.bundle.v1.Bundle.GetFederatedBundle:output_type -> spire.api.types.Bundle
 	13, // 49: spire.api.server.bundle.v1.Bundle.BatchCreateFederatedBundle:output_type -> spire.api.server.bundle.v1.BatchCreateFederatedBundleResponse

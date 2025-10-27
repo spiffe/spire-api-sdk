@@ -24,7 +24,7 @@ const (
 	Bundle_GetBundle_FullMethodName                  = "/spire.api.server.bundle.v1.Bundle/GetBundle"
 	Bundle_AppendBundle_FullMethodName               = "/spire.api.server.bundle.v1.Bundle/AppendBundle"
 	Bundle_PublishJWTAuthority_FullMethodName        = "/spire.api.server.bundle.v1.Bundle/PublishJWTAuthority"
-	Bundle_PublisWITTAuthority_FullMethodName        = "/spire.api.server.bundle.v1.Bundle/PublisWITTAuthority"
+	Bundle_PublishWITAuthority_FullMethodName        = "/spire.api.server.bundle.v1.Bundle/PublishWITAuthority"
 	Bundle_ListFederatedBundles_FullMethodName       = "/spire.api.server.bundle.v1.Bundle/ListFederatedBundles"
 	Bundle_GetFederatedBundle_FullMethodName         = "/spire.api.server.bundle.v1.Bundle/GetFederatedBundle"
 	Bundle_BatchCreateFederatedBundle_FullMethodName = "/spire.api.server.bundle.v1.Bundle/BatchCreateFederatedBundle"
@@ -69,7 +69,7 @@ type BundleClient interface {
 	// the server appends the WIT authority to its own bundle.
 	//
 	// The caller must present a downstream X509-SVID.
-	PublisWITTAuthority(ctx context.Context, in *PublishWITAuthorityRequest, opts ...grpc.CallOption) (*PublishWITAuthorityResponse, error)
+	PublishWITAuthority(ctx context.Context, in *PublishWITAuthorityRequest, opts ...grpc.CallOption) (*PublishWITAuthorityResponse, error)
 	// Lists federated bundles.
 	//
 	// The caller must be local or present an admin X509-SVID.
@@ -144,10 +144,10 @@ func (c *bundleClient) PublishJWTAuthority(ctx context.Context, in *PublishJWTAu
 	return out, nil
 }
 
-func (c *bundleClient) PublisWITTAuthority(ctx context.Context, in *PublishWITAuthorityRequest, opts ...grpc.CallOption) (*PublishWITAuthorityResponse, error) {
+func (c *bundleClient) PublishWITAuthority(ctx context.Context, in *PublishWITAuthorityRequest, opts ...grpc.CallOption) (*PublishWITAuthorityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PublishWITAuthorityResponse)
-	err := c.cc.Invoke(ctx, Bundle_PublisWITTAuthority_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Bundle_PublishWITAuthority_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ type BundleServer interface {
 	// the server appends the WIT authority to its own bundle.
 	//
 	// The caller must present a downstream X509-SVID.
-	PublisWITTAuthority(context.Context, *PublishWITAuthorityRequest) (*PublishWITAuthorityResponse, error)
+	PublishWITAuthority(context.Context, *PublishWITAuthorityRequest) (*PublishWITAuthorityResponse, error)
 	// Lists federated bundles.
 	//
 	// The caller must be local or present an admin X509-SVID.
@@ -297,8 +297,8 @@ func (UnimplementedBundleServer) AppendBundle(context.Context, *AppendBundleRequ
 func (UnimplementedBundleServer) PublishJWTAuthority(context.Context, *PublishJWTAuthorityRequest) (*PublishJWTAuthorityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishJWTAuthority not implemented")
 }
-func (UnimplementedBundleServer) PublisWITTAuthority(context.Context, *PublishWITAuthorityRequest) (*PublishWITAuthorityResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PublisWITTAuthority not implemented")
+func (UnimplementedBundleServer) PublishWITAuthority(context.Context, *PublishWITAuthorityRequest) (*PublishWITAuthorityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PublishWITAuthority not implemented")
 }
 func (UnimplementedBundleServer) ListFederatedBundles(context.Context, *ListFederatedBundlesRequest) (*ListFederatedBundlesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListFederatedBundles not implemented")
@@ -411,20 +411,20 @@ func _Bundle_PublishJWTAuthority_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Bundle_PublisWITTAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Bundle_PublishWITAuthority_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PublishWITAuthorityRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BundleServer).PublisWITTAuthority(ctx, in)
+		return srv.(BundleServer).PublishWITAuthority(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Bundle_PublisWITTAuthority_FullMethodName,
+		FullMethod: Bundle_PublishWITAuthority_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BundleServer).PublisWITTAuthority(ctx, req.(*PublishWITAuthorityRequest))
+		return srv.(BundleServer).PublishWITAuthority(ctx, req.(*PublishWITAuthorityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -561,8 +561,8 @@ var Bundle_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Bundle_PublishJWTAuthority_Handler,
 		},
 		{
-			MethodName: "PublisWITTAuthority",
-			Handler:    _Bundle_PublisWITTAuthority_Handler,
+			MethodName: "PublishWITAuthority",
+			Handler:    _Bundle_PublishWITAuthority_Handler,
 		},
 		{
 			MethodName: "ListFederatedBundles",
