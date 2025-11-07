@@ -8,10 +8,10 @@ import "spire/api/types/spiffeid.proto";
 // WIT SPIFFE Verifiable Identity Document. It contains the raw WIT token
 // as well as a few denormalized fields for convenience.
 message WITSVID {
-    // The serialized JWT token.
+    // The serialized WIT token.
     string token = 1;
 
-    // The SPIFFE ID of the JWT-SVID.
+    // The SPIFFE ID of the WIT-SVID.
     spire.api.types.SPIFFEID id = 2;
 
     // Expiration timestamp (seconds since Unix epoch).

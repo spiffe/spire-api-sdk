@@ -25,9 +25,9 @@ const (
 // as well as a few denormalized fields for convenience.
 type WITSVID struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The serialized JWT token.
+	// The serialized WIT token.
 	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
-	// The SPIFFE ID of the JWT-SVID.
+	// The SPIFFE ID of the WIT-SVID.
 	Id *SPIFFEID `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	// Expiration timestamp (seconds since Unix epoch).
 	ExpiresAt int64 `protobuf:"varint,3,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
