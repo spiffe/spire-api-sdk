@@ -28,6 +28,7 @@ protos := \
 	proto/spire/api/types/spiffeid.proto \
 	proto/spire/api/types/status.proto \
 	proto/spire/api/types/x509svid.proto \
+	proto/spire/api/types/witsvid.proto \
 
 
 apiprotos := \
@@ -141,7 +142,7 @@ $(protoc_gen_go_bin): | go-check
 	@echo "Installing protoc-gen-go $(protoc_gen_go_version)..."
 	@rm -rf $(protoc_gen_go_base_dir)
 	@mkdir -p $(protoc_gen_go_dir)
-	@$(go_path) go build -o $(protoc_gen_go_bin) google.golang.org/protobuf/cmd/protoc-gen-go
+	@GOBIN=$(protoc_gen_go_dir) $(go_path) go install google.golang.org/protobuf/cmd/protoc-gen-go@$(protoc_gen_go_version)
 
 #############################################################################
 # protoc-gen-go-grpc

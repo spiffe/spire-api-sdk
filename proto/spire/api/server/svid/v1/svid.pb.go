@@ -126,6 +126,117 @@ func (x *MintX509SVIDResponse) GetSvid() *types.X509SVID {
 	return nil
 }
 
+type MintWITSVIDRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. SPIFFE ID of the WIT-SVID.
+	Id *types.SPIFFEID `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Required. The ASN.1 DER encoded public key.
+	PublicKey []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	// Desired TTL of the WIT-SVID, in seconds. The server default will be used
+	// if unset. The TTL is advisory only. The actual lifetime of the WIT-SVID
+	// may be lower depending on the remaining lifetime of the active SPIRE
+	// Server CA.
+	Ttl           int32 `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MintWITSVIDRequest) Reset() {
+	*x = MintWITSVIDRequest{}
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MintWITSVIDRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MintWITSVIDRequest) ProtoMessage() {}
+
+func (x *MintWITSVIDRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MintWITSVIDRequest.ProtoReflect.Descriptor instead.
+func (*MintWITSVIDRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *MintWITSVIDRequest) GetId() *types.SPIFFEID {
+	if x != nil {
+		return x.Id
+	}
+	return nil
+}
+
+func (x *MintWITSVIDRequest) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
+func (x *MintWITSVIDRequest) GetTtl() int32 {
+	if x != nil {
+		return x.Ttl
+	}
+	return 0
+}
+
+type MintWITSVIDResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The newly issued WIT-SVID.
+	Svid          *types.WITSVID `protobuf:"bytes,1,opt,name=svid,proto3" json:"svid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MintWITSVIDResponse) Reset() {
+	*x = MintWITSVIDResponse{}
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MintWITSVIDResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MintWITSVIDResponse) ProtoMessage() {}
+
+func (x *MintWITSVIDResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MintWITSVIDResponse.ProtoReflect.Descriptor instead.
+func (*MintWITSVIDResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *MintWITSVIDResponse) GetSvid() *types.WITSVID {
+	if x != nil {
+		return x.Svid
+	}
+	return nil
+}
+
 type MintJWTSVIDRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Required. SPIFFE ID of the JWT-SVID.
@@ -144,7 +255,7 @@ type MintJWTSVIDRequest struct {
 
 func (x *MintJWTSVIDRequest) Reset() {
 	*x = MintJWTSVIDRequest{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[2]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -156,7 +267,7 @@ func (x *MintJWTSVIDRequest) String() string {
 func (*MintJWTSVIDRequest) ProtoMessage() {}
 
 func (x *MintJWTSVIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[2]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -169,7 +280,7 @@ func (x *MintJWTSVIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MintJWTSVIDRequest.ProtoReflect.Descriptor instead.
 func (*MintJWTSVIDRequest) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{2}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *MintJWTSVIDRequest) GetId() *types.SPIFFEID {
@@ -203,7 +314,7 @@ type MintJWTSVIDResponse struct {
 
 func (x *MintJWTSVIDResponse) Reset() {
 	*x = MintJWTSVIDResponse{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[3]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -215,7 +326,7 @@ func (x *MintJWTSVIDResponse) String() string {
 func (*MintJWTSVIDResponse) ProtoMessage() {}
 
 func (x *MintJWTSVIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[3]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -228,7 +339,7 @@ func (x *MintJWTSVIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MintJWTSVIDResponse.ProtoReflect.Descriptor instead.
 func (*MintJWTSVIDResponse) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{3}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *MintJWTSVIDResponse) GetSvid() *types.JWTSVID {
@@ -249,7 +360,7 @@ type BatchNewX509SVIDRequest struct {
 
 func (x *BatchNewX509SVIDRequest) Reset() {
 	*x = BatchNewX509SVIDRequest{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[4]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -261,7 +372,7 @@ func (x *BatchNewX509SVIDRequest) String() string {
 func (*BatchNewX509SVIDRequest) ProtoMessage() {}
 
 func (x *BatchNewX509SVIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[4]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -274,7 +385,7 @@ func (x *BatchNewX509SVIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchNewX509SVIDRequest.ProtoReflect.Descriptor instead.
 func (*BatchNewX509SVIDRequest) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{4}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *BatchNewX509SVIDRequest) GetParams() []*NewX509SVIDParams {
@@ -294,7 +405,7 @@ type BatchNewX509SVIDResponse struct {
 
 func (x *BatchNewX509SVIDResponse) Reset() {
 	*x = BatchNewX509SVIDResponse{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[5]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -306,7 +417,7 @@ func (x *BatchNewX509SVIDResponse) String() string {
 func (*BatchNewX509SVIDResponse) ProtoMessage() {}
 
 func (x *BatchNewX509SVIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[5]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -319,7 +430,7 @@ func (x *BatchNewX509SVIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchNewX509SVIDResponse.ProtoReflect.Descriptor instead.
 func (*BatchNewX509SVIDResponse) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{5}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *BatchNewX509SVIDResponse) GetResults() []*BatchNewX509SVIDResponse_Result {
@@ -342,7 +453,7 @@ type NewJWTSVIDRequest struct {
 
 func (x *NewJWTSVIDRequest) Reset() {
 	*x = NewJWTSVIDRequest{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[6]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -354,7 +465,7 @@ func (x *NewJWTSVIDRequest) String() string {
 func (*NewJWTSVIDRequest) ProtoMessage() {}
 
 func (x *NewJWTSVIDRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[6]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -367,7 +478,7 @@ func (x *NewJWTSVIDRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewJWTSVIDRequest.ProtoReflect.Descriptor instead.
 func (*NewJWTSVIDRequest) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{6}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *NewJWTSVIDRequest) GetEntryId() string {
@@ -384,6 +495,97 @@ func (x *NewJWTSVIDRequest) GetAudience() []string {
 	return nil
 }
 
+type BatchNewWITSVIDRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. One or more WIT-SVID parameters for WIT-SVID entries to
+	// be signed.
+	Params        []*NewWITSVIDParams `protobuf:"bytes,1,rep,name=params,proto3" json:"params,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchNewWITSVIDRequest) Reset() {
+	*x = BatchNewWITSVIDRequest{}
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchNewWITSVIDRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchNewWITSVIDRequest) ProtoMessage() {}
+
+func (x *BatchNewWITSVIDRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchNewWITSVIDRequest.ProtoReflect.Descriptor instead.
+func (*BatchNewWITSVIDRequest) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *BatchNewWITSVIDRequest) GetParams() []*NewWITSVIDParams {
+	if x != nil {
+		return x.Params
+	}
+	return nil
+}
+
+type BatchNewWITSVIDResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Result for each WIT-SVID requested (order is maintained).
+	Results       []*BatchNewWITSVIDResponse_Result `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchNewWITSVIDResponse) Reset() {
+	*x = BatchNewWITSVIDResponse{}
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchNewWITSVIDResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchNewWITSVIDResponse) ProtoMessage() {}
+
+func (x *BatchNewWITSVIDResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchNewWITSVIDResponse.ProtoReflect.Descriptor instead.
+func (*BatchNewWITSVIDResponse) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *BatchNewWITSVIDResponse) GetResults() []*BatchNewWITSVIDResponse_Result {
+	if x != nil {
+		return x.Results
+	}
+	return nil
+}
+
 type NewJWTSVIDResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The newly issued JWT-SVID
@@ -394,7 +596,7 @@ type NewJWTSVIDResponse struct {
 
 func (x *NewJWTSVIDResponse) Reset() {
 	*x = NewJWTSVIDResponse{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[7]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -406,7 +608,7 @@ func (x *NewJWTSVIDResponse) String() string {
 func (*NewJWTSVIDResponse) ProtoMessage() {}
 
 func (x *NewJWTSVIDResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[7]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -419,7 +621,7 @@ func (x *NewJWTSVIDResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewJWTSVIDResponse.ProtoReflect.Descriptor instead.
 func (*NewJWTSVIDResponse) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{7}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *NewJWTSVIDResponse) GetSvid() *types.JWTSVID {
@@ -445,7 +647,7 @@ type NewDownstreamX509CARequest struct {
 
 func (x *NewDownstreamX509CARequest) Reset() {
 	*x = NewDownstreamX509CARequest{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[8]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -457,7 +659,7 @@ func (x *NewDownstreamX509CARequest) String() string {
 func (*NewDownstreamX509CARequest) ProtoMessage() {}
 
 func (x *NewDownstreamX509CARequest) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[8]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -470,7 +672,7 @@ func (x *NewDownstreamX509CARequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewDownstreamX509CARequest.ProtoReflect.Descriptor instead.
 func (*NewDownstreamX509CARequest) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{8}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *NewDownstreamX509CARequest) GetCsr() []byte {
@@ -501,7 +703,7 @@ type NewDownstreamX509CAResponse struct {
 
 func (x *NewDownstreamX509CAResponse) Reset() {
 	*x = NewDownstreamX509CAResponse{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[9]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -513,7 +715,7 @@ func (x *NewDownstreamX509CAResponse) String() string {
 func (*NewDownstreamX509CAResponse) ProtoMessage() {}
 
 func (x *NewDownstreamX509CAResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[9]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -526,7 +728,7 @@ func (x *NewDownstreamX509CAResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewDownstreamX509CAResponse.ProtoReflect.Descriptor instead.
 func (*NewDownstreamX509CAResponse) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{9}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *NewDownstreamX509CAResponse) GetCaCertChain() [][]byte {
@@ -557,7 +759,7 @@ type NewX509SVIDParams struct {
 
 func (x *NewX509SVIDParams) Reset() {
 	*x = NewX509SVIDParams{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[10]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -569,7 +771,7 @@ func (x *NewX509SVIDParams) String() string {
 func (*NewX509SVIDParams) ProtoMessage() {}
 
 func (x *NewX509SVIDParams) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[10]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -582,7 +784,7 @@ func (x *NewX509SVIDParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewX509SVIDParams.ProtoReflect.Descriptor instead.
 func (*NewX509SVIDParams) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{10}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *NewX509SVIDParams) GetEntryId() string {
@@ -599,6 +801,60 @@ func (x *NewX509SVIDParams) GetCsr() []byte {
 	return nil
 }
 
+type NewWITSVIDParams struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Required. The entry ID for the identity being requested.
+	EntryId string `protobuf:"bytes,1,opt,name=entry_id,json=entryId,proto3" json:"entry_id,omitempty"`
+	// Required. The ASN.1 DER encoded public key.
+	PublicKey     []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *NewWITSVIDParams) Reset() {
+	*x = NewWITSVIDParams{}
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NewWITSVIDParams) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NewWITSVIDParams) ProtoMessage() {}
+
+func (x *NewWITSVIDParams) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NewWITSVIDParams.ProtoReflect.Descriptor instead.
+func (*NewWITSVIDParams) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *NewWITSVIDParams) GetEntryId() string {
+	if x != nil {
+		return x.EntryId
+	}
+	return ""
+}
+
+func (x *NewWITSVIDParams) GetPublicKey() []byte {
+	if x != nil {
+		return x.PublicKey
+	}
+	return nil
+}
+
 type BatchNewX509SVIDResponse_Result struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The status of creating the X509-SVID.
@@ -611,7 +867,7 @@ type BatchNewX509SVIDResponse_Result struct {
 
 func (x *BatchNewX509SVIDResponse_Result) Reset() {
 	*x = BatchNewX509SVIDResponse_Result{}
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[11]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -623,7 +879,7 @@ func (x *BatchNewX509SVIDResponse_Result) String() string {
 func (*BatchNewX509SVIDResponse_Result) ProtoMessage() {}
 
 func (x *BatchNewX509SVIDResponse_Result) ProtoReflect() protoreflect.Message {
-	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[11]
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -636,7 +892,7 @@ func (x *BatchNewX509SVIDResponse_Result) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchNewX509SVIDResponse_Result.ProtoReflect.Descriptor instead.
 func (*BatchNewX509SVIDResponse_Result) Descriptor() ([]byte, []int) {
-	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{5, 0}
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{7, 0}
 }
 
 func (x *BatchNewX509SVIDResponse_Result) GetStatus() *types.Status {
@@ -653,16 +909,77 @@ func (x *BatchNewX509SVIDResponse_Result) GetSvid() *types.X509SVID {
 	return nil
 }
 
+type BatchNewWITSVIDResponse_Result struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The status of creating the WIT-SVID.
+	Status *types.Status `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
+	// The newly created WIT-SVID. This will be set if the status is OK.
+	Svid          *types.WITSVID `protobuf:"bytes,2,opt,name=svid,proto3" json:"svid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BatchNewWITSVIDResponse_Result) Reset() {
+	*x = BatchNewWITSVIDResponse_Result{}
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BatchNewWITSVIDResponse_Result) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BatchNewWITSVIDResponse_Result) ProtoMessage() {}
+
+func (x *BatchNewWITSVIDResponse_Result) ProtoReflect() protoreflect.Message {
+	mi := &file_spire_api_server_svid_v1_svid_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BatchNewWITSVIDResponse_Result.ProtoReflect.Descriptor instead.
+func (*BatchNewWITSVIDResponse_Result) Descriptor() ([]byte, []int) {
+	return file_spire_api_server_svid_v1_svid_proto_rawDescGZIP(), []int{10, 0}
+}
+
+func (x *BatchNewWITSVIDResponse_Result) GetStatus() *types.Status {
+	if x != nil {
+		return x.Status
+	}
+	return nil
+}
+
+func (x *BatchNewWITSVIDResponse_Result) GetSvid() *types.WITSVID {
+	if x != nil {
+		return x.Svid
+	}
+	return nil
+}
+
 var File_spire_api_server_svid_v1_svid_proto protoreflect.FileDescriptor
 
 const file_spire_api_server_svid_v1_svid_proto_rawDesc = "" +
 	"\n" +
-	"#spire/api/server/svid/v1/svid.proto\x12\x18spire.api.server.svid.v1\x1a\x1dspire/api/types/jwtsvid.proto\x1a\x1espire/api/types/spiffeid.proto\x1a\x1cspire/api/types/status.proto\x1a\x1espire/api/types/x509svid.proto\"9\n" +
+	"#spire/api/server/svid/v1/svid.proto\x12\x18spire.api.server.svid.v1\x1a\x1dspire/api/types/jwtsvid.proto\x1a\x1espire/api/types/spiffeid.proto\x1a\x1cspire/api/types/status.proto\x1a\x1espire/api/types/x509svid.proto\x1a\x1dspire/api/types/witsvid.proto\"9\n" +
 	"\x13MintX509SVIDRequest\x12\x10\n" +
 	"\x03csr\x18\x01 \x01(\fR\x03csr\x12\x10\n" +
 	"\x03ttl\x18\x02 \x01(\x05R\x03ttl\"E\n" +
 	"\x14MintX509SVIDResponse\x12-\n" +
-	"\x04svid\x18\x01 \x01(\v2\x19.spire.api.types.X509SVIDR\x04svid\"m\n" +
+	"\x04svid\x18\x01 \x01(\v2\x19.spire.api.types.X509SVIDR\x04svid\"p\n" +
+	"\x12MintWITSVIDRequest\x12)\n" +
+	"\x02id\x18\x01 \x01(\v2\x19.spire.api.types.SPIFFEIDR\x02id\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x02 \x01(\fR\tpublicKey\x12\x10\n" +
+	"\x03ttl\x18\x03 \x01(\x05R\x03ttl\"C\n" +
+	"\x13MintWITSVIDResponse\x12,\n" +
+	"\x04svid\x18\x01 \x01(\v2\x18.spire.api.types.WITSVIDR\x04svid\"m\n" +
 	"\x12MintJWTSVIDRequest\x12)\n" +
 	"\x02id\x18\x01 \x01(\v2\x19.spire.api.types.SPIFFEIDR\x02id\x12\x1a\n" +
 	"\baudience\x18\x02 \x03(\tR\baudience\x12\x10\n" +
@@ -678,7 +995,14 @@ const file_spire_api_server_svid_v1_svid_proto_rawDesc = "" +
 	"\x04svid\x18\x02 \x01(\v2\x19.spire.api.types.X509SVIDR\x04svid\"J\n" +
 	"\x11NewJWTSVIDRequest\x12\x19\n" +
 	"\bentry_id\x18\x01 \x01(\tR\aentryId\x12\x1a\n" +
-	"\baudience\x18\x02 \x03(\tR\baudience\"B\n" +
+	"\baudience\x18\x02 \x03(\tR\baudience\"\\\n" +
+	"\x16BatchNewWITSVIDRequest\x12B\n" +
+	"\x06params\x18\x01 \x03(\v2*.spire.api.server.svid.v1.NewWITSVIDParamsR\x06params\"\xd6\x01\n" +
+	"\x17BatchNewWITSVIDResponse\x12R\n" +
+	"\aresults\x18\x01 \x03(\v28.spire.api.server.svid.v1.BatchNewWITSVIDResponse.ResultR\aresults\x1ag\n" +
+	"\x06Result\x12/\n" +
+	"\x06status\x18\x01 \x01(\v2\x17.spire.api.types.StatusR\x06status\x12,\n" +
+	"\x04svid\x18\x02 \x01(\v2\x18.spire.api.types.WITSVIDR\x04svid\"B\n" +
 	"\x12NewJWTSVIDResponse\x12,\n" +
 	"\x04svid\x18\x01 \x01(\v2\x18.spire.api.types.JWTSVIDR\x04svid\"S\n" +
 	"\x1aNewDownstreamX509CARequest\x12\x10\n" +
@@ -689,13 +1013,19 @@ const file_spire_api_server_svid_v1_svid_proto_rawDesc = "" +
 	"\x10x509_authorities\x18\x02 \x03(\fR\x0fx509Authorities\"@\n" +
 	"\x11NewX509SVIDParams\x12\x19\n" +
 	"\bentry_id\x18\x01 \x01(\tR\aentryId\x12\x10\n" +
-	"\x03csr\x18\x02 \x01(\fR\x03csr2\xca\x04\n" +
+	"\x03csr\x18\x02 \x01(\fR\x03csr\"L\n" +
+	"\x10NewWITSVIDParams\x12\x19\n" +
+	"\bentry_id\x18\x01 \x01(\tR\aentryId\x12\x1d\n" +
+	"\n" +
+	"public_key\x18\x02 \x01(\fR\tpublicKey2\xae\x06\n" +
 	"\x04SVID\x12m\n" +
 	"\fMintX509SVID\x12-.spire.api.server.svid.v1.MintX509SVIDRequest\x1a..spire.api.server.svid.v1.MintX509SVIDResponse\x12j\n" +
-	"\vMintJWTSVID\x12,.spire.api.server.svid.v1.MintJWTSVIDRequest\x1a-.spire.api.server.svid.v1.MintJWTSVIDResponse\x12y\n" +
+	"\vMintJWTSVID\x12,.spire.api.server.svid.v1.MintJWTSVIDRequest\x1a-.spire.api.server.svid.v1.MintJWTSVIDResponse\x12j\n" +
+	"\vMintWITSVID\x12,.spire.api.server.svid.v1.MintWITSVIDRequest\x1a-.spire.api.server.svid.v1.MintWITSVIDResponse\x12y\n" +
 	"\x10BatchNewX509SVID\x121.spire.api.server.svid.v1.BatchNewX509SVIDRequest\x1a2.spire.api.server.svid.v1.BatchNewX509SVIDResponse\x12g\n" +
 	"\n" +
-	"NewJWTSVID\x12+.spire.api.server.svid.v1.NewJWTSVIDRequest\x1a,.spire.api.server.svid.v1.NewJWTSVIDResponse\x12\x82\x01\n" +
+	"NewJWTSVID\x12+.spire.api.server.svid.v1.NewJWTSVIDRequest\x1a,.spire.api.server.svid.v1.NewJWTSVIDResponse\x12v\n" +
+	"\x0fBatchNewWITSVID\x120.spire.api.server.svid.v1.BatchNewWITSVIDRequest\x1a1.spire.api.server.svid.v1.BatchNewWITSVIDResponse\x12\x82\x01\n" +
 	"\x13NewDownstreamX509CA\x124.spire.api.server.svid.v1.NewDownstreamX509CARequest\x1a5.spire.api.server.svid.v1.NewDownstreamX509CAResponseBGZEgithub.com/spiffe/spire-api-sdk/proto/spire/api/server/svid/v1;svidv1b\x06proto3"
 
 var (
@@ -710,49 +1040,66 @@ func file_spire_api_server_svid_v1_svid_proto_rawDescGZIP() []byte {
 	return file_spire_api_server_svid_v1_svid_proto_rawDescData
 }
 
-var file_spire_api_server_svid_v1_svid_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_spire_api_server_svid_v1_svid_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_spire_api_server_svid_v1_svid_proto_goTypes = []any{
 	(*MintX509SVIDRequest)(nil),             // 0: spire.api.server.svid.v1.MintX509SVIDRequest
 	(*MintX509SVIDResponse)(nil),            // 1: spire.api.server.svid.v1.MintX509SVIDResponse
-	(*MintJWTSVIDRequest)(nil),              // 2: spire.api.server.svid.v1.MintJWTSVIDRequest
-	(*MintJWTSVIDResponse)(nil),             // 3: spire.api.server.svid.v1.MintJWTSVIDResponse
-	(*BatchNewX509SVIDRequest)(nil),         // 4: spire.api.server.svid.v1.BatchNewX509SVIDRequest
-	(*BatchNewX509SVIDResponse)(nil),        // 5: spire.api.server.svid.v1.BatchNewX509SVIDResponse
-	(*NewJWTSVIDRequest)(nil),               // 6: spire.api.server.svid.v1.NewJWTSVIDRequest
-	(*NewJWTSVIDResponse)(nil),              // 7: spire.api.server.svid.v1.NewJWTSVIDResponse
-	(*NewDownstreamX509CARequest)(nil),      // 8: spire.api.server.svid.v1.NewDownstreamX509CARequest
-	(*NewDownstreamX509CAResponse)(nil),     // 9: spire.api.server.svid.v1.NewDownstreamX509CAResponse
-	(*NewX509SVIDParams)(nil),               // 10: spire.api.server.svid.v1.NewX509SVIDParams
-	(*BatchNewX509SVIDResponse_Result)(nil), // 11: spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result
-	(*types.X509SVID)(nil),                  // 12: spire.api.types.X509SVID
-	(*types.SPIFFEID)(nil),                  // 13: spire.api.types.SPIFFEID
-	(*types.JWTSVID)(nil),                   // 14: spire.api.types.JWTSVID
-	(*types.Status)(nil),                    // 15: spire.api.types.Status
+	(*MintWITSVIDRequest)(nil),              // 2: spire.api.server.svid.v1.MintWITSVIDRequest
+	(*MintWITSVIDResponse)(nil),             // 3: spire.api.server.svid.v1.MintWITSVIDResponse
+	(*MintJWTSVIDRequest)(nil),              // 4: spire.api.server.svid.v1.MintJWTSVIDRequest
+	(*MintJWTSVIDResponse)(nil),             // 5: spire.api.server.svid.v1.MintJWTSVIDResponse
+	(*BatchNewX509SVIDRequest)(nil),         // 6: spire.api.server.svid.v1.BatchNewX509SVIDRequest
+	(*BatchNewX509SVIDResponse)(nil),        // 7: spire.api.server.svid.v1.BatchNewX509SVIDResponse
+	(*NewJWTSVIDRequest)(nil),               // 8: spire.api.server.svid.v1.NewJWTSVIDRequest
+	(*BatchNewWITSVIDRequest)(nil),          // 9: spire.api.server.svid.v1.BatchNewWITSVIDRequest
+	(*BatchNewWITSVIDResponse)(nil),         // 10: spire.api.server.svid.v1.BatchNewWITSVIDResponse
+	(*NewJWTSVIDResponse)(nil),              // 11: spire.api.server.svid.v1.NewJWTSVIDResponse
+	(*NewDownstreamX509CARequest)(nil),      // 12: spire.api.server.svid.v1.NewDownstreamX509CARequest
+	(*NewDownstreamX509CAResponse)(nil),     // 13: spire.api.server.svid.v1.NewDownstreamX509CAResponse
+	(*NewX509SVIDParams)(nil),               // 14: spire.api.server.svid.v1.NewX509SVIDParams
+	(*NewWITSVIDParams)(nil),                // 15: spire.api.server.svid.v1.NewWITSVIDParams
+	(*BatchNewX509SVIDResponse_Result)(nil), // 16: spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result
+	(*BatchNewWITSVIDResponse_Result)(nil),  // 17: spire.api.server.svid.v1.BatchNewWITSVIDResponse.Result
+	(*types.X509SVID)(nil),                  // 18: spire.api.types.X509SVID
+	(*types.SPIFFEID)(nil),                  // 19: spire.api.types.SPIFFEID
+	(*types.WITSVID)(nil),                   // 20: spire.api.types.WITSVID
+	(*types.JWTSVID)(nil),                   // 21: spire.api.types.JWTSVID
+	(*types.Status)(nil),                    // 22: spire.api.types.Status
 }
 var file_spire_api_server_svid_v1_svid_proto_depIdxs = []int32{
-	12, // 0: spire.api.server.svid.v1.MintX509SVIDResponse.svid:type_name -> spire.api.types.X509SVID
-	13, // 1: spire.api.server.svid.v1.MintJWTSVIDRequest.id:type_name -> spire.api.types.SPIFFEID
-	14, // 2: spire.api.server.svid.v1.MintJWTSVIDResponse.svid:type_name -> spire.api.types.JWTSVID
-	10, // 3: spire.api.server.svid.v1.BatchNewX509SVIDRequest.params:type_name -> spire.api.server.svid.v1.NewX509SVIDParams
-	11, // 4: spire.api.server.svid.v1.BatchNewX509SVIDResponse.results:type_name -> spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result
-	14, // 5: spire.api.server.svid.v1.NewJWTSVIDResponse.svid:type_name -> spire.api.types.JWTSVID
-	15, // 6: spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result.status:type_name -> spire.api.types.Status
-	12, // 7: spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result.svid:type_name -> spire.api.types.X509SVID
-	0,  // 8: spire.api.server.svid.v1.SVID.MintX509SVID:input_type -> spire.api.server.svid.v1.MintX509SVIDRequest
-	2,  // 9: spire.api.server.svid.v1.SVID.MintJWTSVID:input_type -> spire.api.server.svid.v1.MintJWTSVIDRequest
-	4,  // 10: spire.api.server.svid.v1.SVID.BatchNewX509SVID:input_type -> spire.api.server.svid.v1.BatchNewX509SVIDRequest
-	6,  // 11: spire.api.server.svid.v1.SVID.NewJWTSVID:input_type -> spire.api.server.svid.v1.NewJWTSVIDRequest
-	8,  // 12: spire.api.server.svid.v1.SVID.NewDownstreamX509CA:input_type -> spire.api.server.svid.v1.NewDownstreamX509CARequest
-	1,  // 13: spire.api.server.svid.v1.SVID.MintX509SVID:output_type -> spire.api.server.svid.v1.MintX509SVIDResponse
-	3,  // 14: spire.api.server.svid.v1.SVID.MintJWTSVID:output_type -> spire.api.server.svid.v1.MintJWTSVIDResponse
-	5,  // 15: spire.api.server.svid.v1.SVID.BatchNewX509SVID:output_type -> spire.api.server.svid.v1.BatchNewX509SVIDResponse
-	7,  // 16: spire.api.server.svid.v1.SVID.NewJWTSVID:output_type -> spire.api.server.svid.v1.NewJWTSVIDResponse
-	9,  // 17: spire.api.server.svid.v1.SVID.NewDownstreamX509CA:output_type -> spire.api.server.svid.v1.NewDownstreamX509CAResponse
-	13, // [13:18] is the sub-list for method output_type
-	8,  // [8:13] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	18, // 0: spire.api.server.svid.v1.MintX509SVIDResponse.svid:type_name -> spire.api.types.X509SVID
+	19, // 1: spire.api.server.svid.v1.MintWITSVIDRequest.id:type_name -> spire.api.types.SPIFFEID
+	20, // 2: spire.api.server.svid.v1.MintWITSVIDResponse.svid:type_name -> spire.api.types.WITSVID
+	19, // 3: spire.api.server.svid.v1.MintJWTSVIDRequest.id:type_name -> spire.api.types.SPIFFEID
+	21, // 4: spire.api.server.svid.v1.MintJWTSVIDResponse.svid:type_name -> spire.api.types.JWTSVID
+	14, // 5: spire.api.server.svid.v1.BatchNewX509SVIDRequest.params:type_name -> spire.api.server.svid.v1.NewX509SVIDParams
+	16, // 6: spire.api.server.svid.v1.BatchNewX509SVIDResponse.results:type_name -> spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result
+	15, // 7: spire.api.server.svid.v1.BatchNewWITSVIDRequest.params:type_name -> spire.api.server.svid.v1.NewWITSVIDParams
+	17, // 8: spire.api.server.svid.v1.BatchNewWITSVIDResponse.results:type_name -> spire.api.server.svid.v1.BatchNewWITSVIDResponse.Result
+	21, // 9: spire.api.server.svid.v1.NewJWTSVIDResponse.svid:type_name -> spire.api.types.JWTSVID
+	22, // 10: spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result.status:type_name -> spire.api.types.Status
+	18, // 11: spire.api.server.svid.v1.BatchNewX509SVIDResponse.Result.svid:type_name -> spire.api.types.X509SVID
+	22, // 12: spire.api.server.svid.v1.BatchNewWITSVIDResponse.Result.status:type_name -> spire.api.types.Status
+	20, // 13: spire.api.server.svid.v1.BatchNewWITSVIDResponse.Result.svid:type_name -> spire.api.types.WITSVID
+	0,  // 14: spire.api.server.svid.v1.SVID.MintX509SVID:input_type -> spire.api.server.svid.v1.MintX509SVIDRequest
+	4,  // 15: spire.api.server.svid.v1.SVID.MintJWTSVID:input_type -> spire.api.server.svid.v1.MintJWTSVIDRequest
+	2,  // 16: spire.api.server.svid.v1.SVID.MintWITSVID:input_type -> spire.api.server.svid.v1.MintWITSVIDRequest
+	6,  // 17: spire.api.server.svid.v1.SVID.BatchNewX509SVID:input_type -> spire.api.server.svid.v1.BatchNewX509SVIDRequest
+	8,  // 18: spire.api.server.svid.v1.SVID.NewJWTSVID:input_type -> spire.api.server.svid.v1.NewJWTSVIDRequest
+	9,  // 19: spire.api.server.svid.v1.SVID.BatchNewWITSVID:input_type -> spire.api.server.svid.v1.BatchNewWITSVIDRequest
+	12, // 20: spire.api.server.svid.v1.SVID.NewDownstreamX509CA:input_type -> spire.api.server.svid.v1.NewDownstreamX509CARequest
+	1,  // 21: spire.api.server.svid.v1.SVID.MintX509SVID:output_type -> spire.api.server.svid.v1.MintX509SVIDResponse
+	5,  // 22: spire.api.server.svid.v1.SVID.MintJWTSVID:output_type -> spire.api.server.svid.v1.MintJWTSVIDResponse
+	3,  // 23: spire.api.server.svid.v1.SVID.MintWITSVID:output_type -> spire.api.server.svid.v1.MintWITSVIDResponse
+	7,  // 24: spire.api.server.svid.v1.SVID.BatchNewX509SVID:output_type -> spire.api.server.svid.v1.BatchNewX509SVIDResponse
+	11, // 25: spire.api.server.svid.v1.SVID.NewJWTSVID:output_type -> spire.api.server.svid.v1.NewJWTSVIDResponse
+	10, // 26: spire.api.server.svid.v1.SVID.BatchNewWITSVID:output_type -> spire.api.server.svid.v1.BatchNewWITSVIDResponse
+	13, // 27: spire.api.server.svid.v1.SVID.NewDownstreamX509CA:output_type -> spire.api.server.svid.v1.NewDownstreamX509CAResponse
+	21, // [21:28] is the sub-list for method output_type
+	14, // [14:21] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_spire_api_server_svid_v1_svid_proto_init() }
@@ -766,7 +1113,7 @@ func file_spire_api_server_svid_v1_svid_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_spire_api_server_svid_v1_svid_proto_rawDesc), len(file_spire_api_server_svid_v1_svid_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
