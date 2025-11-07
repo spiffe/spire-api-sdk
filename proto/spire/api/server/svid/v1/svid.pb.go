@@ -497,7 +497,7 @@ func (x *NewJWTSVIDRequest) GetAudience() []string {
 
 type BatchNewWITSVIDRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Required. One or more X509-SVID parameters for X509-SVID entries to
+	// Required. One or more WIT-SVID parameters for WIT-SVID entries to
 	// be signed.
 	Params        []*NewWITSVIDParams `protobuf:"bytes,1,rep,name=params,proto3" json:"params,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -543,7 +543,7 @@ func (x *BatchNewWITSVIDRequest) GetParams() []*NewWITSVIDParams {
 
 type BatchNewWITSVIDResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Result for each X509-SVID requested (order is maintained).
+	// Result for each WIT-SVID requested (order is maintained).
 	Results       []*BatchNewWITSVIDResponse_Result `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -913,7 +913,7 @@ type BatchNewWITSVIDResponse_Result struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The status of creating the WIT-SVID.
 	Status *types.Status `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
-	// The newly created X509-SVID. This will be set if the status is OK.
+	// The newly created WIT-SVID. This will be set if the status is OK.
 	Svid          *types.WITSVID `protobuf:"bytes,2,opt,name=svid,proto3" json:"svid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

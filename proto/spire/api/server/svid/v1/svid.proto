@@ -139,7 +139,7 @@ message NewJWTSVIDRequest {
 
 
 message BatchNewWITSVIDRequest {
-    // Required. One or more X509-SVID parameters for X509-SVID entries to
+    // Required. One or more WIT-SVID parameters for WIT-SVID entries to
     // be signed.
     repeated NewWITSVIDParams params = 1;
 }
@@ -149,11 +149,11 @@ message BatchNewWITSVIDResponse {
         // The status of creating the WIT-SVID.
         spire.api.types.Status status = 1;
 
-        // The newly created X509-SVID. This will be set if the status is OK.
+        // The newly created WIT-SVID. This will be set if the status is OK.
         spire.api.types.WITSVID svid = 2;
     }
 
-    // Result for each X509-SVID requested (order is maintained).
+    // Result for each WIT-SVID requested (order is maintained).
     repeated Result results = 1;
 }
 
