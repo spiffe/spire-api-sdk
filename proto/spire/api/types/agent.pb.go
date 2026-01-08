@@ -38,8 +38,8 @@ type Agent struct {
 	Banned bool `protobuf:"varint,6,opt,name=banned,proto3" json:"banned,omitempty"`
 	// Output only. Whether or not the agent can re-attest.
 	CanReattest bool `protobuf:"varint,7,opt,name=can_reattest,json=canReattest,proto3" json:"can_reattest,omitempty"`
-	// Output only. The version of the agent.
-	AgentVersion  *string `protobuf:"bytes,8,opt,name=agent_version,json=agentVersion,proto3,oneof" json:"agent_version,omitempty"`
+	// Output only. Optional. The version of the agent.
+	AgentVersion  string `protobuf:"bytes,8,opt,name=agent_version,json=agentVersion,proto3" json:"agent_version,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -124,8 +124,8 @@ func (x *Agent) GetCanReattest() bool {
 }
 
 func (x *Agent) GetAgentVersion() string {
-	if x != nil && x.AgentVersion != nil {
-		return *x.AgentVersion
+	if x != nil {
+		return x.AgentVersion
 	}
 	return ""
 }
@@ -233,7 +233,7 @@ var File_spire_api_types_agent_proto protoreflect.FileDescriptor
 
 const file_spire_api_types_agent_proto_rawDesc = "" +
 	"\n" +
-	"\x1bspire/api/types/agent.proto\x12\x0fspire.api.types\x1a\x1espire/api/types/selector.proto\x1a\x1espire/api/types/spiffeid.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xf3\x02\n" +
+	"\x1bspire/api/types/agent.proto\x12\x0fspire.api.types\x1a\x1espire/api/types/selector.proto\x1a\x1espire/api/types/spiffeid.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xdc\x02\n" +
 	"\x05Agent\x12)\n" +
 	"\x02id\x18\x01 \x01(\v2\x19.spire.api.types.SPIFFEIDR\x02id\x12)\n" +
 	"\x10attestation_type\x18\x02 \x01(\tR\x0fattestationType\x124\n" +
@@ -241,9 +241,8 @@ const file_spire_api_types_agent_proto_rawDesc = "" +
 	"\x13x509svid_expires_at\x18\x04 \x01(\x03R\x11x509svidExpiresAt\x127\n" +
 	"\tselectors\x18\x05 \x03(\v2\x19.spire.api.types.SelectorR\tselectors\x12\x16\n" +
 	"\x06banned\x18\x06 \x01(\bR\x06banned\x12!\n" +
-	"\fcan_reattest\x18\a \x01(\bR\vcanReattest\x12(\n" +
-	"\ragent_version\x18\b \x01(\tH\x00R\fagentVersion\x88\x01\x01B\x10\n" +
-	"\x0e_agent_version\"\x9a\x02\n" +
+	"\fcan_reattest\x18\a \x01(\bR\vcanReattest\x12#\n" +
+	"\ragent_version\x18\b \x01(\tR\fagentVersion\"\x9a\x02\n" +
 	"\tAgentMask\x12)\n" +
 	"\x10attestation_type\x18\x02 \x01(\bR\x0fattestationType\x124\n" +
 	"\x16x509svid_serial_number\x18\x03 \x01(\bR\x14x509svidSerialNumber\x12.\n" +
@@ -289,7 +288,6 @@ func file_spire_api_types_agent_proto_init() {
 	}
 	file_spire_api_types_selector_proto_init()
 	file_spire_api_types_spiffeid_proto_init()
-	file_spire_api_types_agent_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

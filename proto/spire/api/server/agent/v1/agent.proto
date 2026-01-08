@@ -227,8 +227,8 @@ message PostStatusRequest {
     // Required. Serial number of the bundle currently being served by the agent
     uint64 current_bundle_serial = 1;
 
-    // The version of the agent.
-    optional string agent_version = 2;
+    // Optional. The version of the agent.
+    string agent_version = 2;
 }
 
 message PostStatusResponse {
