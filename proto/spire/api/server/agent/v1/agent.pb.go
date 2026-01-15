@@ -765,8 +765,10 @@ type PostStatusRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Required. Serial number of the bundle currently being served by the agent
 	CurrentBundleSerial uint64 `protobuf:"varint,1,opt,name=current_bundle_serial,json=currentBundleSerial,proto3" json:"current_bundle_serial,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// Optional. The version of the agent.
+	AgentVersion  string `protobuf:"bytes,2,opt,name=agent_version,json=agentVersion,proto3" json:"agent_version,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PostStatusRequest) Reset() {
@@ -804,6 +806,13 @@ func (x *PostStatusRequest) GetCurrentBundleSerial() uint64 {
 		return x.CurrentBundleSerial
 	}
 	return 0
+}
+
+func (x *PostStatusRequest) GetAgentVersion() string {
+	if x != nil {
+		return x.AgentVersion
+	}
+	return ""
 }
 
 type PostStatusResponse struct {
@@ -1174,9 +1183,10 @@ const file_spire_api_server_agent_v1_agent_proto_rawDesc = "" +
 	"\x05token\x18\x02 \x01(\tR\x05token\x124\n" +
 	"\bagent_id\x18\x03 \x01(\v2\x19.spire.api.types.SPIFFEIDR\aagentId\"'\n" +
 	"\x13AgentX509SVIDParams\x12\x10\n" +
-	"\x03csr\x18\x01 \x01(\fR\x03csr\"G\n" +
+	"\x03csr\x18\x01 \x01(\fR\x03csr\"l\n" +
 	"\x11PostStatusRequest\x122\n" +
-	"\x15current_bundle_serial\x18\x01 \x01(\x04R\x13currentBundleSerial\"\x14\n" +
+	"\x15current_bundle_serial\x18\x01 \x01(\x04R\x13currentBundleSerial\x12#\n" +
+	"\ragent_version\x18\x02 \x01(\tR\fagentVersion\"\x14\n" +
 	"\x12PostStatusResponse2\x80\a\n" +
 	"\x05Agent\x12l\n" +
 	"\vCountAgents\x12-.spire.api.server.agent.v1.CountAgentsRequest\x1a..spire.api.server.agent.v1.CountAgentsResponse\x12i\n" +
