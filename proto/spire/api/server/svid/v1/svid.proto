@@ -82,6 +82,10 @@ message MintWITSVIDRequest {
     // may be lower depending on the remaining lifetime of the active SPIRE
     // Server CA.
     int32 ttl = 3;
+
+    // Required. The signing algorithm to specify in the key. This must be one
+    // of the values supported by the WIT-SVID specification.
+    string signing_algorithm = 4;
 }
 
 message MintWITSVIDResponse {
@@ -200,4 +204,8 @@ message NewWITSVIDParams {
 
     // Required. The ASN.1 DER encoded public key.
     bytes public_key = 2;
+
+    // Required. The signing algorithm to specify in the key. This must be one
+    // of the values supported by the WIT-SVID specification.
+    string signing_algorithm = 3;
 }
