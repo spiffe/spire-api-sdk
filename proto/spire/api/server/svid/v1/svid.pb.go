@@ -136,9 +136,12 @@ type MintWITSVIDRequest struct {
 	// if unset. The TTL is advisory only. The actual lifetime of the WIT-SVID
 	// may be lower depending on the remaining lifetime of the active SPIRE
 	// Server CA.
-	Ttl           int32 `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Ttl int32 `protobuf:"varint,3,opt,name=ttl,proto3" json:"ttl,omitempty"`
+	// Required. The signing algorithm to specify in the key. This must be one
+	// of the values supported by the WIT-SVID specification.
+	SigningAlgorithm string `protobuf:"bytes,4,opt,name=signing_algorithm,json=signingAlgorithm,proto3" json:"signing_algorithm,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *MintWITSVIDRequest) Reset() {
@@ -190,6 +193,13 @@ func (x *MintWITSVIDRequest) GetTtl() int32 {
 		return x.Ttl
 	}
 	return 0
+}
+
+func (x *MintWITSVIDRequest) GetSigningAlgorithm() string {
+	if x != nil {
+		return x.SigningAlgorithm
+	}
+	return ""
 }
 
 type MintWITSVIDResponse struct {
@@ -806,9 +816,12 @@ type NewWITSVIDParams struct {
 	// Required. The entry ID for the identity being requested.
 	EntryId string `protobuf:"bytes,1,opt,name=entry_id,json=entryId,proto3" json:"entry_id,omitempty"`
 	// Required. The ASN.1 DER encoded public key.
-	PublicKey     []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	PublicKey []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	// Required. The signing algorithm to specify in the key. This must be one
+	// of the values supported by the WIT-SVID specification.
+	SigningAlgorithm string `protobuf:"bytes,3,opt,name=signing_algorithm,json=signingAlgorithm,proto3" json:"signing_algorithm,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *NewWITSVIDParams) Reset() {
@@ -853,6 +866,13 @@ func (x *NewWITSVIDParams) GetPublicKey() []byte {
 		return x.PublicKey
 	}
 	return nil
+}
+
+func (x *NewWITSVIDParams) GetSigningAlgorithm() string {
+	if x != nil {
+		return x.SigningAlgorithm
+	}
+	return ""
 }
 
 type BatchNewX509SVIDResponse_Result struct {
@@ -972,12 +992,13 @@ const file_spire_api_server_svid_v1_svid_proto_rawDesc = "" +
 	"\x03csr\x18\x01 \x01(\fR\x03csr\x12\x10\n" +
 	"\x03ttl\x18\x02 \x01(\x05R\x03ttl\"E\n" +
 	"\x14MintX509SVIDResponse\x12-\n" +
-	"\x04svid\x18\x01 \x01(\v2\x19.spire.api.types.X509SVIDR\x04svid\"p\n" +
+	"\x04svid\x18\x01 \x01(\v2\x19.spire.api.types.X509SVIDR\x04svid\"\x9d\x01\n" +
 	"\x12MintWITSVIDRequest\x12)\n" +
 	"\x02id\x18\x01 \x01(\v2\x19.spire.api.types.SPIFFEIDR\x02id\x12\x1d\n" +
 	"\n" +
 	"public_key\x18\x02 \x01(\fR\tpublicKey\x12\x10\n" +
-	"\x03ttl\x18\x03 \x01(\x05R\x03ttl\"C\n" +
+	"\x03ttl\x18\x03 \x01(\x05R\x03ttl\x12+\n" +
+	"\x11signing_algorithm\x18\x04 \x01(\tR\x10signingAlgorithm\"C\n" +
 	"\x13MintWITSVIDResponse\x12,\n" +
 	"\x04svid\x18\x01 \x01(\v2\x18.spire.api.types.WITSVIDR\x04svid\"m\n" +
 	"\x12MintJWTSVIDRequest\x12)\n" +
@@ -1013,11 +1034,12 @@ const file_spire_api_server_svid_v1_svid_proto_rawDesc = "" +
 	"\x10x509_authorities\x18\x02 \x03(\fR\x0fx509Authorities\"@\n" +
 	"\x11NewX509SVIDParams\x12\x19\n" +
 	"\bentry_id\x18\x01 \x01(\tR\aentryId\x12\x10\n" +
-	"\x03csr\x18\x02 \x01(\fR\x03csr\"L\n" +
+	"\x03csr\x18\x02 \x01(\fR\x03csr\"y\n" +
 	"\x10NewWITSVIDParams\x12\x19\n" +
 	"\bentry_id\x18\x01 \x01(\tR\aentryId\x12\x1d\n" +
 	"\n" +
-	"public_key\x18\x02 \x01(\fR\tpublicKey2\xae\x06\n" +
+	"public_key\x18\x02 \x01(\fR\tpublicKey\x12+\n" +
+	"\x11signing_algorithm\x18\x03 \x01(\tR\x10signingAlgorithm2\xae\x06\n" +
 	"\x04SVID\x12m\n" +
 	"\fMintX509SVID\x12-.spire.api.server.svid.v1.MintX509SVIDRequest\x1a..spire.api.server.svid.v1.MintX509SVIDResponse\x12j\n" +
 	"\vMintJWTSVID\x12,.spire.api.server.svid.v1.MintJWTSVIDRequest\x1a-.spire.api.server.svid.v1.MintJWTSVIDResponse\x12j\n" +
