@@ -226,6 +226,9 @@ message AgentX509SVIDParams {
 message PostStatusRequest {
     // Required. Serial number of the bundle currently being served by the agent
     uint64 current_bundle_serial = 1;
+
+    // Optional. The version of the agent.
+    string agent_version = 2;
 }
 
 message PostStatusResponse {
