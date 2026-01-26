@@ -66,7 +66,9 @@ type Entry struct {
 	// identity should be used by a workload when more than one SVID is returned.
 	Hint string `protobuf:"bytes,14,opt,name=hint,proto3" json:"hint,omitempty"`
 	// When the entry was created (seconds since Unix epoch).
-	CreatedAt     int64 `protobuf:"varint,15,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreatedAt int64 `protobuf:"varint,15,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// The time to live for WIT-SVID identities issues for this entry (in seconds), overttide ttl if set.
+	WitSvidTtl    int64 `protobuf:"varint,16,opt,name=wit_svid_ttl,json=witSvidTtl,proto3" json:"wit_svid_ttl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -206,6 +208,13 @@ func (x *Entry) GetCreatedAt() int64 {
 	return 0
 }
 
+func (x *Entry) GetWitSvidTtl() int64 {
+	if x != nil {
+		return x.WitSvidTtl
+	}
+	return 0
+}
+
 // Field mask for Entry fields
 type EntryMask struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -236,7 +245,9 @@ type EntryMask struct {
 	// hint field mask
 	Hint bool `protobuf:"varint,14,opt,name=hint,proto3" json:"hint,omitempty"`
 	// created_at field mask
-	CreatedAt     bool `protobuf:"varint,15,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreatedAt bool `protobuf:"varint,15,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	// wit_svid_ttl mask
+	WitSvidTtl    bool `protobuf:"varint,16,opt,name=wit_svid_ttl,json=witSvidTtl,proto3" json:"wit_svid_ttl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -369,11 +380,18 @@ func (x *EntryMask) GetCreatedAt() bool {
 	return false
 }
 
+func (x *EntryMask) GetWitSvidTtl() bool {
+	if x != nil {
+		return x.WitSvidTtl
+	}
+	return false
+}
+
 var File_spire_api_types_entry_proto protoreflect.FileDescriptor
 
 const file_spire_api_types_entry_proto_rawDesc = "" +
 	"\n" +
-	"\x1bspire/api/types/entry.proto\x12\x0fspire.api.types\x1a\x1espire/api/types/selector.proto\x1a\x1espire/api/types/spiffeid.proto\"\x9a\x04\n" +
+	"\x1bspire/api/types/entry.proto\x12\x0fspire.api.types\x1a\x1espire/api/types/selector.proto\x1a\x1espire/api/types/spiffeid.proto\"\xbc\x04\n" +
 	"\x05Entry\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x126\n" +
 	"\tspiffe_id\x18\x02 \x01(\v2\x19.spire.api.types.SPIFFEIDR\bspiffeId\x126\n" +
@@ -396,7 +414,9 @@ const file_spire_api_types_entry_proto_rawDesc = "" +
 	"jwtSvidTtl\x12\x12\n" +
 	"\x04hint\x18\x0e \x01(\tR\x04hint\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x0f \x01(\x03R\tcreatedAt\"\xbd\x03\n" +
+	"created_at\x18\x0f \x01(\x03R\tcreatedAt\x12 \n" +
+	"\fwit_svid_ttl\x18\x10 \x01(\x03R\n" +
+	"witSvidTtl\"\xdf\x03\n" +
 	"\tEntryMask\x12\x1b\n" +
 	"\tspiffe_id\x18\x02 \x01(\bR\bspiffeId\x12\x1b\n" +
 	"\tparent_id\x18\x03 \x01(\bR\bparentId\x12\x1c\n" +
@@ -418,7 +438,9 @@ const file_spire_api_types_entry_proto_rawDesc = "" +
 	"jwtSvidTtl\x12\x12\n" +
 	"\x04hint\x18\x0e \x01(\bR\x04hint\x12\x1d\n" +
 	"\n" +
-	"created_at\x18\x0f \x01(\bR\tcreatedAtB7Z5github.com/spiffe/spire-api-sdk/proto/spire/api/typesb\x06proto3"
+	"created_at\x18\x0f \x01(\bR\tcreatedAt\x12 \n" +
+	"\fwit_svid_ttl\x18\x10 \x01(\bR\n" +
+	"witSvidTtlB7Z5github.com/spiffe/spire-api-sdk/proto/spire/api/typesb\x06proto3"
 
 var (
 	file_spire_api_types_entry_proto_rawDescOnce sync.Once

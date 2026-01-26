@@ -64,6 +64,9 @@ message Entry {
 
     // When the entry was created (seconds since Unix epoch).
     int64 created_at = 15;
+
+    // The time to live for WIT-SVID identities issues for this entry (in seconds), overttide ttl if set.
+    int64 wit_svid_ttl = 16;
 }
 
 // Field mask for Entry fields
@@ -109,4 +112,7 @@ message EntryMask {
 
     // created_at field mask
     bool created_at = 15;
+
+    // wit_svid_ttl mask
+    bool wit_svid_ttl = 16;
 }
