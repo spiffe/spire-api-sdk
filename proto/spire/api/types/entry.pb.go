@@ -68,7 +68,7 @@ type Entry struct {
 	// When the entry was created (seconds since Unix epoch).
 	CreatedAt int64 `protobuf:"varint,15,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// The time to live for WIT-SVID identities issues for this entry (in seconds), overttide ttl if set.
-	WitSvidTtl    int64 `protobuf:"varint,16,opt,name=wit_svid_ttl,json=witSvidTtl,proto3" json:"wit_svid_ttl,omitempty"`
+	WitSvidTtl    int32 `protobuf:"varint,16,opt,name=wit_svid_ttl,json=witSvidTtl,proto3" json:"wit_svid_ttl,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -208,7 +208,7 @@ func (x *Entry) GetCreatedAt() int64 {
 	return 0
 }
 
-func (x *Entry) GetWitSvidTtl() int64 {
+func (x *Entry) GetWitSvidTtl() int32 {
 	if x != nil {
 		return x.WitSvidTtl
 	}
@@ -415,7 +415,7 @@ const file_spire_api_types_entry_proto_rawDesc = "" +
 	"\x04hint\x18\x0e \x01(\tR\x04hint\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x0f \x01(\x03R\tcreatedAt\x12 \n" +
-	"\fwit_svid_ttl\x18\x10 \x01(\x03R\n" +
+	"\fwit_svid_ttl\x18\x10 \x01(\x05R\n" +
 	"witSvidTtl\"\xdf\x03\n" +
 	"\tEntryMask\x12\x1b\n" +
 	"\tspiffe_id\x18\x02 \x01(\bR\bspiffeId\x12\x1b\n" +
