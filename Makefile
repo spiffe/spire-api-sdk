@@ -15,6 +15,7 @@ help:
 	@echo "  generate-check   - ensure generated code is up to date"
 
 protos := \
+	proto/spiffe/reference/reference.proto \
 	proto/spire/api/types/agent.proto \
 	proto/spire/api/types/attestation.proto \
 	proto/spire/api/types/bundle.proto \
@@ -32,6 +33,7 @@ protos := \
 
 
 apiprotos := \
+	proto/spiffe/broker/api.proto \
 	proto/spire/api/agent/debug/v1/debug.proto \
 	proto/spire/api/agent/delegatedidentity/v1/delegatedidentity.proto \
 	proto/spire/api/agent/logger/v1/logger.proto \

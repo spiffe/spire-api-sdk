@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package spiffe.reference;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spiffe/reference;reference";
+
+// The WorkloadPIDReference message conveys a process id reference of a workload
+// running in the same environment.
+message WorkloadPIDReference {
+    // Required. The process id of the workload. MUST be a positive integer.
+    int32 pid = 1;
+}
+
+// The KubernetesResource message identifies a Kubernetes resource by its
+// plural name and API group. This avoids ambiguity between plurals that
+// happen to contain dots (e.g., the plural `myresource.example` in the `com`
+// group vs. `myresource` in the `example.com` group) that arises when the
+// `<plural>.<group>` shorthand is parsed as a single string.
+message KubernetesResource {
+    // Required. The plural name of the Kubernetes resource, as registered with
+    // the Kubernetes API server. For example, `pods`, `deployments`, or the
+    // plural form declared by a `CustomResourceDefinition`.
+    string plural = 1;
+
+    // Required. The API group of the Kubernetes resource. For non-core
+    // resources this is the API group name (e.g., `apps`, `example.com`).
+    // For core resources this field MUST be set to the literal string `core`.
+    string group = 2;
+}
+
+// The KubernetesObjectReference message conveys a reference to an arbitrary
+// Kubernetes object (built-in or custom) by which a workload is identified for
+// the purpose of SVID issuance. The referenced object MUST exist and be accessible
+// at the time of the request.
+//
+// The mapping from a Kubernetes object to a SPIFFE ID is implementation-defined;
+// this specification does not mandate a particular SPIFFE ID format. A RECOMMENDED
+// default is `spiffe://<trust domain>/<resource>/<namespace>/<name>` for namespaced
+// resources and `spiffe://<trust domain>/<resource>/<name>` for cluster-scoped
+// resources, but runtimes MAY use other formats to satisfy ecosystem conventions
+// (for example, Istio uses `spiffe://<trust domain>/ns/<namespace>/sa/<serviceaccount>`
+// for ServiceAccount-derived identities).
+message KubernetesObjectReference {
+    // Required. The Kubernetes resource of the referenced object.
+    KubernetesResource resource = 1;
+
+    // Optional. The namespace of the referenced Kubernetes object. MUST be set
+    // when `name` is set on a namespaced resource. MUST NOT be set when `name`
+    // is not set (a namespace alone does not identify any object; the server
+    // resolves the namespace from the UID when the object is identified by
+    // `uid` alone). MUST be empty when the resource is cluster-scoped.
+    string namespace = 2;
+
+    // Optional. The name of the referenced Kubernetes object. At least one of `name`
+    // or `uid` MUST be specified.
+    string name = 3;
+
+    // Optional. The UID of the referenced Kubernetes object. MUST be a valid UUID
+    // string as assigned by Kubernetes. At least one of `name` or `uid` MUST be
+    // specified. When both `name` (together with `namespace` for namespaced
+    // resources) and `uid` are specified, the server MUST verify that the object
+    // resolved by name has the specified UID at the time of issuing the SVIDs and
+    // MUST return an error otherwise.
+    string uid = 4;
+}
