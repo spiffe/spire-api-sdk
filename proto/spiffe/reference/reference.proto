@@ -1,0 +1,17 @@
+syntax = "proto3";
+package spiffe.reference;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spiffe/reference;reference";
+
+// The WorkloadPIDReference message conveys a process id reference of a workload
+// running in the same environment.
+message WorkloadPIDReference {
+    // Required. The process id of the workload. MUST be a positive integer.
+    int32 pid = 1;
+}
+
+// The KubernetesPodUIDReference message conveys a Kubernetes pod UID reference of a
+// workload running in a Kubernetes cluster.
+message KubernetesPodUIDReference {
+    // Required. The UID of the Kubernetes pod. MUST be a valid UUID string.
+    string uid = 1;
+}

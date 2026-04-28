@@ -43,6 +43,8 @@ apiprotos := \
 	proto/spire/api/server/logger/v1/logger.proto \
 	proto/spire/api/server/trustdomain/v1/trustdomain.proto \
 	proto/spire/api/server/svid/v1/svid.proto \
+	proto/spiffe/reference/reference.proto \
+	proto/spiffe/broker/api.proto
 
 # Used to force some rules to run every time
 FORCE: ;
