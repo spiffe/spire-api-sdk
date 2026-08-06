@@ -25,6 +25,7 @@ protos := \
 	proto/spire/api/types/jwtsvid.proto \
 	proto/spire/api/types/logger.proto \
 	proto/spire/api/types/selector.proto \
+	proto/spire/api/types/selectorreference.proto \
 	proto/spire/api/types/spiffeid.proto \
 	proto/spire/api/types/status.proto \
 	proto/spire/api/types/x509svid.proto \

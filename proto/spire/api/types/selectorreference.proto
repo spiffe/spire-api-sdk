@@ -1,0 +1,27 @@
+syntax = "proto3";
+package spire.api.types;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/types";
+
+import "spire/api/types/selector.proto";
+
+// SelectorReference conveys a workload identified by a set of selectors
+// supplied by the caller, rather than one the SPIRE Agent resolves and attests
+// for itself.
+//
+// It is intended for use as a SPIFFE Broker API WorkloadReference extension
+// type, by brokers that perform their own workload attestation using mechanisms
+// SPIRE has no attestor for, and that map the result onto SPIRE's selector
+// vocabulary.
+//
+// Unlike reference types the agent resolves itself, a SelectorReference cannot
+// be independently verified: there is no object to resolve and no process to
+// inspect, so the selectors are treated as already attested. A caller able to
+// use this reference type can therefore obtain SVIDs for any identity whose
+// selectors it can name. Implementations MUST NOT accept this reference type
+// from a caller that has not been explicitly authorized to assert selectors,
+// and MUST NOT treat a general grant of "any reference type" as such an
+// authorization.
+message SelectorReference {
+    // Required. The selectors describing the workload. Must not be empty.
+    repeated Selector selectors = 1;
+}
