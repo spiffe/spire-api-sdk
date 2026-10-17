@@ -1,0 +1,31 @@
+syntax = "proto3";
+package spire.api.server.version.v1;
+option go_package = "github.com/spiffe/spire-api-sdk/proto/spire/api/server/version/v1;versionv1";
+
+service Version {
+    // Gets the version of this SPIRE server instance.
+    //
+    // The returned version is the full version string. Release builds return
+    // major.minor.patch (e.g. "1.15.4"); development builds may carry a
+    // pre-release suffix (e.g. "1.16.0-dev-<commit>"), so callers should
+    // parse it as a semantic version.
+    //
+    // Per the SPIRE upgrade guidance
+    // (https://spiffe.io/docs/latest/maintenance/upgrading/), agents must not
+    // be newer than the oldest SPIRE server they communicate with, so this
+    // value is also the highest recommended agent version for the server
+    // being queried. Dealing with HA setups that may run mixed versions
+    // during upgrades is up to the caller (for example by querying each
+    // instance and taking the minimum).
+    //
+    // The RPC does not require authentication.
+    rpc GetVersion(GetVersionRequest) returns (GetVersionResponse);
+}
+
+message GetVersionRequest {
+}
+
+message GetVersionResponse {
+    // Version of this SPIRE server instance.
+    string version = 1;
+}
