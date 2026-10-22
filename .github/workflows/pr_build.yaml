@@ -11,5 +11,5 @@ jobs:
         with:
           cache: true
           cache-dependency-path: go.sum
-          go-version-file: go.mod
+          go-version-file: .go-version
       - run: make generate-check
